@@ -1,3 +1,4 @@
+import 'package:e_commerce/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatelessWidget {
@@ -32,7 +33,7 @@ class _UsernameInput extends StatelessWidget {
         onChanged: (username) {},
         decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.grey[370],
+          fillColor: AppColors.inputFieldColor,
           labelText: 'username',
           floatingLabelBehavior: FloatingLabelBehavior.never,
           border: OutlineInputBorder(
@@ -57,7 +58,7 @@ class _PasswordInput extends StatelessWidget {
         onChanged: (password) {},
         decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.grey[370],
+          fillColor: AppColors.inputFieldColor,
           labelText: 'password',
           floatingLabelBehavior: FloatingLabelBehavior.never,
           border: OutlineInputBorder(
