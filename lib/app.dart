@@ -1,4 +1,3 @@
-import 'package:e_commerce/authentication/widgets/auth_form.dart';
 import 'package:e_commerce/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
