@@ -8,8 +8,11 @@ import 'models/product.dart';
 /// Exception thrown when products list is empty.
 class ProductsEmptyFailure implements Exception {}
 
-/// Exception thrown when getAllProducts fails.
+/// Exception thrown when getAllProducts or getProductById fails.
 class ProductsRequestFailure implements Exception {}
+
+/// Exception thrown when a product is not found.
+class ProductNotFoundFailure implements Exception {}
 
 /// {@template product_api_client}
 /// Dart API Client which wraps the e-commerce API for the products endpoint.
@@ -40,6 +43,29 @@ class ProductApiClient {
     final result = products.map((e) => Product.fromJson(e)).toList();
 
     if (result.isEmpty) throw ProductsEmptyFailure();
+
+    return result;
+  }
+
+  /// Fetches the product of the given id.
+  Future<Product> getProductById({required int id}) async {
+    final productRequest =
+        Uri.http(Constants.baseUrlStore, "$_productsEndpoint/$id");
+
+    final productResponse = await _httpClient.get(productRequest);
+
+    if (productResponse.statusCode != 200) {
+      throw ProductsRequestFailure();
+    }
+
+    final productJson =
+        jsonDecode(productResponse.body) as Map<String, dynamic>;
+
+    if (!productJson.containsKey("id")) {
+      throw ProductNotFoundFailure();
+    }
+
+    final result = Product.fromJson(productJson);
 
     return result;
   }
