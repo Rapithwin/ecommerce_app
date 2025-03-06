@@ -1,3 +1,4 @@
+import 'package:e_commerce/data_constants.dart';
 import 'package:e_commerce/products_data/product_api_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +30,24 @@ void main() {
       });
     });
 
-    group("getAllProducts", () {});
+    group("getAllProducts", () {
+      test("Makes correct http request.", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        try {
+          await apiClient.getAllProducts();
+        } catch (_) {}
+        verify(
+          () => httpClient.get(
+            Uri.http(
+              Constants.baseUrlStore,
+              "api/Products",
+            ),
+          ),
+        ).called(1);
+      });
+    });
   });
 }
