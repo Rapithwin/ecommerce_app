@@ -22,5 +22,13 @@ void main() {
       httpClient = MockHttpClient();
       apiClient = ProductApiClient(httpClient: httpClient);
     });
+
+    group("constructor", () {
+      test("Does not require an httpClient", () {
+        expect(ProductApiClient(), isNotNull);
+      });
+    });
+
+    group("getAllProducts", () {});
   });
 }
