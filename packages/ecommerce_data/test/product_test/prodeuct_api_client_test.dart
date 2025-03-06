@@ -1,4 +1,5 @@
 import 'package:e_commerce/data_constants.dart';
+import 'package:e_commerce/products_data/models/product.dart';
 import 'package:e_commerce/products_data/product_api_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -68,6 +69,29 @@ void main() {
           apiClient.getAllProducts(),
           throwsA(isA<ProductsEmptyFailure>()),
         );
+      });
+
+      test("Returns products on valid response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn('''
+[
+    {
+      "id": 1,
+      "name": "test",
+      "description": "this is a test.",
+      "price": 1
+    }
+]
+''');
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        final actual = await apiClient.getAllProducts();
+        final matcher = isA<Product>()
+            .having((e) => e.id, "id", 1)
+            .having((e) => e.name, "name", "test")
+            .having((e) => e.description, "description", "this is a test.")
+            .having((e) => e.price, "price", 1);
+        expect(actual[0], matcher);
       });
     });
   });
