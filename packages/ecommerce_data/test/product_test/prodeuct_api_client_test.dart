@@ -1,6 +1,6 @@
-import 'package:e_commerce/data_constants.dart';
-import 'package:e_commerce/products_data/models/product.dart';
-import 'package:e_commerce/products_data/product_api_client.dart';
+import 'package:e_commerce_data/data_constants.dart';
+import 'package:e_commerce_data/products_data/models/product.dart';
+import 'package:e_commerce_data/products_data/product_api_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';

@@ -1,4 +1,4 @@
-import 'package:e_commerce/products_data/models/product.dart';
+import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:test/test.dart';
 
 void main() {
