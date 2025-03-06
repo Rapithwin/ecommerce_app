@@ -1,5 +1,5 @@
 name: e_commerce
-description: "An e-commerce store built with flutter."
+description: "A package for handling the data layer of the e-commerce app."
 publish_to: 'none'
 version: 0.1.0
 
