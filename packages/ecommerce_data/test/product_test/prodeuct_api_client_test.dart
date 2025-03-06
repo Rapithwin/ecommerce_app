@@ -48,6 +48,16 @@ void main() {
           ),
         ).called(1);
       });
+
+      test("Throws ProductsRequestFailure on non 200 response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(400);
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getAllProducts(),
+          throwsA(isA<ProductsRequestFailure>()),
+        );
+      });
     });
   });
 }
