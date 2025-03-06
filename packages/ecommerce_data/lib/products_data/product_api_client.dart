@@ -69,4 +69,7 @@ class ProductApiClient {
 
     return result;
   }
+
+  /// Closes the underlying http client.
+  void close() => _httpClient.close();
 }
