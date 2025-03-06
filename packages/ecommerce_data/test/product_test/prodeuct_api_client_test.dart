@@ -58,6 +58,17 @@ void main() {
           throwsA(isA<ProductsRequestFailure>()),
         );
       });
+
+      test("Throws ProductsEmptyFailure on empty list response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("[]");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getAllProducts(),
+          throwsA(isA<ProductsEmptyFailure>()),
+        );
+      });
     });
   });
 }
