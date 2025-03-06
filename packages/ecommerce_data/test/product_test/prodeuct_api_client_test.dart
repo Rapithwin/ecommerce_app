@@ -94,5 +94,68 @@ void main() {
         expect(actual[0], matcher);
       });
     });
+
+    group("getProductById", () {
+      const int id = 1;
+      test("Makes correct http request.", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        try {
+          await apiClient.getProductById(id: id);
+        } catch (_) {}
+        verify(
+          () => httpClient.get(
+            Uri.http(
+              Constants.baseUrlStore,
+              "api/Products/$id",
+            ),
+          ),
+        ).called(1);
+      });
+
+      test("Throws ProductsRequestFailure on non 200 response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(400);
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getProductById(id: id),
+          throwsA(isA<ProductsRequestFailure>()),
+        );
+      });
+
+      test("Throws ProductNotFoundFailure on error", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getProductById(id: id),
+          throwsA(isA<ProductNotFoundFailure>()),
+        );
+      });
+
+      test("Returns products on valid response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn('''
+    {
+      "id": 1,
+      "name": "test",
+      "description": "this is a test.",
+      "price": 1
+    }
+''');
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        final actual = await apiClient.getProductById(id: id);
+        final matcher = isA<Product>()
+            .having((e) => e.id, "id", 1)
+            .having((e) => e.name, "name", "test")
+            .having((e) => e.description, "description", "this is a test.")
+            .having((e) => e.price, "price", 1);
+        expect(actual, matcher);
+      });
+    });
   });
 }
