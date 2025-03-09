@@ -1,5 +1,4 @@
-import 'package:e_commerce_data/products_data/models/product.dart';
-import 'package:equatable/equatable.dart';
+part of 'products_cubit.dart';
 
 enum ProductsStatus { initial, loading, success, failure }
 

@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce/products/presentation/bloc/products_state.dart';
 import 'package:e_commerce_repository/products_repository/products_repostitory.dart';
+import 'package:e_commerce_data/products_data/models/product.dart';
+import 'package:equatable/equatable.dart';
+
+part 'products_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit(this._productsRepostitory) : super(ProductsState());
