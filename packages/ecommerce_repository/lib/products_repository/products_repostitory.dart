@@ -6,8 +6,8 @@ import 'package:e_commerce_data/products_data/product_api_client.dart';
 /// {@endtemplate}
 class ProductsRepostitory {
   /// {@macro products_repository}
-  ProductsRepostitory({required ProductApiClient productApi})
-      : _productApi = productApi;
+  ProductsRepostitory({ProductApiClient? productApi})
+      : _productApi = productApi ?? ProductApiClient();
   final ProductApiClient _productApi;
 
   /// Provides a [List] of all the available products.
