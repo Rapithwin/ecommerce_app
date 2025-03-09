@@ -1,22 +1,34 @@
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:equatable/equatable.dart';
 
-enum ProductStatus { initial, loading, success, failure }
+enum ProductsStatus { initial, loading, success, failure }
 
-extension ProductStatusX on ProductStatus {
-  bool get isInitial => this == ProductStatus.initial;
-  bool get isLoading => this == ProductStatus.loading;
-  bool get isSuccess => this == ProductStatus.success;
-  bool get isFailure => this == ProductStatus.failure;
+extension ProductsStatusX on ProductsStatus {
+  bool get isInitial => this == ProductsStatus.initial;
+  bool get isLoading => this == ProductsStatus.loading;
+  bool get isSuccess => this == ProductsStatus.success;
+  bool get isFailure => this == ProductsStatus.failure;
 }
 
 final class ProductsState extends Equatable {
-  final ProductStatus status;
-  final List<Product> product;
+  final ProductsStatus status;
+  final List<Product> products;
 
-  ProductsState({this.status = ProductStatus.initial, List<Product>? product})
-      : product = product ?? [];
+  ProductsState({
+    this.status = ProductsStatus.initial,
+    List<Product>? products,
+  }) : products = products ?? [];
+
+  ProductsState copyWith({
+    ProductsStatus? status,
+    List<Product>? products,
+  }) {
+    return ProductsState(
+      status: status ?? this.status,
+      products: products ?? this.products,
+    );
+  }
 
   @override
-  List<Object?> get props => [status, product];
+  List<Object?> get props => [status, products];
 }
