@@ -42,22 +42,34 @@ class RootView extends StatelessWidget {
             _RootTabButton(
               groupValue: selectedTab,
               value: RootTab.home,
-              icon: Icon(Icons.home),
+              icon:
+                  Image.asset("assets/images/bottom_navbar/shop-outlined.png"),
+              selectedIcon:
+                  Image.asset("assets/images/bottom_navbar/shop-filled.png"),
             ),
             _RootTabButton(
               groupValue: selectedTab,
               value: RootTab.catalog,
-              icon: Icon(Icons.book),
+              icon: Image.asset(
+                  "assets/images/bottom_navbar/product-outlined.png"),
+              selectedIcon:
+                  Image.asset("assets/images/bottom_navbar/product-filled.png"),
             ),
             _RootTabButton(
               groupValue: selectedTab,
               value: RootTab.cart,
-              icon: Icon(Icons.shopping_cart_sharp),
+              icon:
+                  Image.asset("assets/images/bottom_navbar/cart-outlined.png"),
+              selectedIcon:
+                  Image.asset("assets/images/bottom_navbar/cart-filled.png"),
             ),
             _RootTabButton(
               groupValue: selectedTab,
               value: RootTab.profile,
-              icon: Icon(Icons.person),
+              icon: Image.asset(
+                  "assets/images/bottom_navbar/person-outlined.png"),
+              selectedIcon:
+                  Image.asset("assets/images/bottom_navbar/person-filled.png"),
             ),
           ],
         ),
@@ -71,11 +83,13 @@ class _RootTabButton extends StatelessWidget {
     required this.groupValue,
     required this.value,
     required this.icon,
+    required this.selectedIcon,
   });
 
   final RootTab groupValue;
   final RootTab value;
   final Widget icon;
+  final Widget selectedIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +99,8 @@ class _RootTabButton extends StatelessWidget {
       color:
           groupValue != value ? null : Theme.of(context).colorScheme.secondary,
       icon: icon,
+      isSelected: value == groupValue,
+      selectedIcon: selectedIcon,
     );
   }
 }
