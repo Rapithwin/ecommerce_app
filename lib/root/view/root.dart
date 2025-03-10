@@ -19,6 +19,68 @@ class RootView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final selectedTab = context.select((RootCubit cubit) => cubit.state.tab);
+    return Scaffold(
+      body: IndexedStack(
+        index: selectedTab.index,
+        children: <Widget>[
+          HomePage(),
+          CatalogPage(),
+          CartPage(),
+          ProfilePage()
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _RootTabButton(
+              groupValue: selectedTab,
+              value: RootTab.home,
+              icon: Icon(Icons.home),
+            ),
+            _RootTabButton(
+              groupValue: selectedTab,
+              value: RootTab.catalog,
+              icon: Icon(Icons.book),
+            ),
+            _RootTabButton(
+              groupValue: selectedTab,
+              value: RootTab.cart,
+              icon: Icon(Icons.shopping_cart_sharp),
+            ),
+            _RootTabButton(
+              groupValue: selectedTab,
+              value: RootTab.profile,
+              icon: Icon(Icons.person),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RootTabButton extends StatelessWidget {
+  const _RootTabButton({
+    required this.groupValue,
+    required this.value,
+    required this.icon,
+  });
+
+  final RootTab groupValue;
+  final RootTab value;
+  final Widget icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => context.read<RootCubit>().setTab(value),
+      iconSize: 32,
+      color:
+          groupValue != value ? null : Theme.of(context).colorScheme.secondary,
+      icon: icon,
+    );
   }
 }
