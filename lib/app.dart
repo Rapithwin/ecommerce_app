@@ -13,10 +13,9 @@ class MainApp extends StatelessWidget {
         RepositoryProvider<ProductsRepostitory>(
           create: (context) => ProductsRepostitory(),
           dispose: (repository) => repository.dispose(),
-          child: HomePage(),
         ),
       ],
-      child: Container(),
+      child: AppView(),
     );
   }
 }
