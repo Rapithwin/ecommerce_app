@@ -1,6 +1,10 @@
+import 'package:e_commerce/cart/presentation/view/cart_page.dart';
+import 'package:e_commerce/profile/presentation/view/profile_page.dart';
 import 'package:e_commerce/root/cubit/root_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:e_commerce/products/presentation/view/view.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
