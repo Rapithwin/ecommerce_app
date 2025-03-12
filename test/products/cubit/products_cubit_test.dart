@@ -64,5 +64,20 @@ void main() {
         ],
       );
     });
+    group("fetchProductsById", () {
+      blocTest<ProductsCubit, ProductsState>(
+        'emits [loading, failure] when fetchProductsById throws.',
+        setUp: () {
+          when(() => repository.getProductById(id: 1))
+              .thenThrow(Exception("oops"));
+        },
+        build: () => cubit,
+        act: (cubit) => cubit.fetchProductsById(id: 1),
+        expect: () => <ProductsState>[
+          ProductsState(status: ProductsStatus.loading),
+          ProductsState(status: ProductsStatus.failure),
+        ],
+      );
+    });
   });
 }
