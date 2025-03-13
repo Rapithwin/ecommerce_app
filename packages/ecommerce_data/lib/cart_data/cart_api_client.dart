@@ -41,7 +41,7 @@ class CartApiClient {
       query.toJson(),
     );
 
-    final cartResponse = await _httpClient.get(cartRequest);
+    final cartResponse = await _httpClient.post(cartRequest);
 
     if (cartResponse.statusCode != 200) throw CartRequestFailure();
 
