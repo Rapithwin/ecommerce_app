@@ -4,33 +4,37 @@ part 'cart.g.dart';
 
 @JsonSerializable()
 class Cart {
-  final int id;
+  final int? id;
   final String userId;
   final List<CartItems> cartItems;
 
   Cart({
-    required this.id,
+    this.id,
     required this.userId,
     required this.cartItems,
   });
 
   factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CartToJson(this);
 }
 
 @JsonSerializable()
 class CartItems {
-  final int id;
+  final int? id;
   final int productId;
-  final String productName;
+  final String? productName;
   final int quantity;
 
   CartItems({
-    required this.id,
+    this.id,
     required this.productId,
-    required this.productName,
+    this.productName,
     required this.quantity,
   });
 
   factory CartItems.fromJson(Map<String, dynamic> json) =>
       _$CartItemsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CartItemsToJson(this);
 }
