@@ -33,4 +33,24 @@ class CartApiClient {
 
     return result;
   }
+
+  Future<Cart> addToCart({required Cart query}) async {
+    final cartRequest = Uri.http(
+      Constants.baseUrlStore,
+      _cartEndpoint,
+      query.toJson(),
+    );
+
+    final cartResponse = await _httpClient.get(cartRequest);
+
+    if (cartResponse.statusCode != 200) throw CartRequestFailure();
+
+    final cartJson = jsonDecode(cartResponse.body);
+
+    final result = Cart.fromJson(cartJson);
+
+    if (result.cartItems.isEmpty) throw CartEmptyFailure();
+
+    return result;
+  }
 }
