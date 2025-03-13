@@ -6,7 +6,7 @@ part 'cart.g.dart';
 class Cart {
   final int id;
   final String userId;
-  final CartItems cartItems;
+  final List<CartItems> cartItems;
 
   Cart({
     required this.id,

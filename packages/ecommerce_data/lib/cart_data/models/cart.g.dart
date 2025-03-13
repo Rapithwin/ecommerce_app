@@ -15,8 +15,11 @@ Cart _$CartFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = Cart(
           id: $checkedConvert('id', (v) => (v as num).toInt()),
           userId: $checkedConvert('userId', (v) => v as String),
-          cartItems: $checkedConvert('cartItems',
-              (v) => CartItems.fromJson(v as Map<String, dynamic>)),
+          cartItems: $checkedConvert(
+              'cartItems',
+              (v) => (v as List<dynamic>)
+                  .map((e) => CartItems.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
