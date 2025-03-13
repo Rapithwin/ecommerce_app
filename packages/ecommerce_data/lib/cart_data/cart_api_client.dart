@@ -25,8 +25,11 @@ class CartApiClient {
 
     if (cartResponse.statusCode != 200) throw CartRequestFailure();
 
-    final cart = jsonDecode(cartResponse.body);
-    final result = Cart.fromJson(cart);
+    final cartJson = jsonDecode(cartResponse.body);
+
+    final result = Cart.fromJson(cartJson);
+
+    if (result.cartItems.isEmpty) throw CartEmptyFailure();
 
     return result;
   }
