@@ -10,13 +10,18 @@ class CartEmptyFailure implements Exception {}
 /// Exception thrown when getCart fails.
 class CartRequestFailure implements Exception {}
 
+/// {@template cart_api_client}
+/// Dart API Client which wraps the e-commerce API for the cart endpoint.
+/// {@endtemplate}
 class CartApiClient {
+  /// {@macro cart_api_client}
   CartApiClient({http.Client? httpClient})
       : _httpClient = httpClient ?? http.Client();
   final http.Client _httpClient;
 
   final _cartEndpoint = "api/Carts";
 
+  /// Fetches the cart and all the items in it.
   Future<Cart> getCart({required String userId}) async {
     final cartRequest =
         Uri.http(Constants.baseUrlStore, "$_cartEndpoint/$userId");
@@ -34,6 +39,7 @@ class CartApiClient {
     return result;
   }
 
+  /// Used to create a cart and add items to a cart.
   Future<Cart> addToCart({required Cart query}) async {
     final cartRequest = Uri.http(
       Constants.baseUrlStore,
@@ -53,4 +59,8 @@ class CartApiClient {
 
     return result;
   }
+
+  // TODO: Delete
+
+  void close() => _httpClient.close();
 }
