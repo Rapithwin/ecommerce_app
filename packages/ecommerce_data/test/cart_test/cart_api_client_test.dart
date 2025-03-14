@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:e_commerce_data/cart_data/cart_api_client.dart';
 import 'package:e_commerce_data/cart_data/models/cart.dart';
 import 'package:e_commerce_data/data_constants.dart';
@@ -96,6 +98,110 @@ void main() {
 ''');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
         final actual = await apiClient.getCart(userId: "1");
+        final matcher = isA<Cart>()
+            .having((e) => e.id, "id", 1)
+            .having((e) => e.userId, "userId", "1")
+            .having(
+              (e) => e.cartItems,
+              "cartItems",
+              isA<List<CartItems>>()
+                  .having((e) => e[0].id, "id", 1)
+                  .having((e) => e[0].productId, "productId", 1)
+                  .having((e) => e[0].productName, "productName", "test")
+                  .having((e) => e[0].quantity, "quantity", 1),
+            );
+        expect(actual, matcher);
+      });
+    });
+
+    group("addToCart", () {
+      final Cart query = Cart(userId: "1", cartItems: [
+        CartItems(
+          productId: 1,
+          quantity: 1,
+        )
+      ]);
+      test("Makes correct http request.", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.post(
+              any(),
+              headers: any(named: 'headers'),
+              body: any(named: 'body'),
+            )).thenAnswer((_) async => response);
+        try {
+          await apiClient.addToCart(query: query);
+        } catch (_) {}
+        verify(
+          () => httpClient.post(
+              Uri.http(
+                Constants.baseUrlStore,
+                "api/Carts",
+              ),
+              headers: {'Content-Type': 'application/json'},
+              body: jsonEncode(query.toJson())),
+        ).called(1);
+      });
+
+      test("Throws CartRequestFailure on non 200 response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(400);
+        when(() => httpClient.post(
+              any(),
+              headers: any(named: 'headers'),
+              body: any(named: 'body'),
+            )).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.addToCart(query: query),
+          throwsA(isA<CartRequestFailure>()),
+        );
+      });
+
+      test("Throws CartEmptyFailure on empty list response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn('''
+  {
+    "id": 1,
+    "userId": "…",
+    "cartItems": []
+  }
+''');
+        when(() => httpClient.post(
+              any(),
+              headers: any(named: 'headers'),
+              body: any(named: 'body'),
+            )).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.addToCart(query: query),
+          throwsA(isA<CartEmptyFailure>()),
+        );
+      });
+
+      test("Returns cart on valid response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn('''
+{
+  "id": 1,
+  "userId": "1",
+  "cartItems": [
+    {
+      "id": 1,
+      "productId": 1,
+      "productName": "test",
+      "quantity": 1
+    }
+  ]
+}
+''');
+        when(() => httpClient.post(
+              any(),
+              headers: any(named: 'headers'),
+              body: any(named: 'body'),
+            )).thenAnswer((_) async => response);
+        final actual = await apiClient.addToCart(query: query);
         final matcher = isA<Cart>()
             .having((e) => e.id, "id", 1)
             .having((e) => e.userId, "userId", "1")
