@@ -44,10 +44,13 @@ class CartApiClient {
     final cartRequest = Uri.http(
       Constants.baseUrlStore,
       _cartEndpoint,
-      query.toJson(),
     );
 
-    final cartResponse = await _httpClient.post(cartRequest);
+    final cartResponse = await _httpClient.post(
+      cartRequest,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(query.toJson()),
+    );
 
     if (cartResponse.statusCode != 200) throw CartRequestFailure();
 
