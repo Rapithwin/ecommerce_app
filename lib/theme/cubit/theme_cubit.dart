@@ -4,5 +4,7 @@ import 'package:equatable/equatable.dart';
 part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(ThemeInitial());
+  ThemeCubit() : super(const ThemeState());
+
+  void setTheme(ThemeMode themeMode) => emit(ThemeState(themeMode: themeMode));
 }

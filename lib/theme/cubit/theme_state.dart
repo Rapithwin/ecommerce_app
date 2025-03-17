@@ -2,7 +2,7 @@ part of 'theme_cubit.dart';
 
 enum ThemeMode { dark, light, system }
 
-sealed class ThemeState extends Equatable {
+class ThemeState extends Equatable {
   const ThemeState({this.themeMode = ThemeMode.system});
 
   final ThemeMode themeMode;
