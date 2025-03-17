@@ -24,6 +24,7 @@ class RootView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedTab = context.select((RootCubit cubit) => cubit.state.tab);
+    final theme = Theme.of(context);
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
@@ -42,34 +43,50 @@ class RootView extends StatelessWidget {
             _RootTabButton(
               groupValue: selectedTab,
               value: RootTab.home,
-              icon:
-                  Image.asset("assets/images/bottom_navbar/shop-outlined.png"),
-              selectedIcon:
-                  Image.asset("assets/images/bottom_navbar/shop-filled.png"),
+              icon: Image.asset(
+                "assets/images/bottom_navbar/shop-outlined.png",
+                color: theme.colorScheme.secondary,
+              ),
+              selectedIcon: Image.asset(
+                "assets/images/bottom_navbar/shop-filled.png",
+                color: theme.colorScheme.secondary,
+              ),
             ),
             _RootTabButton(
               groupValue: selectedTab,
               value: RootTab.catalog,
               icon: Image.asset(
-                  "assets/images/bottom_navbar/product-outlined.png"),
-              selectedIcon:
-                  Image.asset("assets/images/bottom_navbar/product-filled.png"),
+                "assets/images/bottom_navbar/product-outlined.png",
+                color: theme.colorScheme.secondary,
+              ),
+              selectedIcon: Image.asset(
+                "assets/images/bottom_navbar/product-filled.png",
+                color: theme.colorScheme.secondary,
+              ),
             ),
             _RootTabButton(
               groupValue: selectedTab,
               value: RootTab.cart,
-              icon:
-                  Image.asset("assets/images/bottom_navbar/cart-outlined.png"),
-              selectedIcon:
-                  Image.asset("assets/images/bottom_navbar/cart-filled.png"),
+              icon: Image.asset(
+                "assets/images/bottom_navbar/cart-outlined.png",
+                color: theme.colorScheme.secondary,
+              ),
+              selectedIcon: Image.asset(
+                "assets/images/bottom_navbar/cart-filled.png",
+                color: theme.colorScheme.secondary,
+              ),
             ),
             _RootTabButton(
               groupValue: selectedTab,
               value: RootTab.profile,
               icon: Image.asset(
-                  "assets/images/bottom_navbar/person-outlined.png"),
-              selectedIcon:
-                  Image.asset("assets/images/bottom_navbar/person-filled.png"),
+                "assets/images/bottom_navbar/person-outlined.png",
+                color: theme.colorScheme.secondary,
+              ),
+              selectedIcon: Image.asset(
+                "assets/images/bottom_navbar/person-filled.png",
+                color: theme.colorScheme.secondary,
+              ),
             ),
           ],
         ),
