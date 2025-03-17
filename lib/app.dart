@@ -29,6 +29,7 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.dark,
       home: RootPage(),
     );
   }

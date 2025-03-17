@@ -27,12 +27,15 @@ class AppTheme {
         backgroundColor: AppColors.blackColor,
       ),
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.blackColor,
-        primary: AppColors.blackColor,
-        secondary: AppColors.whiteColor,
-        tertiary: AppColors.tertiaryColor,
-        brightness: Brightness.dark,
-      ),
+          seedColor: AppColors.blackColor,
+          primary: AppColors.blackColor,
+          secondary: AppColors.whiteColor,
+          tertiary: AppColors.tertiaryColor.withAlpha(160),
+          onPrimary: AppColors.whiteColor,
+          onSecondary: AppColors.blackColor,
+          onTertiary: AppColors.blackColor.withAlpha(200),
+          brightness: Brightness.dark,
+          outline: AppColors.whiteColor),
     );
   }
 }
