@@ -20,4 +20,6 @@ class CartRepository {
   /// instance of [Cart].
   Future<Cart> addToCart({required Cart query}) =>
       _cartApi.addToCart(query: query);
+
+  void dispose() => _cartApi.close();
 }
