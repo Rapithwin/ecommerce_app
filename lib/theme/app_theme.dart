@@ -12,7 +12,11 @@ class AppTheme {
         primary: AppColors.whiteColor,
         secondary: AppColors.blackColor,
         tertiary: AppColors.tertiaryColor,
+        onPrimary: AppColors.blackColor,
+        onSecondary: AppColors.whiteColor,
+        onTertiary: AppColors.blackColor.withAlpha(150),
         brightness: Brightness.light,
+        outline: AppColors.blackColor,
       ),
     );
   }

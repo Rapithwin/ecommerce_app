@@ -40,11 +40,13 @@ class AppBarWidgets {
               child: SearchBar(
                 backgroundColor:
                     WidgetStatePropertyAll(theme.colorScheme.tertiary),
+                shadowColor: WidgetStatePropertyAll(theme.colorScheme.tertiary),
                 hintText: "جستجو...",
-                hintStyle:
-                    WidgetStatePropertyAll(theme.textTheme.labelLarge?.copyWith(
-                  color: theme.colorScheme.onTertiary,
-                )),
+                hintStyle: WidgetStatePropertyAll(
+                  theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.onTertiary,
+                  ),
+                ),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
