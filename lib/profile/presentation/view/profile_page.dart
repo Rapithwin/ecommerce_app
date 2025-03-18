@@ -11,7 +11,11 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        actions: AppBarWidgets.appBarActions(size, theme),
+        actions: AppBarWidgets.appBarActions(
+          size,
+          theme,
+          context,
+        ),
       ),
     );
   }
