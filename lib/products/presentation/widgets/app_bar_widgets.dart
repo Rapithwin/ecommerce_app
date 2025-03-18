@@ -40,7 +40,7 @@ class AppBarWidgets {
               child: SearchBar(
                 backgroundColor:
                     WidgetStatePropertyAll(theme.colorScheme.tertiary),
-                shadowColor: WidgetStatePropertyAll(theme.colorScheme.tertiary),
+                shadowColor: WidgetStatePropertyAll(Colors.transparent),
                 hintText: "جستجو...",
                 hintStyle: WidgetStatePropertyAll(
                   theme.textTheme.labelLarge?.copyWith(
