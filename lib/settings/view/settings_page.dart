@@ -1,4 +1,6 @@
+import 'package:e_commerce/theme/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -27,9 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
         controller: _panelController,
         defaultPanelState: PanelState.CLOSED,
         minHeight: 0,
-        panel: Center(
-          child: Text("panel"),
-        ),
+        panel: ThemeRadioList(),
         body: ListView(
           children: [
             Divider(
@@ -69,5 +69,42 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
     );
+  }
+}
+
+class ThemeRadioList extends StatelessWidget {
+  const ThemeRadioList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        children: ThemeMode.values.map((theme) {
+      return BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+          return RadioListTile<ThemeMode>(
+              value: theme,
+              title: Text(theme.toFarsi()),
+              groupValue: state.themeMode,
+              onChanged: (newTheme) {
+                if (newTheme != null) {
+                  context.read<ThemeCubit>().setTheme(newTheme);
+                }
+              });
+        },
+      );
+    }).toList());
+  }
+}
+
+extension on ThemeMode {
+  String toFarsi() {
+    switch (this) {
+      case ThemeMode.system:
+        return "خودکار(پیش‌فرض سیستم)";
+      case ThemeMode.dark:
+        return "تاریک";
+      case ThemeMode.light:
+        return "روشن";
+    }
   }
 }
