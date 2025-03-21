@@ -24,6 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(),
       body: SlidingUpPanel(
         controller: _panelController,
@@ -31,8 +32,9 @@ class _SettingsPageState extends State<SettingsPage> {
         color: theme.colorScheme.primary,
         backdropEnabled: true,
         backdropColor: Colors.transparent,
-        backdropOpacity: 0.1,
+        backdropOpacity: 0,
         minHeight: 0,
+        maxHeight: size.height / 3.5,
         panel: ThemeRadioList(),
         body: ListView(
           children: [
@@ -91,6 +93,7 @@ class ThemeRadioList extends StatelessWidget {
               title: Text(
                 theme.toFarsi(),
                 style: appTheme.textTheme.labelLarge,
+                textDirection: TextDirection.rtl,
               ),
               fillColor: WidgetStatePropertyAll(appTheme.colorScheme.onSurface),
               groupValue: state.themeMode,
