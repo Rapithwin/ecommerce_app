@@ -9,9 +9,9 @@ class AppTheme {
       ),
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.whiteColor,
-        primary: AppColors.whiteColor,
+        primary: AppColors.greyColorLight,
         secondary: AppColors.blackColor,
-        tertiary: AppColors.tertiaryColor,
+        tertiary: AppColors.greyColorDark,
         onPrimary: AppColors.blackColor,
         onSecondary: AppColors.whiteColor,
         onTertiary: AppColors.blackColor.withAlpha(150),
@@ -33,9 +33,9 @@ class AppTheme {
         ),
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.blackColor,
-          primary: AppColors.blackColor,
+          primary: AppColors.greyColorDark,
           secondary: AppColors.whiteColor,
-          tertiary: AppColors.tertiaryColor.withAlpha(160),
+          tertiary: AppColors.greyColorDark.withAlpha(160),
           onPrimary: AppColors.whiteColor,
           onSecondary: AppColors.blackColor,
           onTertiary: AppColors.whiteColor.withAlpha(150),
