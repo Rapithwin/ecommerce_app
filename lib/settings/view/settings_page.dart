@@ -29,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: SlidingUpPanel(
         controller: _panelController,
         defaultPanelState: PanelState.CLOSED,
-        color: theme.colorScheme.primary,
+        color: theme.colorScheme.surfaceBright,
         backdropEnabled: true,
         backdropColor: Colors.transparent,
         backdropOpacity: 0,
