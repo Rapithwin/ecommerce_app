@@ -11,7 +11,7 @@ class AppTheme {
         seedColor: AppColors.whiteColor,
         primary: AppColors.greyColorLight,
         secondary: AppColors.blackColor,
-        tertiary: AppColors.greyColorDark,
+        tertiary: AppColors.greyColorLight,
         onPrimary: AppColors.blackColor,
         onSecondary: AppColors.whiteColor,
         onTertiary: AppColors.blackColor.withAlpha(150),
