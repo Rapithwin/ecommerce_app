@@ -25,11 +25,11 @@ class ThemeCubit extends Cubit<ThemeState> {
   ThemeMode _getThemeMode(int index) {
     switch (index) {
       case 0:
-        return ThemeMode.light;
-      case 1:
-        return ThemeMode.dark;
-      case 2:
         return ThemeMode.system;
+      case 1:
+        return ThemeMode.light;
+      case 2:
+        return ThemeMode.dark;
       default:
         return ThemeMode.system;
     }
