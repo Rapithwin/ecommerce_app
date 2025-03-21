@@ -38,13 +38,13 @@ class AppBarWidgets {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: SearchBar(
-                backgroundColor:
-                    WidgetStatePropertyAll(theme.colorScheme.tertiary),
+                backgroundColor: WidgetStatePropertyAll(
+                    theme.colorScheme.surfaceContainerHighest),
                 shadowColor: WidgetStatePropertyAll(Colors.transparent),
                 hintText: "جستجو...",
                 hintStyle: WidgetStatePropertyAll(
                   theme.textTheme.labelLarge?.copyWith(
-                    color: theme.colorScheme.onTertiary,
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
                 shape: WidgetStatePropertyAll(
