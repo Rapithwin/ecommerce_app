@@ -17,6 +17,8 @@ class AppTheme {
         onTertiary: AppColors.blackColor.withAlpha(150),
         brightness: Brightness.light,
         outline: AppColors.blackColor,
+        surface: AppColors.whiteColor,
+        onSurface: AppColors.blackColor,
       ),
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: AppColors.blackColor.withAlpha(150),
@@ -39,6 +41,8 @@ class AppTheme {
           onTertiary: AppColors.whiteColor.withAlpha(150),
           brightness: Brightness.dark,
           outline: AppColors.whiteColor,
+          surface: AppColors.blackColor,
+          onSurface: AppColors.whiteColor,
         ),
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: AppColors.whiteColor.withAlpha(150),
