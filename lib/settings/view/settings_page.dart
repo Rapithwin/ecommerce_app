@@ -28,6 +28,10 @@ class _SettingsPageState extends State<SettingsPage> {
       body: SlidingUpPanel(
         controller: _panelController,
         defaultPanelState: PanelState.CLOSED,
+        color: theme.colorScheme.primary,
+        backdropEnabled: true,
+        backdropColor: Colors.transparent,
+        backdropOpacity: 0.1,
         minHeight: 0,
         panel: ThemeRadioList(),
         body: ListView(
@@ -77,13 +81,18 @@ class ThemeRadioList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Theme.of(context);
     return Column(
         children: ThemeMode.values.map((theme) {
       return BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return RadioListTile<ThemeMode>(
               value: theme,
-              title: Text(theme.toFarsi()),
+              title: Text(
+                theme.toFarsi(),
+                style: appTheme.textTheme.labelLarge,
+              ),
+              fillColor: WidgetStatePropertyAll(appTheme.colorScheme.onSurface),
               groupValue: state.themeMode,
               onChanged: (newTheme) {
                 if (newTheme != null) {
