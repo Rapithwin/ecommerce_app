@@ -1,5 +1,6 @@
 import 'package:e_commerce/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static ThemeData get light {
@@ -21,6 +22,7 @@ class AppTheme {
         surface: AppColors.whiteColor,
         onSurface: AppColors.blackColor,
       ),
+      textTheme: GoogleFonts.notoSansArabicTextTheme(),
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: AppColors.blackColor.withAlpha(150),
       ),
@@ -46,6 +48,7 @@ class AppTheme {
           surface: AppColors.blackColor,
           onSurface: AppColors.whiteColor,
         ),
+        textTheme: GoogleFonts.notoSansArabicTextTheme(),
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: AppColors.whiteColor.withAlpha(150),
         ));
