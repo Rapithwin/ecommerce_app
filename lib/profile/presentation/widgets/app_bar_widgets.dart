@@ -31,7 +31,9 @@ class AppBarWidgets {
                 child: Text(
                   "پروفایل",
                   textDirection: TextDirection.rtl,
-                  style: theme.textTheme.headlineLarge,
+                  style: theme.textTheme.headlineLarge?.copyWith(
+                    color: theme.colorScheme.onSurface,
+                  ),
                 ),
               ),
             ],

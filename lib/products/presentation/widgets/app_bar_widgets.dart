@@ -25,7 +25,9 @@ class AppBarWidgets {
                     child: Text(
                       "محصولات",
                       textDirection: TextDirection.rtl,
-                      style: theme.textTheme.headlineLarge,
+                      style: theme.textTheme.headlineLarge?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                      ),
                     ),
                   ),
                 ],

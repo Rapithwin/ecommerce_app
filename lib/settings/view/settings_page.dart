@@ -55,7 +55,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: [
                       Text(
                         "حالت نمایش",
-                        style: theme.textTheme.labelLarge,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onSurface,
+                        ),
                       ),
                       Icon(
                         Icons.arrow_back_ios,
@@ -92,7 +94,8 @@ class ThemeRadioList extends StatelessWidget {
               value: theme,
               title: Text(
                 theme.toFarsi(),
-                style: appTheme.textTheme.labelLarge,
+                style: appTheme.textTheme.labelLarge
+                    ?.copyWith(color: appTheme.colorScheme.onSurface),
                 textDirection: TextDirection.rtl,
               ),
               fillColor: WidgetStatePropertyAll(appTheme.colorScheme.onSurface),
