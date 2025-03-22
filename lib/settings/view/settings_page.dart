@@ -45,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onTap: () {
                 _panelController.open();
               },
-              child: Container(
+              child: SizedBox(
                 height: 60,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
@@ -59,8 +59,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           color: theme.colorScheme.onSurface,
                         ),
                       ),
-                      Icon(
-                        Icons.arrow_back_ios,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 11.0),
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          size: 21,
+                        ),
                       )
                     ],
                   ),
