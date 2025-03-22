@@ -29,7 +29,6 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: size.height / 6,
         actions: AppBarWidgets.appBarActions(size, theme),
-        backgroundColor: Colors.transparent,
       ),
     );
   }

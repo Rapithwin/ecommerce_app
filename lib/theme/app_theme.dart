@@ -5,7 +5,8 @@ class AppTheme {
   static ThemeData get light {
     return ThemeData(
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.whiteColor,
@@ -29,7 +30,8 @@ class AppTheme {
   static ThemeData get dark {
     return ThemeData(
         appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.blackColor,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.blackColor,
