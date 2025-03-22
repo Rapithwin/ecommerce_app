@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'theme_state.dart';
 
+/// Cubit for managing [ThemeState].
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit() : super(const ThemeState()) {
     _loadTheme();
