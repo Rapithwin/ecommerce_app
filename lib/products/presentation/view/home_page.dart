@@ -11,7 +11,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductsCubit(context.read<ProductsRepostitory>()),
+      create: (context) => ProductsCubit(
+        context.read<ProductsRepostitory>(),
+      ),
       child: HomeView(),
     );
   }
@@ -29,6 +31,40 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: size.height / 6,
         actions: AppBarWidgets.appBarActions(size, theme),
+      ),
+      body: BlocBuilder<ProductsCubit, ProductsState>(
+        builder: (context, state) {
+          if (state.products.isEmpty) {
+            return Text("empty");
+          }
+          return GridView.builder(
+            itemCount: state.products.length,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+            ),
+            itemBuilder: (context, index) {
+              return Container(
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      state.products[index].name,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      state.products[index].price.toString(),
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
