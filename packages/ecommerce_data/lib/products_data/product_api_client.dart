@@ -32,7 +32,7 @@ class ProductApiClient {
     try {
       final productsRequest = Uri.http(
         Constants.authority,
-        '$_productsEndpoint',
+        _productsEndpoint,
       );
 
       final productResponse = await _httpClient.get(productsRequest);
@@ -59,25 +59,31 @@ class ProductApiClient {
 
   /// Fetches the product of the given id.
   Future<Product> getProductById({required int id}) async {
-    final productRequest =
-        Uri.http(Constants.authority, "$_productsEndpoint/$id");
+    try {
+      final productRequest =
+          Uri.http(Constants.authority, "$_productsEndpoint/$id");
 
-    final productResponse = await _httpClient.get(productRequest);
+      final productResponse = await _httpClient.get(productRequest);
 
-    if (productResponse.statusCode != 200) {
-      throw ProductsRequestFailure();
+      if (productResponse.statusCode != 200) {
+        throw ProductsRequestFailure();
+      }
+
+      final productJson =
+          jsonDecode(productResponse.body) as Map<String, dynamic>;
+
+      if (!productJson.containsKey("id")) {
+        throw ProductNotFoundFailure();
+      }
+
+      final result = Product.fromJson(productJson);
+
+      return result;
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
     }
-
-    final productJson =
-        jsonDecode(productResponse.body) as Map<String, dynamic>;
-
-    if (!productJson.containsKey("id")) {
-      throw ProductNotFoundFailure();
-    }
-
-    final result = Product.fromJson(productJson);
-
-    return result;
   }
 
   /// Closes the underlying http client.
