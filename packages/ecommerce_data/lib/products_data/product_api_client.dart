@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dart_style/src/debug.dart';
 import 'package:http/http.dart' as http;
 
 import '../data_constants.dart';
@@ -28,29 +29,38 @@ class ProductApiClient {
 
   /// Fetches all of the products and returns a list of them.
   Future<List<Product>> getAllProducts() async {
-    final productsRequest = Uri.http(Constants.baseUrlStore, _productsEndpoint);
+    try {
+      final productsRequest = Uri.http(
+        Constants.authority,
+        '$_productsEndpoint',
+      );
 
-    final productResponse = await _httpClient.get(productsRequest);
+      final productResponse = await _httpClient.get(productsRequest);
 
-    if (productResponse.statusCode != 200) {
-      throw ProductsRequestFailure();
+      if (productResponse.statusCode != 200) {
+        throw ProductsRequestFailure();
+      }
+
+      final products = jsonDecode(productResponse.body) as List;
+
+      // Iterates through each element in products list and converts the json
+      // elements to a Map<String, dynamic>
+      final result = products.map((e) => Product.fromJson(e)).toList();
+
+      if (result.isEmpty) throw ProductsEmptyFailure();
+
+      return result;
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
     }
-
-    final products = jsonDecode(productResponse.body) as List;
-
-    // Iterates through each element in products list and converts the json
-    // elements to a Map<String, dynamic>
-    final result = products.map((e) => Product.fromJson(e)).toList();
-
-    if (result.isEmpty) throw ProductsEmptyFailure();
-
-    return result;
   }
 
   /// Fetches the product of the given id.
   Future<Product> getProductById({required int id}) async {
     final productRequest =
-        Uri.http(Constants.baseUrlStore, "$_productsEndpoint/$id");
+        Uri.http(Constants.authority, "$_productsEndpoint/$id");
 
     final productResponse = await _httpClient.get(productRequest);
 
