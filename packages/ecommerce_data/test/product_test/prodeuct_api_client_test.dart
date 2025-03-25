@@ -43,7 +43,7 @@ void main() {
         verify(
           () => httpClient.get(
             Uri.http(
-              Constants.baseUrlStore,
+              Constants.authority,
               "api/Products",
             ),
           ),
@@ -108,7 +108,7 @@ void main() {
         verify(
           () => httpClient.get(
             Uri.http(
-              Constants.baseUrlStore,
+              Constants.authority,
               "api/Products/$id",
             ),
           ),

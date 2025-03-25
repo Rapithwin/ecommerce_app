@@ -45,7 +45,7 @@ void main() {
         verify(
           () => httpClient.get(
             Uri.http(
-              Constants.baseUrlStore,
+              Constants.authority,
               "api/Carts/1",
             ),
           ),
@@ -136,7 +136,7 @@ void main() {
         verify(
           () => httpClient.post(
               Uri.http(
-                Constants.baseUrlStore,
+                Constants.authority,
                 "api/Carts",
               ),
               headers: {'Content-Type': 'application/json'},
