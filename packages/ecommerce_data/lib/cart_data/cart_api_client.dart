@@ -23,8 +23,7 @@ class CartApiClient {
 
   /// Fetches the cart and all the items in it.
   Future<Cart> getCart({required String userId}) async {
-    final cartRequest =
-        Uri.http(Constants.baseUrlStore, "$_cartEndpoint/$userId");
+    final cartRequest = Uri.http(Constants.authority, "$_cartEndpoint/$userId");
 
     final cartResponse = await _httpClient.get(cartRequest);
 
@@ -42,7 +41,7 @@ class CartApiClient {
   /// Used to create a cart and add items to a cart.
   Future<Cart> addToCart({required Cart query}) async {
     final cartRequest = Uri.http(
-      Constants.baseUrlStore,
+      Constants.authority,
       _cartEndpoint,
     );
 
