@@ -1,3 +1,3 @@
 class Constants {
-  static const baseUrlStore = "localhost:2020";
+  static const baseUrlStore = "10.0.2.2:2020";
 }
