@@ -1,9 +1,8 @@
 import 'package:e_commerce/products/presentation/cubit/products_cubit.dart';
+import 'package:e_commerce/products/presentation/widgets/widgets.dart';
 import 'package:e_commerce_repository/products_repository/products_repostitory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../widgets/app_bar_widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -26,6 +25,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
+    context.read<ProductsCubit>().fetchProducts();
 
     return Scaffold(
       appBar: AppBar(
@@ -34,36 +34,12 @@ class HomeView extends StatelessWidget {
       ),
       body: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
-          if (state.products.isEmpty) {
-            return Text("empty");
-          }
-          return GridView.builder(
-            itemCount: state.products.length,
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-            ),
-            itemBuilder: (context, index) {
-              return Container(
-                color: Colors.white,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      state.products[index].name,
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: theme.colorScheme.onSurface,
-                      ),
-                    ),
-                    Text(
-                      state.products[index].price.toString(),
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: theme.colorScheme.onSurface,
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          );
+          return switch (state.status) {
+            ProductsStatus.initial => const ProductsLoading(),
+            ProductsStatus.loading => const ProductsLoading(),
+            ProductsStatus.failure => const ProductsFailure(),
+            ProductsStatus.success => ProductsSuccess(products: state.products),
+          };
         },
       ),
     );
