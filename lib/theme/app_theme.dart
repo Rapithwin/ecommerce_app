@@ -18,9 +18,10 @@ class AppTheme {
         onSecondary: AppColors.whiteColor,
         onTertiary: AppColors.blackColor.withAlpha(150),
         brightness: Brightness.light,
-        outline: AppColors.blackColor,
         surface: AppColors.whiteColor,
         onSurface: AppColors.blackColor,
+        outline: AppColors.greyColorDark,
+        outlineVariant: AppColors.greyColorLight,
       ),
       textTheme: GoogleFonts.notoSansArabicTextTheme(),
       textSelectionTheme: TextSelectionThemeData(
@@ -44,9 +45,10 @@ class AppTheme {
           onSecondary: AppColors.blackColor,
           onTertiary: AppColors.whiteColor.withAlpha(150),
           brightness: Brightness.dark,
-          outline: AppColors.whiteColor,
           surface: AppColors.blackColor,
           onSurface: AppColors.whiteColor,
+          outline: AppColors.greyColorLight,
+          outlineVariant: AppColors.greyColorDark,
         ),
         textTheme: GoogleFonts.notoSansArabicTextTheme(),
         textSelectionTheme: TextSelectionThemeData(
