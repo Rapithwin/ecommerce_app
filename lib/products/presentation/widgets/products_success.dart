@@ -12,7 +12,6 @@ class ProductsSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final size = MediaQuery.sizeOf(context);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -20,7 +19,7 @@ class ProductsSuccess extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 13),
         itemCount: products.length,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 250,
+          maxCrossAxisExtent: 200,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
           childAspectRatio: 0.7,
@@ -40,21 +39,24 @@ class ProductsSuccess extends StatelessWidget {
               ),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    height: size.height / 5,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.secondaryContainer,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(7),
+                  Expanded(
+                    flex: 7,
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.secondaryContainer,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(7),
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.image,
+                        size: 120,
                       ),
                     ),
-                    child: Icon(
-                      Icons.image,
-                      size: 120,
-                    ),
                   ),
-                  Expanded(
+                  Flexible(
+                    flex: 2,
                     child: SizedBox(
                       width: 180,
                       child: Center(
@@ -68,7 +70,8 @@ class ProductsSuccess extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
+                  Flexible(
+                    flex: 1,
                     child: Text(
                       products[index].price.toString(),
                       style: theme.textTheme.bodyLarge?.copyWith(

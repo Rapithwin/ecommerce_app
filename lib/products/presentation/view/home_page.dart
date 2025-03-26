@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        toolbarHeight: size.height / 7.5,
+        toolbarHeight: size.height / 7.2,
         actions: AppBarWidgets.appBarActions(size, theme),
       ),
       body: BlocBuilder<ProductsCubit, ProductsState>(
