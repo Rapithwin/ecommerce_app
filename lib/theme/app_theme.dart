@@ -21,7 +21,7 @@ class AppTheme {
         surface: AppColors.whiteColor,
         onSurface: AppColors.blackColor,
         outline: AppColors.greyColorDark,
-        outlineVariant: AppColors.greyColorLight,
+        outlineVariant: AppColors.greyColorDark,
       ),
       textTheme: GoogleFonts.notoSansArabicTextTheme(),
       textSelectionTheme: TextSelectionThemeData(
@@ -47,7 +47,7 @@ class AppTheme {
           brightness: Brightness.dark,
           surface: AppColors.blackColor,
           onSurface: AppColors.whiteColor,
-          outline: AppColors.greyColorLight,
+          outline: AppColors.greyColorDark,
           outlineVariant: AppColors.greyColorDark,
         ),
         textTheme: GoogleFonts.notoSansArabicTextTheme(),
