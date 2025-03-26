@@ -16,13 +16,24 @@ class ProductsSuccess extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: GridView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 13),
         itemCount: products.length,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 250,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: 0.7,
         ),
         itemBuilder: (context, index) {
           return Container(
-            color: Colors.transparent,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(
+                color: theme.colorScheme.outline,
+                width: 3,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: Column(
               children: <Widget>[
                 Icon(
