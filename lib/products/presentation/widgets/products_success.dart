@@ -25,44 +25,48 @@ class ProductsSuccess extends StatelessWidget {
           childAspectRatio: 0.7,
         ),
         itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(
-                color: theme.colorScheme.outline,
-                width: 3,
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              children: <Widget>[
-                Icon(
-                  Icons.image,
-                  size: 120,
+          return InkWell(
+            borderRadius: BorderRadius.circular(10),
+            onTap: () {},
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                border: Border.all(
+                  color: theme.colorScheme.outline,
+                  width: 3,
                 ),
-                Expanded(
-                  child: SizedBox(
-                    width: 180,
-                    child: Center(
-                      child: Text(
-                        products[index].name,
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: theme.colorScheme.onSurface,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Icon(
+                    Icons.image,
+                    size: 120,
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      width: 180,
+                      child: Center(
+                        child: Text(
+                          products[index].name,
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            color: theme.colorScheme.onSurface,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Text(
-                    products[index].price.toString(),
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.onSurface,
+                  Expanded(
+                    child: Text(
+                      products[index].price.toString(),
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           );
         },
