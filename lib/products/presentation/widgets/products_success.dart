@@ -12,6 +12,7 @@ class ProductsSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final size = MediaQuery.sizeOf(context);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -39,9 +40,19 @@ class ProductsSuccess extends StatelessWidget {
               ),
               child: Column(
                 children: <Widget>[
-                  Icon(
-                    Icons.image,
-                    size: 120,
+                  Container(
+                    height: size.height / 5,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.secondaryContainer,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(7),
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.image,
+                      size: 120,
+                    ),
                   ),
                   Expanded(
                     child: SizedBox(
