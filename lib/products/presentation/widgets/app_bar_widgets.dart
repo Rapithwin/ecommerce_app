@@ -22,29 +22,31 @@ class AppBarWidgets {
               ),
             ),
           ),
-          SizedBox(
-            width: size.width - 30,
-            height: size.height / 18,
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: SearchBar(
-                backgroundColor: WidgetStatePropertyAll(
-                    theme.colorScheme.surfaceContainerHighest),
-                shadowColor: WidgetStatePropertyAll(Colors.transparent),
-                leading: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.search),
-                  splashRadius: 1,
-                ),
-                hintText: "جستجو...",
-                hintStyle: WidgetStatePropertyAll(
-                  theme.textTheme.labelLarge?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
+          Flexible(
+            child: SizedBox(
+              width: size.width - 30,
+              height: size.height / 19,
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: SearchBar(
+                  backgroundColor: WidgetStatePropertyAll(
+                      theme.colorScheme.surfaceContainerHighest),
+                  shadowColor: WidgetStatePropertyAll(Colors.transparent),
+                  leading: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.search),
+                    splashRadius: 1,
                   ),
-                ),
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                  hintText: "جستجو...",
+                  hintStyle: WidgetStatePropertyAll(
+                    theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                 ),
               ),
