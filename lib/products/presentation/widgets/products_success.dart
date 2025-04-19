@@ -1,3 +1,4 @@
+import 'package:e_commerce/products/presentation/view/product_details.dart';
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,12 @@ class ProductsSuccess extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             borderRadius: BorderRadius.circular(10),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                ProductDetails.route(products[index]),
+              );
+            },
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.transparent,
