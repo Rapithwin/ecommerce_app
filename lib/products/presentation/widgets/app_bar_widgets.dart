@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppBarWidgets {
   static List<Widget> appBarActions(Size size, ThemeData theme) {
+    final sreachBarController = SearchController();
     return [
       Column(
         spacing: 10,
@@ -29,6 +30,10 @@ class AppBarWidgets {
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: SearchBar(
+                  onTapOutside: (event) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  controller: sreachBarController,
                   backgroundColor: WidgetStatePropertyAll(
                       theme.colorScheme.surfaceContainerHighest),
                   shadowColor: WidgetStatePropertyAll(Colors.transparent),
