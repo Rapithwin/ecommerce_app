@@ -17,7 +17,19 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 4.0),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.favorite_border),
+              selectedIcon: Icon(Icons.favorite),
+              iconSize: 30,
+            ),
+          )
+        ],
+      ),
       body: Center(
         child: Text(product.name),
       ),
