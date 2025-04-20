@@ -1,9 +1,9 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key, required this.product});
+  ProductDetails({super.key, required this.product});
 
   final Product product;
 
@@ -15,9 +15,18 @@ class ProductDetails extends StatelessWidget {
     );
   }
 
+  final List<String> testNetworkImg = [
+    "https://static.owayo-cdn.com/newhp/img/productHome/productSeitenansicht/productservice/tshirts_classic_herren_basic_productservice/tshirt_basic_4.jpg",
+    "https://static.owayo-cdn.com/newhp/img/productHome/productSeitenansicht/productservice/tshirts_classic_herren_basic_productservice/st2020_gyh.png",
+    "https://static.owayo-cdn.com/newhp/img/productHome/productSeitenansicht/productservice/tshirts_classic_herren_basic_productservice/st2020_whi.png",
+  ];
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final Size size = MediaQuery.sizeOf(context);
+
+    final PageController _pageController = PageController();
 
     return Scaffold(
       appBar: AppBar(
@@ -36,11 +45,28 @@ class ProductDetails extends StatelessWidget {
       body: Center(
         child: Column(
           children: <Widget>[
-            CarouselSlider.builder(
-              itemCount: 3,
-              itemBuilder: imageBuilder,
-              options: CarouselOptions(
-                viewportFraction: 1,
+            SizedBox(
+              height: size.height / 3,
+              child: PageView.builder(
+                itemCount: testNetworkImg.length,
+                reverse: true,
+                itemBuilder: imageBuilder,
+                controller: _pageController,
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            SmoothPageIndicator(
+              textDirection: TextDirection.rtl,
+              controller: _pageController,
+              count: testNetworkImg.length,
+              effect: ExpandingDotsEffect(
+                dotHeight: 10.0,
+                dotWidth: 10.0,
+                expansionFactor: 2,
+                activeDotColor: theme.colorScheme.secondary,
+                dotColor: theme.colorScheme.onSurface.withAlpha(60),
               ),
             )
           ],
@@ -52,19 +78,10 @@ class ProductDetails extends StatelessWidget {
   Widget imageBuilder(
     BuildContext context,
     int index,
-    int realIndex,
   ) {
-    final ThemeData theme = Theme.of(context);
-    final Size size = MediaQuery.sizeOf(context);
-
-    final List<String> testNetworkImg = [
-      "https://www.mountaingoatsoftware.com/uploads/blog/2016-09-06-what-is-a-product.png",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9YL_gULeR_w6Vus30JxsM0lGuiHFHmJKG5Q&s",
-      "https://media.istockphoto.com/id/1193723594/photo/fujiyoshida-japan-at-chureito-pagoda-and-mt-fuji-in-the-spring-with-cherry-blossoms.jpg?s=612x612&w=0&k=20&c=O5Oy6Bxa7rJs6eqVu4h85OxDd-yBnUVfJ_cAyt5P6iY=",
-    ];
-
     return Image(
       image: NetworkImage(testNetworkImg[index]),
+      fit: BoxFit.fitHeight,
     );
   }
 }
