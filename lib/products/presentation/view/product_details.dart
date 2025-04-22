@@ -26,7 +26,7 @@ class ProductDetails extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final Size size = MediaQuery.sizeOf(context);
 
-    final PageController _pageController = PageController();
+    final PageController pageController = PageController();
 
     return Scaffold(
       appBar: AppBar(
@@ -51,7 +51,7 @@ class ProductDetails extends StatelessWidget {
                 itemCount: testNetworkImg.length,
                 reverse: true,
                 itemBuilder: imageBuilder,
-                controller: _pageController,
+                controller: pageController,
               ),
             ),
             SizedBox(
@@ -59,7 +59,7 @@ class ProductDetails extends StatelessWidget {
             ),
             SmoothPageIndicator(
               textDirection: TextDirection.rtl,
-              controller: _pageController,
+              controller: pageController,
               count: testNetworkImg.length,
               effect: ExpandingDotsEffect(
                 dotHeight: 10.0,
