@@ -29,6 +29,45 @@ class ProductDetails extends StatelessWidget {
     final PageController pageController = PageController();
 
     return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        shadowColor: theme.colorScheme.shadow,
+        elevation: 11,
+        color: theme.colorScheme.surfaceContainer,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 20,
+          children: <Widget>[
+            Text(
+              "\$${product.price.toString()}000000",
+              style: theme.textTheme.headlineLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Flexible(
+              child: SizedBox(
+                width: size.width / 1.6,
+                height: size.height / 10,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: theme.colorScheme.secondary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    "افزودن به سبد خرید",
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onSecondary,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
         actions: [
           Padding(
