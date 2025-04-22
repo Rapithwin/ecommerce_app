@@ -22,6 +22,7 @@ dependencies:
   shared_preferences: ^2.5.2
   google_fonts: ^6.2.1
   smooth_page_indicator: ^1.2.1
+  persian_number_utility: ^1.1.6
 
 
 dev_dependencies:

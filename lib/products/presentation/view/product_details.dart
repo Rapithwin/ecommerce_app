@@ -1,5 +1,6 @@
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -27,7 +28,7 @@ class ProductDetails extends StatelessWidget {
     final Size size = MediaQuery.sizeOf(context);
 
     final PageController pageController = PageController();
-
+    final convertedPrice = product.price.toString().seRagham().toPersianDigit();
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         shadowColor: theme.colorScheme.shadow,
@@ -38,8 +39,9 @@ class ProductDetails extends StatelessWidget {
           spacing: 20,
           children: <Widget>[
             Text(
-              "\$${product.price.toString()}000000",
-              style: theme.textTheme.headlineLarge?.copyWith(
+              textDirection: TextDirection.rtl,
+              "$convertedPrice تومان",
+              style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
