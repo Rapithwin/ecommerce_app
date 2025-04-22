@@ -30,6 +30,7 @@ class ProductDetails extends StatelessWidget {
     final PageController pageController = PageController();
     final convertedPrice = product.price.toString().seRagham().toPersianDigit();
     return Scaffold(
+      backgroundColor: theme.colorScheme.surfaceBright,
       bottomNavigationBar: BottomAppBar(
         shadowColor: theme.colorScheme.shadow,
         elevation: 11,
@@ -43,6 +44,7 @@ class ProductDetails extends StatelessWidget {
               "$convertedPrice تومان",
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
+                color: theme.colorScheme.onSurface,
               ),
             ),
             Flexible(
@@ -108,6 +110,53 @@ class ProductDetails extends StatelessWidget {
                 expansionFactor: 2,
                 activeDotColor: theme.colorScheme.secondary,
                 dotColor: theme.colorScheme.onSurface.withAlpha(60),
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      height: 35,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: theme.colorScheme.tertiary,
+                      ),
+                      child: Center(
+                        child: Text(
+                          "${"1111".toPersianDigit()} نظر",
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: theme.colorScheme.onTertiary,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "4.3",
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            color: Colors.orange,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          Icons.star,
+                          color: Colors.orange,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             )
           ],
