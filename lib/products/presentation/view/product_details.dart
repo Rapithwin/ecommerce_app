@@ -89,8 +89,8 @@ class ProductDetails extends StatelessWidget {
           )
         ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Center(
           child: Column(
             children: <Widget>[
               SizedBox(
@@ -146,6 +146,7 @@ class ProductDetails extends StatelessWidget {
                     color: Colors.transparent,
                     textStyle: theme.textTheme.bodyLarge?.copyWith(
                       color: theme.colorScheme.onSurface,
+                      wordSpacing: 0.4,
                     ),
                     child: ReadMoreText(
                       product.description,
