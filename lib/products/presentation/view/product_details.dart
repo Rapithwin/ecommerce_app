@@ -82,8 +82,16 @@ class ProductDetails extends StatelessWidget {
             padding: const EdgeInsets.only(right: 4.0),
             child: IconButton(
               onPressed: () {},
-              icon: Icon(Icons.favorite_border),
-              selectedIcon: Icon(Icons.favorite),
+              icon: Image.asset(
+                "assets/images/icons/heart-outlined.png",
+                height: 40,
+                width: 40,
+              ),
+              selectedIcon: Image.asset(
+                "assets/images/icons/heart-filled.png",
+                height: 40,
+                width: 40,
+              ),
               iconSize: 30,
             ),
           )
