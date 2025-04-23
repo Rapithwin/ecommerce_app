@@ -1,6 +1,7 @@
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -89,37 +90,82 @@ class ProductDetails extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: size.height / 3,
-              child: PageView.builder(
-                itemCount: testNetworkImg.length,
-                reverse: true,
-                itemBuilder: imageBuilder,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: size.height / 3,
+                child: PageView.builder(
+                  itemCount: testNetworkImg.length,
+                  reverse: true,
+                  itemBuilder: imageBuilder,
+                  controller: pageController,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              SmoothPageIndicator(
+                textDirection: TextDirection.rtl,
                 controller: pageController,
+                count: testNetworkImg.length,
+                effect: ExpandingDotsEffect(
+                  dotHeight: 10.0,
+                  dotWidth: 10.0,
+                  expansionFactor: 2,
+                  activeDotColor: theme.colorScheme.secondary,
+                  dotColor: theme.colorScheme.onSurface.withAlpha(60),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 12,
-            ),
-            SmoothPageIndicator(
-              textDirection: TextDirection.rtl,
-              controller: pageController,
-              count: testNetworkImg.length,
-              effect: ExpandingDotsEffect(
-                dotHeight: 10.0,
-                dotWidth: 10.0,
-                expansionFactor: 2,
-                activeDotColor: theme.colorScheme.secondary,
-                dotColor: theme.colorScheme.onSurface.withAlpha(60),
+              SizedBox(
+                height: 30,
               ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            UserRatings(theme: theme)
-          ],
+              UserRatings(theme: theme),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    product.name,
+                    style: theme.textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                    textDirection: TextDirection.rtl,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Material(
+                    color: Colors.transparent,
+                    textStyle: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                    ),
+                    child: ReadMoreText(
+                      product.description,
+                      trimCollapsedText: "بیشتر",
+                      trimExpandedText: "بستن",
+                      trimLength: 450,
+                      moreStyle: theme.textTheme.labelLarge?.copyWith(
+                        color: theme.colorScheme.tertiaryFixed,
+                      ),
+                      lessStyle: theme.textTheme.labelLarge?.copyWith(
+                        color: theme.colorScheme.tertiaryFixed,
+                      ),
+                      textDirection: TextDirection.rtl,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
