@@ -118,50 +118,7 @@ class ProductDetails extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Directionality(
-              textDirection: TextDirection.rtl,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      height: 35,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: theme.colorScheme.tertiary,
-                      ),
-                      child: Center(
-                        child: Text(
-                          "${"1111".toPersianDigit()} نظر",
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            color: theme.colorScheme.onTertiary,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "4.3",
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            color: Colors.orange,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: Colors.orange,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            )
+            UserRatings(theme: theme)
           ],
         ),
       ),
@@ -175,6 +132,63 @@ class ProductDetails extends StatelessWidget {
     return Image(
       image: NetworkImage(testNetworkImg[index]),
       fit: BoxFit.fitHeight,
+    );
+  }
+}
+
+class UserRatings extends StatelessWidget {
+  const UserRatings({
+    super.key,
+    required this.theme,
+  });
+
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              height: 35,
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: theme.colorScheme.tertiary,
+              ),
+              child: Center(
+                child: Text(
+                  "${"1111".toPersianDigit()} نظر",
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.onTertiary,
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Text(
+                  "4.3",
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: Colors.orange,
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.orange,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
