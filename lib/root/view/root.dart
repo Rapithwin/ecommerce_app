@@ -56,11 +56,11 @@ class RootView extends StatelessWidget {
               groupValue: selectedTab,
               value: RootTab.catalog,
               icon: Image.asset(
-                "assets/images/bottom_navbar/product-outlined.png",
+                "assets/images/icons/heart-outlined.png",
                 color: theme.colorScheme.secondary,
               ),
               selectedIcon: Image.asset(
-                "assets/images/bottom_navbar/product-filled.png",
+                "assets/images/icons/heart-filled.png",
                 color: theme.colorScheme.secondary,
               ),
             ),
