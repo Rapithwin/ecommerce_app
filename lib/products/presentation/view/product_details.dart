@@ -53,15 +53,7 @@ class ProductDetails extends StatelessWidget {
                 width: size.width / 1.6,
                 height: size.height / 10,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      side: BorderSide(
-                        color: theme.colorScheme.outline.withAlpha(200),
-                        width: 2,
-                      ),
-                    ),
-                  ),
+                  style: theme.elevatedButtonTheme.style,
                   onPressed: () {},
                   child: Text(
                     "افزودن به سبد خرید",
