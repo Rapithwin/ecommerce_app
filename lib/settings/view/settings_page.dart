@@ -23,6 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final themeMode = context.read<ThemeCubit>().state.themeMode;
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(),
@@ -38,38 +39,32 @@ class _SettingsPageState extends State<SettingsPage> {
         panel: ThemeRadioList(),
         body: ListView(
           children: [
-            Divider(
-              height: 1,
-            ),
             CustomSettingsOption(
+              icon: themeMode.toIcon(),
               theme: theme,
               onTap: () {
                 _panelController.open();
               },
               title: "حالت نمایش",
             ),
-            Divider(
-              height: 1,
-            ),
             CustomSettingsOption(
+              icon: "assets/images/settings_page/question_mark.png",
               theme: theme,
               onTap: () {},
               title: "سوالات متداول",
             ),
-            Divider(
-              height: 1,
-            ),
             CustomSettingsOption(
+              icon: "assets/images/settings_page/phone.png",
               theme: theme,
               onTap: () {},
               title: "تماس با ما",
             ),
-            Divider(
-              height: 1,
+            CustomSettingsOption(
+              icon: "assets/images/settings_page/notification.png",
+              theme: theme,
+              onTap: () {},
+              title: "اعلان‌ها",
             ),
-            Container(
-              height: 50,
-            )
           ],
         ),
       ),
@@ -83,40 +78,64 @@ class CustomSettingsOption extends StatelessWidget {
     required this.theme,
     required this.title,
     required this.onTap,
+    required this.icon,
   });
 
   final ThemeData theme;
   final String title;
   final VoidCallback onTap;
+  final String icon;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: SizedBox(
-        height: 60,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            textDirection: TextDirection.rtl,
-            children: [
-              Text(
-                title,
-                style: theme.textTheme.labelLarge?.copyWith(
-                  color: theme.colorScheme.onSurface,
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: [
+          InkWell(
+            onTap: onTap,
+            child: SizedBox(
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                textDirection: TextDirection.rtl,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        title,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onSurface,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Image.asset(
+                        icon,
+                        color: theme.colorScheme.onSurface,
+                        width: 35,
+                        height: 35,
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      size: 21,
+                    ),
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 11.0),
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  size: 21,
-                ),
-              )
-            ],
+            ),
           ),
-        ),
+          Divider(
+            height: 1,
+            color: theme.colorScheme.outlineVariant,
+          ),
+        ],
       ),
     );
   }
@@ -162,6 +181,17 @@ extension on ThemeMode {
         return "تاریک";
       case ThemeMode.light:
         return "روشن";
+    }
+  }
+
+  String toIcon() {
+    switch (this) {
+      case ThemeMode.system:
+        return "assets/images/settings_page/system.png";
+      case ThemeMode.dark:
+        return "assets/images/settings_page/dark.png";
+      case ThemeMode.light:
+        return "assets/images/settings_page/light.png";
     }
   }
 }
