@@ -1,4 +1,3 @@
-import 'package:e_commerce/settings/view/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class AppBarWidgets {
