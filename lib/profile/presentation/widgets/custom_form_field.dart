@@ -67,10 +67,10 @@ class CustomFormField extends StatelessWidget {
                 color: theme.colorScheme.outlineVariant,
                 width: 1.0,
               ),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(14),
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(14),
             ),
           ),
         ),
