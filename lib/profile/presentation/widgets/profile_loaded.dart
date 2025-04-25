@@ -1,3 +1,4 @@
+import 'package:e_commerce/orders/presentation/view/orders_page.dart';
 import 'package:e_commerce/settings/view/settings_page.dart';
 import 'package:e_commerce/settings/widgets/custom_options.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,10 @@ class ProfileLoaded extends StatelessWidget {
         CustomSettingsOption(
           theme: theme,
           title: "سفارش‌ها",
-          onTap: () {},
+          onTap: () => Navigator.push(
+            context,
+            OrdersPage.route(),
+          ),
           icon: "assets/images/profile_page/orders.png",
         ),
         CustomSettingsOption(
