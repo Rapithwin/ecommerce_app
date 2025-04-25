@@ -1,3 +1,5 @@
+import 'package:e_commerce/settings/view/settings_page.dart';
+import 'package:e_commerce/settings/widgets/custom_options.dart';
 import 'package:flutter/material.dart';
 
 class ProfileLoaded extends StatelessWidget {
@@ -67,6 +69,21 @@ class ProfileLoaded extends StatelessWidget {
               ),
             ),
           ),
+        ),
+        CustomSettingsOption(
+          theme: theme,
+          title: "سفارش‌ها",
+          onTap: () {},
+          icon: "assets/images/profile_page/orders.png",
+        ),
+        CustomSettingsOption(
+          theme: theme,
+          title: "تنظیمات",
+          onTap: () => Navigator.push(
+            context,
+            SettingsPage.route(),
+          ),
+          icon: "assets/images/profile_page/settings.png",
         ),
       ],
     );

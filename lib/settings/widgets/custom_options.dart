@@ -16,13 +16,13 @@ class CustomSettingsOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        children: [
-          InkWell(
-            onTap: onTap,
-            child: SizedBox(
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            SizedBox(
               height: 60,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,12 +58,12 @@ class CustomSettingsOption extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          Divider(
-            height: 1,
-            color: theme.colorScheme.outlineVariant,
-          ),
-        ],
+            Divider(
+              height: 1,
+              color: theme.colorScheme.outlineVariant,
+            ),
+          ],
+        ),
       ),
     );
   }

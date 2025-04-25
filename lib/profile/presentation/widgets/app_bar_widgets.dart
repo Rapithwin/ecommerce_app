@@ -13,19 +13,8 @@ class AppBarWidgets {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.push(context, SettingsPage.route());
-                },
-                icon: Image.asset(
-                  "assets/images/profile_page/settings.png",
-                  color: theme.colorScheme.secondary,
-                  height: 40,
-                  width: 40,
-                ),
-              ),
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
