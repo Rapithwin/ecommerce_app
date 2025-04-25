@@ -1,4 +1,5 @@
 import 'package:e_commerce/orders/presentation/view/orders_page.dart';
+import 'package:e_commerce/profile/presentation/view/edit_details.dart';
 import 'package:e_commerce/settings/view/settings_page.dart';
 import 'package:e_commerce/settings/widgets/custom_options.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,10 @@ class ProfileLoaded extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           margin: EdgeInsets.all(15.0),
           child: InkWell(
-            onTap: () {},
+            onTap: () => Navigator.push(
+              context,
+              EditDetailsPage.route(),
+            ),
             child: SizedBox(
               width: size.width,
               height: size.height / 5,
