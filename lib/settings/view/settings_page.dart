@@ -41,35 +41,12 @@ class _SettingsPageState extends State<SettingsPage> {
             Divider(
               height: 1,
             ),
-            InkWell(
+            CustomSettingsOption(
+              theme: theme,
               onTap: () {
                 _panelController.open();
               },
-              child: SizedBox(
-                height: 60,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    textDirection: TextDirection.rtl,
-                    children: [
-                      Text(
-                        "حالت نمایش",
-                        style: theme.textTheme.labelLarge?.copyWith(
-                          color: theme.colorScheme.onSurface,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 11.0),
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          size: 21,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              title: "حالت نمایش",
             ),
             Divider(
               height: 1,
@@ -78,6 +55,51 @@ class _SettingsPageState extends State<SettingsPage> {
               height: 50,
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomSettingsOption extends StatelessWidget {
+  const CustomSettingsOption({
+    super.key,
+    required this.theme,
+    required this.title,
+    required this.onTap,
+  });
+
+  final ThemeData theme;
+  final String title;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        height: 60,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            textDirection: TextDirection.rtl,
+            children: [
+              Text(
+                title,
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 11.0),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  size: 21,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
