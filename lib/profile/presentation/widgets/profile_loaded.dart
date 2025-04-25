@@ -38,12 +38,12 @@ class ProfileLoaded extends StatelessWidget {
               height: size.height / 5,
               child: Padding(
                 padding: const EdgeInsets.only(
-                  top: 8.0,
                   right: 15.0,
                   left: 12.0,
                 ),
                 child: Column(
                   textDirection: TextDirection.rtl,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
