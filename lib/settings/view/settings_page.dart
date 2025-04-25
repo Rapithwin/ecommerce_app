@@ -51,6 +51,22 @@ class _SettingsPageState extends State<SettingsPage> {
             Divider(
               height: 1,
             ),
+            CustomSettingsOption(
+              theme: theme,
+              onTap: () {},
+              title: "سوالات متداول",
+            ),
+            Divider(
+              height: 1,
+            ),
+            CustomSettingsOption(
+              theme: theme,
+              onTap: () {},
+              title: "تماس با ما",
+            ),
+            Divider(
+              height: 1,
+            ),
             Container(
               height: 50,
             )
