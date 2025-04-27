@@ -1,3 +1,4 @@
+import 'package:e_commerce/profile/presentation/widgets/app_bar_widgets.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatelessWidget {
@@ -5,6 +6,18 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("cart"));
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.surfaceContainerLow,
+        actions: AppBarWidgets.appBarActions(
+          size,
+          theme,
+          context,
+          title: "سبد خرید",
+        ),
+      ),
+    );
   }
 }
