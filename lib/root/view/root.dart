@@ -37,6 +37,7 @@ class RootView extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
+        color: theme.colorScheme.surfaceContainerLow,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

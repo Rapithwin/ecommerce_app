@@ -35,7 +35,7 @@ class ProductDetails extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         shadowColor: theme.colorScheme.shadow,
         elevation: 11,
-        color: theme.colorScheme.surfaceContainer,
+        color: theme.colorScheme.surfaceContainerLowest,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 20,
@@ -69,6 +69,7 @@ class ProductDetails extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
+        backgroundColor: theme.colorScheme.surfaceContainerHighest,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 4.0),

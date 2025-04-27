@@ -23,12 +23,17 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
     final ThemeData theme = Theme.of(context);
     final Size size = MediaQuery.sizeOf(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.surfaceContainerLow,
+      ),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: 5,
+              ),
               CustomFormField(
                 labelName: "نام",
                 textDirection: TextDirection.rtl,

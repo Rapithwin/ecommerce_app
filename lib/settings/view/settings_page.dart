@@ -27,7 +27,9 @@ class _SettingsPageState extends State<SettingsPage> {
     final themeMode = context.read<ThemeCubit>().state.themeMode;
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.surfaceContainerLow,
+      ),
       body: SlidingUpPanel(
         controller: _panelController,
         defaultPanelState: PanelState.CLOSED,

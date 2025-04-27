@@ -32,6 +32,7 @@ class HomeView extends StatelessWidget {
         scrolledUnderElevation: 0,
         toolbarHeight: size.height / 7.2,
         actions: AppBarWidgets.appBarActions(size, theme),
+        backgroundColor: theme.colorScheme.surfaceContainerLow,
       ),
       body: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
