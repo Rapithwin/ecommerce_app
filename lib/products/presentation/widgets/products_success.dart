@@ -40,7 +40,7 @@ class ProductsSuccess extends StatelessWidget {
                   color: Colors.transparent,
                   border: Border.all(
                     color: theme.colorScheme.outline,
-                    width: 3,
+                    width: 1.2,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),

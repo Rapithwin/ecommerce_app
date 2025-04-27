@@ -35,7 +35,7 @@ class ProductDetails extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         shadowColor: theme.colorScheme.shadow,
         elevation: 11,
-        color: theme.colorScheme.surfaceContainerLowest,
+        color: theme.colorScheme.surfaceContainerLow,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 20,
@@ -69,7 +69,7 @@ class ProductDetails extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: theme.colorScheme.surfaceContainerHighest,
+        backgroundColor: theme.colorScheme.surfaceContainerLow,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 4.0),
@@ -96,6 +96,9 @@ class ProductDetails extends StatelessWidget {
         child: Center(
           child: Column(
             children: <Widget>[
+              const SizedBox(
+                height: 10,
+              ),
               SizedBox(
                 height: size.height / 3,
                 child: PageView.builder(
@@ -105,7 +108,7 @@ class ProductDetails extends StatelessWidget {
                   controller: pageController,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               SmoothPageIndicator(
@@ -120,11 +123,11 @@ class ProductDetails extends StatelessWidget {
                   dotColor: theme.colorScheme.onSurface.withAlpha(60),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               UserRatings(theme: theme),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Padding(
@@ -157,10 +160,10 @@ class ProductDetails extends StatelessWidget {
                       trimExpandedText: "بستن",
                       trimLength: 450,
                       moreStyle: theme.textTheme.labelLarge?.copyWith(
-                        color: theme.colorScheme.tertiaryFixed,
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                       lessStyle: theme.textTheme.labelLarge?.copyWith(
-                        color: theme.colorScheme.tertiaryFixed,
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.justify,
@@ -208,13 +211,13 @@ class UserRatings extends StatelessWidget {
               width: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
-                color: theme.colorScheme.tertiary,
+                color: theme.colorScheme.secondaryContainer,
               ),
               child: Center(
                 child: Text(
                   "${"1111".toPersianDigit()} نظر",
                   style: theme.textTheme.labelLarge?.copyWith(
-                    color: theme.colorScheme.onTertiary,
+                    color: theme.colorScheme.onSecondaryContainer,
                   ),
                 ),
               ),
