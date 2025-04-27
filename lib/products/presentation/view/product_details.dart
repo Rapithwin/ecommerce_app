@@ -78,11 +78,13 @@ class ProductDetails extends StatelessWidget {
                 "assets/images/icons/heart-outlined.png",
                 height: 40,
                 width: 40,
+                color: theme.colorScheme.onSurface,
               ),
               selectedIcon: Image.asset(
                 "assets/images/icons/heart-filled.png",
                 height: 40,
                 width: 40,
+                color: theme.colorScheme.onSurface,
               ),
               iconSize: 30,
             ),
