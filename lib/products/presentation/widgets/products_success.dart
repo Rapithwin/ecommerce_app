@@ -21,7 +21,6 @@ class ProductsSuccess extends StatelessWidget {
         itemCount: products.length,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
-          mainAxisSpacing: 10,
           crossAxisSpacing: 10,
           childAspectRatio: 0.7,
         ),
@@ -35,6 +34,7 @@ class ProductsSuccess extends StatelessWidget {
               );
             },
             child: Container(
+              margin: EdgeInsets.only(top: 5, bottom: 5),
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 border: Border.all(
@@ -50,7 +50,7 @@ class ProductsSuccess extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.secondaryContainer,
+                        // color: theme.colorScheme.secondaryContainer,
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(7),
                         ),
@@ -60,6 +60,11 @@ class ProductsSuccess extends StatelessWidget {
                         size: 120,
                       ),
                     ),
+                  ),
+                  Divider(
+                    height: 0,
+                    thickness: 0.5,
+                    color: theme.colorScheme.outlineVariant,
                   ),
                   Flexible(
                     flex: 2,
