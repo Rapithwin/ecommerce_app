@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 class AppBarWidgets {
   static List<Widget> appBarActions(
-    Size size,
-    ThemeData theme,
-    BuildContext context,
-  ) {
+      Size size, ThemeData theme, BuildContext context,
+      {String? title}) {
     return [
       SizedBox(
         width: size.width,
@@ -17,7 +15,7 @@ class AppBarWidgets {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  "پروفایل",
+                  title ?? "",
                   textDirection: TextDirection.rtl,
                   style: theme.textTheme.headlineLarge?.copyWith(
                     color: theme.colorScheme.onSurface,

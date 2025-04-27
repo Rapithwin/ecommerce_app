@@ -14,6 +14,7 @@ class ProfilePage extends StatelessWidget {
         actions: AppBarWidgets.appBarActions(
           size,
           theme,
+          title: "پروفایل",
           context,
         ),
       ),
