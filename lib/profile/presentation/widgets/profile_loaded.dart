@@ -26,7 +26,6 @@ class ProfileLoaded extends StatelessWidget {
     final Size size = MediaQuery.sizeOf(context);
     return Column(
       children: <Widget>[
-        //
         Card(
           color: theme.colorScheme.surfaceBright.withAlpha(180),
           clipBehavior: Clip.hardEdge,
