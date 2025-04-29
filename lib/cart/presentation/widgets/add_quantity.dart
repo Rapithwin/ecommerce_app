@@ -42,11 +42,16 @@ class _AddQuantityState extends State<AddQuantity> {
               },
             );
           },
-          splashRadius: 10,
           icon: const Icon(Icons.remove),
         ),
-        SizedBox(
-          width: widget.iconSize,
+        Container(
+          width: widget.iconSize + 10,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+              color: theme.colorScheme.outlineVariant,
+            ),
+          ),
           child: Text(
             value.toString(),
             textAlign: TextAlign.center,
@@ -65,7 +70,6 @@ class _AddQuantityState extends State<AddQuantity> {
               },
             );
           },
-          splashRadius: 10,
           icon: const Icon(Icons.add),
         ),
       ],
