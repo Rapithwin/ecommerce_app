@@ -16,7 +16,38 @@ class EditDetailsPage extends StatefulWidget {
 
 class _EditDetailsPageState extends State<EditDetailsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController controller = TextEditingController();
+
+  late TextEditingController _firstNameController,
+      _lastNameController,
+      _usernameController,
+      _emailController,
+      _phoneController,
+      _postCodeController,
+      _addressController;
+
+  @override
+  void initState() {
+    super.initState();
+    _firstNameController = TextEditingController();
+    _lastNameController = TextEditingController();
+    _usernameController = TextEditingController();
+    _emailController = TextEditingController();
+    _phoneController = TextEditingController();
+    _postCodeController = TextEditingController();
+    _addressController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _addressController.dispose();
+    _postCodeController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    _usernameController.dispose();
+    _lastNameController.dispose();
+    _firstNameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +69,21 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                 labelName: "نام",
                 textDirection: TextDirection.rtl,
                 inputAction: TextInputAction.next,
-                controller: controller,
+                controller: _firstNameController,
                 theme: theme,
               ),
               CustomFormField(
                 labelName: "نام خانوادگی",
                 textDirection: TextDirection.rtl,
                 inputAction: TextInputAction.next,
-                controller: controller,
+                controller: _lastNameController,
                 theme: theme,
               ),
               CustomFormField(
                 labelName: "نام کاربری",
                 textDirection: TextDirection.ltr,
                 inputAction: TextInputAction.next,
-                controller: controller,
+                controller: _usernameController,
                 theme: theme,
               ),
               CustomFormField(
@@ -60,7 +91,7 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                 textDirection: TextDirection.ltr,
                 inputAction: TextInputAction.next,
                 keyboardType: TextInputType.emailAddress,
-                controller: controller,
+                controller: _emailController,
                 theme: theme,
               ),
               CustomFormField(
@@ -68,7 +99,7 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                 textDirection: TextDirection.ltr,
                 inputAction: TextInputAction.next,
                 keyboardType: TextInputType.phone,
-                controller: controller,
+                controller: _phoneController,
                 theme: theme,
               ),
               CustomFormField(
@@ -76,7 +107,7 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                 textDirection: TextDirection.ltr,
                 inputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
-                controller: controller,
+                controller: _postCodeController,
                 theme: theme,
               ),
               CustomFormField(
@@ -84,7 +115,7 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                 textDirection: TextDirection.rtl,
                 inputAction: TextInputAction.done,
                 keyboardType: TextInputType.text,
-                controller: controller,
+                controller: _addressController,
                 theme: theme,
               ),
               Container(
