@@ -1,3 +1,4 @@
+import 'package:e_commerce/cart/presentation/widgets/widgets.dart';
 import 'package:e_commerce/profile/presentation/widgets/app_bar_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class CartPage extends StatelessWidget {
           title: "سبد خرید",
         ),
       ),
+      body: CartLoaded(),
     );
   }
 }
