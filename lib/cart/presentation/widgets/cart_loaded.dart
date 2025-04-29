@@ -13,79 +13,77 @@ class CartLoaded extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: size.height / 6,
-            width: size.width,
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceContainerHigh,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10.0),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 600,
               ),
-              border: Border.all(
-                color: theme.colorScheme.outline,
-              ),
-            ),
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      AddQuantity(
-                        minNumber: 0,
-                        maxNumber: 20,
-                        iconSize: 17,
-                        value: 2,
-                        valueChanged: (quantity) {},
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                          overlayColor: WidgetStateProperty.all(
-                            theme.colorScheme.outlineVariant,
+              child: Container(
+                height: size.height / 8,
+                // width: size.width,
+
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surfaceContainerHigh,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                  border: Border.all(
+                    color: theme.colorScheme.outline,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 3,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Text(
+                            " تتسیبنشیبت یشس بشینبت ش شیمحصول فلایبلسیبل سیبل سب لسیب لسیبل سیبل سیبل بیشبسشسیبسیبشسیبشین",
+                            textDirection: TextDirection.rtl,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
                           ),
-                        ),
-                        child: Text(
-                          "حذف",
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            color: Colors.red,
-                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              AddQuantity(
+                                minNumber: 0,
+                                maxNumber: 20,
+                                iconSize: 17,
+                                value: 2,
+                                valueChanged: (quantity) {},
+                              ),
+                              Text(
+                                "13000000 تومان",
+                                style: theme.textTheme.bodyLarge?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Image(
+                          image: NetworkImage(
+                              "https://static.owayo-cdn.com/newhp/img/productHome/productSeitenansicht/productservice/tshirts_classic_herren_basic_productservice/st2020_gyh.png"),
+                          fit: BoxFit.contain,
                         ),
                       ),
-                      Text(
-                        "} تومان",
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                    ],
-                  ),
-                  Flexible(
-                    child: SizedBox(
-                      width: 30,
                     ),
-                  ),
-                  Text(
-                    "محصول فلان",
-                    textDirection: TextDirection.rtl,
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Image(
-                      image: NetworkImage(
-                          "https://static.owayo-cdn.com/newhp/img/productHome/productSeitenansicht/productservice/tshirts_classic_herren_basic_productservice/tshirt_basic_4.jpg"),
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
