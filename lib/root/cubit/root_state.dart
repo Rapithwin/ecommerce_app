@@ -1,6 +1,6 @@
 part of 'root_cubit.dart';
 
-enum RootTab { home, catalog, cart, profile }
+enum RootTab { home, favorites, cart, profile }
 
 class RootState extends Equatable {
   const RootState({this.tab = RootTab.home});
