@@ -35,90 +35,98 @@ class RootView extends StatelessWidget {
           ProfilePage()
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        color: theme.colorScheme.surfaceContainerLow,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            _RootTabButton(
-              groupValue: selectedTab,
-              value: RootTab.home,
-              icon: Image.asset(
-                "assets/images/bottom_navbar/shop-outlined.png",
-                color: theme.colorScheme.secondary,
-              ),
-              selectedIcon: Image.asset(
-                "assets/images/bottom_navbar/shop-filled.png",
-                color: theme.colorScheme.secondary,
-              ),
-            ),
-            _RootTabButton(
-              groupValue: selectedTab,
-              value: RootTab.catalog,
-              icon: Image.asset(
-                "assets/images/icons/heart-outlined.png",
-                color: theme.colorScheme.secondary,
-              ),
-              selectedIcon: Image.asset(
-                "assets/images/icons/heart-filled.png",
-                color: theme.colorScheme.secondary,
-              ),
-            ),
-            _RootTabButton(
-              groupValue: selectedTab,
-              value: RootTab.cart,
-              icon: Image.asset(
-                "assets/images/bottom_navbar/cart-outlined.png",
-                color: theme.colorScheme.secondary,
-              ),
-              selectedIcon: Image.asset(
-                "assets/images/bottom_navbar/cart-filled.png",
-                color: theme.colorScheme.secondary,
-              ),
-            ),
-            _RootTabButton(
-              groupValue: selectedTab,
-              value: RootTab.profile,
-              icon: Image.asset(
-                "assets/images/bottom_navbar/person-outlined.png",
-                color: theme.colorScheme.secondary,
-              ),
-              selectedIcon: Image.asset(
-                "assets/images/bottom_navbar/person-filled.png",
-                color: theme.colorScheme.secondary,
-              ),
-            ),
-          ],
+      bottomNavigationBar: NavigationBar(
+        height: 58,
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        selectedIndex: selectedTab.index,
+        onDestinationSelected: (int index) =>
+            context.read<RootCubit>().setTab(index.toTab),
+        // indicatorColor: Colors.transparent,
+        labelTextStyle: WidgetStatePropertyAll(
+          theme.textTheme.labelMedium?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
         ),
+        destinations: <Widget>[
+          NavigationDestination(
+            selectedIcon: Image.asset(
+              "assets/images/bottom_navbar/shop-filled.png",
+              color: theme.colorScheme.secondary,
+              height: 34,
+              width: 34,
+            ),
+            icon: Image.asset(
+              "assets/images/bottom_navbar/shop-outlined.png",
+              color: theme.colorScheme.secondary,
+              height: 34,
+              width: 34,
+            ),
+            label: 'خانه',
+          ),
+          NavigationDestination(
+            selectedIcon: Image.asset(
+              "assets/images/icons/heart-filled.png",
+              color: theme.colorScheme.secondary,
+              height: 34,
+              width: 34,
+            ),
+            icon: Image.asset(
+              "assets/images/icons/heart-outlined.png",
+              color: theme.colorScheme.secondary,
+              height: 34,
+              width: 34,
+            ),
+            label: 'علاقه‌مندی‌ها',
+          ),
+          NavigationDestination(
+            selectedIcon: Image.asset(
+              "assets/images/bottom_navbar/cart-filled.png",
+              color: theme.colorScheme.secondary,
+              height: 34,
+              width: 34,
+            ),
+            icon: Image.asset(
+              "assets/images/bottom_navbar/cart-outlined.png",
+              color: theme.colorScheme.secondary,
+              height: 34,
+              width: 34,
+            ),
+            label: 'سبد خرید',
+          ),
+          NavigationDestination(
+            selectedIcon: Image.asset(
+              "assets/images/bottom_navbar/person-filled.png",
+              color: theme.colorScheme.secondary,
+              height: 34,
+              width: 34,
+            ),
+            icon: Image.asset(
+              "assets/images/bottom_navbar/person-outlined.png",
+              color: theme.colorScheme.secondary,
+              height: 34,
+              width: 34,
+            ),
+            label: 'پروفایل',
+          ),
+        ],
       ),
     );
   }
 }
 
-class _RootTabButton extends StatelessWidget {
-  const _RootTabButton({
-    required this.groupValue,
-    required this.value,
-    required this.icon,
-    required this.selectedIcon,
-  });
-
-  final RootTab groupValue;
-  final RootTab value;
-  final Widget icon;
-  final Widget selectedIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () => context.read<RootCubit>().setTab(value),
-      iconSize: 32,
-      color:
-          groupValue != value ? null : Theme.of(context).colorScheme.secondary,
-      icon: icon,
-      isSelected: value == groupValue,
-      selectedIcon: selectedIcon,
-    );
+extension on int {
+  RootTab get toTab {
+    switch (this) {
+      case 0:
+        return RootTab.home;
+      case 1:
+        return RootTab.favorites;
+      case 2:
+        return RootTab.cart;
+      case 3:
+        return RootTab.profile;
+      default:
+        return RootTab.home;
+    }
   }
 }
