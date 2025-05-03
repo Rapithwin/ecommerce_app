@@ -1,5 +1,6 @@
 import 'package:e_commerce/cart/presentation/widgets/add_quantity.dart';
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 class CartLoaded extends StatelessWidget {
   const CartLoaded({super.key});
@@ -61,7 +62,7 @@ class CartLoaded extends StatelessWidget {
                                 valueChanged: (quantity) {},
                               ),
                               Text(
-                                "13000000 تومان",
+                                "${"13000000".seRagham().toPersianDigit()} تومان",
                                 style: theme.textTheme.bodyLarge?.copyWith(
                                   color: theme.colorScheme.onSurfaceVariant,
                                 ),

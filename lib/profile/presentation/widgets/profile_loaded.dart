@@ -49,7 +49,7 @@ class ProfileLoaded extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "ممد ممد",
+                      "نام نام خانوادگی",
                       style: theme.textTheme.titleLarge?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
