@@ -21,7 +21,7 @@ class CartLoaded extends StatelessWidget {
                 maxWidth: 600,
               ),
               child: Container(
-                height: size.height / 8,
+                height: size.height / 6,
                 // width: size.width,
 
                 decoration: BoxDecoration(
@@ -57,7 +57,7 @@ class CartLoaded extends StatelessWidget {
                               AddQuantity(
                                 minNumber: 0,
                                 maxNumber: 20,
-                                iconSize: 17,
+                                iconSize: 017,
                                 value: 2,
                                 valueChanged: (quantity) {},
                               ),
