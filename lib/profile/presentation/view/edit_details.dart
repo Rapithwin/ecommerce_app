@@ -58,81 +58,91 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
         backgroundColor: theme.colorScheme.surfaceContainerLow,
       ),
       body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 5,
-              ),
-              CustomFormField(
-                labelName: "نام",
-                textDirection: TextDirection.rtl,
-                inputAction: TextInputAction.next,
-                controller: _firstNameController,
-                theme: theme,
-              ),
-              CustomFormField(
-                labelName: "نام خانوادگی",
-                textDirection: TextDirection.rtl,
-                inputAction: TextInputAction.next,
-                controller: _lastNameController,
-                theme: theme,
-              ),
-              CustomFormField(
-                labelName: "نام کاربری",
-                textDirection: TextDirection.ltr,
-                inputAction: TextInputAction.next,
-                controller: _usernameController,
-                theme: theme,
-              ),
-              CustomFormField(
-                labelName: "آدرس ایمیل",
-                textDirection: TextDirection.ltr,
-                inputAction: TextInputAction.next,
-                keyboardType: TextInputType.emailAddress,
-                controller: _emailController,
-                theme: theme,
-              ),
-              CustomFormField(
-                labelName: "شماره تماس",
-                textDirection: TextDirection.ltr,
-                inputAction: TextInputAction.next,
-                keyboardType: TextInputType.phone,
-                controller: _phoneController,
-                theme: theme,
-              ),
-              CustomFormField(
-                labelName: "کد پستی",
-                textDirection: TextDirection.ltr,
-                inputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-                controller: _postCodeController,
-                theme: theme,
-              ),
-              CustomFormField(
-                labelName: "آدرس پستی",
-                textDirection: TextDirection.rtl,
-                inputAction: TextInputAction.done,
-                keyboardType: TextInputType.text,
-                controller: _addressController,
-                theme: theme,
-              ),
-              Container(
-                width: size.width,
-                margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "ذخیره",
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: theme.colorScheme.onSurface,
-                      fontSize: 15,
-                    ),
+        child: Align(
+          alignment: AlignmentDirectional.center,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 600,
+              maxHeight: size.height,
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 5,
                   ),
-                ),
-              )
-            ],
+                  CustomFormField(
+                    labelName: "نام",
+                    textDirection: TextDirection.rtl,
+                    inputAction: TextInputAction.next,
+                    controller: _firstNameController,
+                    theme: theme,
+                  ),
+                  CustomFormField(
+                    labelName: "نام خانوادگی",
+                    textDirection: TextDirection.rtl,
+                    inputAction: TextInputAction.next,
+                    controller: _lastNameController,
+                    theme: theme,
+                  ),
+                  CustomFormField(
+                    labelName: "نام کاربری",
+                    textDirection: TextDirection.ltr,
+                    inputAction: TextInputAction.next,
+                    controller: _usernameController,
+                    theme: theme,
+                  ),
+                  CustomFormField(
+                    labelName: "آدرس ایمیل",
+                    textDirection: TextDirection.ltr,
+                    inputAction: TextInputAction.next,
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailController,
+                    theme: theme,
+                  ),
+                  CustomFormField(
+                    labelName: "شماره تماس",
+                    textDirection: TextDirection.ltr,
+                    inputAction: TextInputAction.next,
+                    keyboardType: TextInputType.phone,
+                    controller: _phoneController,
+                    theme: theme,
+                  ),
+                  CustomFormField(
+                    labelName: "کد پستی",
+                    textDirection: TextDirection.ltr,
+                    inputAction: TextInputAction.next,
+                    keyboardType: TextInputType.number,
+                    controller: _postCodeController,
+                    theme: theme,
+                  ),
+                  CustomFormField(
+                    labelName: "آدرس پستی",
+                    textDirection: TextDirection.rtl,
+                    inputAction: TextInputAction.done,
+                    keyboardType: TextInputType.text,
+                    controller: _addressController,
+                    theme: theme,
+                  ),
+                  Container(
+                    width: size.width,
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        "ذخیره",
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onSurface,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),
