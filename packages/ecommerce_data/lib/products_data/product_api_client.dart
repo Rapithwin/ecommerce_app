@@ -28,7 +28,7 @@ class ProductApiClient {
   final _productsEndpoint = "api/products";
 
   /// Fetches all of the products and returns a list of them.
-  Future<List<Product>> getAllProducts() async {
+  Future<Product> getAllProducts() async {
     try {
       final productsRequest = Uri.http(
         Constants.authority,
@@ -41,13 +41,15 @@ class ProductApiClient {
         throw ProductsRequestFailure();
       }
 
-      final products = jsonDecode(productResponse.body) as List;
+      final products = jsonDecode(productResponse.body) as Map<String, dynamic>;
 
       // Iterates through each element in products list and converts the json
       // elements to a Map<String, dynamic>
-      final result = products.map((e) => Product.fromJson(e)).toList();
+      final result = Product.fromJson(products);
 
-      if (result.isEmpty) throw ProductsEmptyFailure();
+      if (result.data != null && result.data!.isEmpty) {
+        throw ProductsEmptyFailure();
+      }
 
       return result;
     } catch (error, stacktrace) {
@@ -65,18 +67,17 @@ class ProductApiClient {
 
       final productResponse = await _httpClient.get(productRequest);
 
-      if (productResponse.statusCode != 200) {
-        throw ProductsRequestFailure();
-      }
-
       final productJson =
           jsonDecode(productResponse.body) as Map<String, dynamic>;
 
-      if (!productJson.containsKey("id")) {
-        throw ProductNotFoundFailure();
-      }
+      final normalizedJson = {
+        "data": [productJson],
+        "error": null,
+      };
 
-      final result = Product.fromJson(productJson);
+      final result = Product.fromJson(normalizedJson);
+
+      if (result.data == null) throw ProductNotFoundFailure();
 
       return result;
     } catch (error, stacktrace) {
