@@ -70,10 +70,16 @@ class ProductApiClient {
       final productJson =
           jsonDecode(productResponse.body) as Map<String, dynamic>;
 
-      final normalizedJson = {
-        "data": [productJson],
-        "error": null,
-      };
+      Map<String, dynamic> normalizedJson;
+
+      if (productJson.containsKey("data") && productJson["data"] != null) {
+        normalizedJson = {
+          "data": [productJson["data"]],
+          "error": null,
+        };
+      } else {
+        normalizedJson = productJson;
+      }
 
       final result = Product.fromJson(normalizedJson);
 
