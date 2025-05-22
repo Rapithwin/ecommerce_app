@@ -15,8 +15,8 @@ Product _$ProductFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = Product(
           data: $checkedConvert(
               'data',
-              (v) => (v as List<dynamic>)
-                  .map((e) => ProductData.fromJson(e as Map<String, dynamic>))
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => ProductData.fromJson(e as Map<String, dynamic>))
                   .toList()),
           error: $checkedConvert('error', (v) => v as String?),
         );

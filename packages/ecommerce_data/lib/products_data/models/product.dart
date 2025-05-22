@@ -4,11 +4,11 @@ part 'product.g.dart';
 
 @JsonSerializable()
 class Product {
-  final List<ProductData> data;
+  final List<ProductData>? data;
   final String? error;
 
   Product({
-    required this.data,
+    this.data,
     this.error,
   });
 
