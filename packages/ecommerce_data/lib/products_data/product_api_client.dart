@@ -25,7 +25,7 @@ class ProductApiClient {
 
   final http.Client _httpClient;
 
-  final _productsEndpoint = "api/Products";
+  final _productsEndpoint = "api/products";
 
   /// Fetches all of the products and returns a list of them.
   Future<List<Product>> getAllProducts() async {
