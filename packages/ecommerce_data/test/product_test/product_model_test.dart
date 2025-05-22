@@ -39,8 +39,8 @@ void main() {
 
       final product = Product.fromJson(json);
 
-      expect(product.data.length, 1);
-      expect(product.data.first.name, "Test Product");
+      expect(product.data!.length, 1);
+      expect(product.data!.first.name, "Test Product");
       expect(product.error, null);
     });
   });
