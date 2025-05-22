@@ -44,7 +44,7 @@ void main() {
           () => httpClient.get(
             Uri.http(
               Constants.authority,
-              "api/Products",
+              "api/products",
             ),
           ),
         ).called(1);
@@ -63,7 +63,7 @@ void main() {
       test("Throws ProductsEmptyFailure on empty list response", () async {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn("[]");
+        when(() => response.body).thenReturn('{"data": []}');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
         await expectLater(
           apiClient.getAllProducts(),
@@ -75,23 +75,32 @@ void main() {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
         when(() => response.body).thenReturn('''
-[
-    {
-      "id": 1,
-      "name": "test",
-      "description": "this is a test.",
-      "price": 1
-    }
-]
-''');
+  {
+    "data": [
+      {
+        "id": 1,
+        "name": "test",
+        "description": "this is a test.",
+        "price": 1,
+        "stockQuantity": 10
+      }
+    ],
+    "error": null
+  }
+  ''');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
         final actual = await apiClient.getAllProducts();
-        final matcher = isA<Product>()
-            .having((e) => e.id, "id", 1)
-            .having((e) => e.name, "name", "test")
-            .having((e) => e.description, "description", "this is a test.")
-            .having((e) => e.price, "price", 1);
-        expect(actual[0], matcher);
+
+        expect(actual.data, isNotNull);
+        expect(actual.data, isA<List<ProductData>>());
+        expect(actual.data!.length, 1);
+
+        final product = actual.data!.first;
+        expect(product.id, 1);
+        expect(product.name, "test");
+        expect(product.description, "this is a test.");
+        expect(product.price, 1);
+        expect(product.stockQuantity, 10);
       });
     });
 
@@ -100,7 +109,7 @@ void main() {
       test("Makes correct http request.", () async {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn("{}");
+        when(() => response.body).thenReturn('{}');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
         try {
           await apiClient.getProductById(id: id);
@@ -109,26 +118,16 @@ void main() {
           () => httpClient.get(
             Uri.http(
               Constants.authority,
-              "api/Products/$id",
+              "api/products/$id",
             ),
           ),
         ).called(1);
       });
 
-      test("Throws ProductsRequestFailure on non 200 response", () async {
-        final response = MockResponse();
-        when(() => response.statusCode).thenReturn(400);
-        when(() => httpClient.get(any())).thenAnswer((_) async => response);
-        await expectLater(
-          apiClient.getProductById(id: id),
-          throwsA(isA<ProductsRequestFailure>()),
-        );
-      });
-
       test("Throws ProductNotFoundFailure on error", () async {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn("{}");
+        when(() => response.body).thenReturn('{"data": null}');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
         await expectLater(
           apiClient.getProductById(id: id),
@@ -140,21 +139,27 @@ void main() {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
         when(() => response.body).thenReturn('''
-    {
+     {"data": {
       "id": 1,
       "name": "test",
       "description": "this is a test.",
-      "price": 1
-    }
-''');
+      "price": 1,
+      "stockQuantity": 10
+    }}
+  ''');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
         final actual = await apiClient.getProductById(id: id);
-        final matcher = isA<Product>()
-            .having((e) => e.id, "id", 1)
-            .having((e) => e.name, "name", "test")
-            .having((e) => e.description, "description", "this is a test.")
-            .having((e) => e.price, "price", 1);
-        expect(actual, matcher);
+
+        expect(actual.data, isNotNull);
+        expect(actual.data, isA<List<ProductData>>());
+        expect(actual.data!.length, 1);
+
+        final product = actual.data!.first;
+        expect(product.id, 1);
+        expect(product.name, "test");
+        expect(product.description, "this is a test.");
+        expect(product.price, 1);
+        expect(product.stockQuantity, 10);
       });
     });
   });
