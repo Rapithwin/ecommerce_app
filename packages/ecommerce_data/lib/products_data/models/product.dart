@@ -5,11 +5,11 @@ part 'product.g.dart';
 @JsonSerializable()
 class Product {
   final List<ProductData> data;
-  final String error;
+  final String? error;
 
   Product({
     required this.data,
-    required this.error,
+    this.error,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) =>
