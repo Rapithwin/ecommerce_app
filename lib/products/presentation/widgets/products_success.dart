@@ -43,9 +43,8 @@ class _ProductsSuccessState extends State<ProductsSuccess> {
 
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
+    return _scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent;
   }
 
   @override
@@ -53,98 +52,128 @@ class _ProductsSuccessState extends State<ProductsSuccess> {
     final theme = Theme.of(context);
     final products = widget.products.data ?? [];
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Expanded(
-        flex: 9,
-        child: GridView.builder(
-          controller: _scrollController,
-          padding: EdgeInsets.symmetric(horizontal: 13),
-          itemCount: products.length + 1,
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
-            crossAxisSpacing: 10,
-            childAspectRatio: 0.7,
-          ),
-          itemBuilder: (context, index) {
-            if (index == products.length) {
-              // Show loading indicator at the end
-              return Center(child: CircularProgressIndicator());
-            }
-            return Padding(
-              padding: const EdgeInsets.only(top: 5, bottom: 5),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    ProductDetails.route(widget.products.data![index].id),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    border: Border.all(
-                      color: theme.colorScheme.outline,
-                      width: 1.2,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 7,
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            // color: theme.colorScheme.secondaryContainer,
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(7),
-                            ),
-                          ),
-                          child: Icon(
-                            Icons.image,
-                            size: 120,
-                          ),
-                        ),
+    return products == []
+        ? Center(
+            child: Text("محصولی برای نمایش وحود ندارد"),
+          )
+        : Expanded(
+            child: Column(
+              children: [
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Expanded(
+                    flex: 9,
+                    child: GridView.builder(
+                      controller: _scrollController,
+                      padding: EdgeInsets.symmetric(horizontal: 13),
+                      itemCount: products.length,
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 0.7,
                       ),
-                      Divider(
-                        height: 0,
-                        thickness: 0.5,
-                        color: theme.colorScheme.outlineVariant,
-                      ),
-                      Flexible(
-                        flex: 2,
-                        child: SizedBox(
-                          width: 180,
-                          child: Center(
-                            child: Text(
-                              widget.products.data![index].name,
-                              style: theme.textTheme.bodyLarge?.copyWith(
-                                color: theme.colorScheme.onSurface,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 5, bottom: 5),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(10),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                ProductDetails.route(
+                                    widget.products.data![index].id),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                border: Border.all(
+                                  color: theme.colorScheme.outline,
+                                  width: 1.2,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              overflow: TextOverflow.ellipsis,
+                              child: Column(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 7,
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        // color: theme.colorScheme.secondaryContainer,
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(7),
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.image,
+                                        size: 120,
+                                      ),
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 0,
+                                    thickness: 0.5,
+                                    color: theme.colorScheme.outlineVariant,
+                                  ),
+                                  Flexible(
+                                    flex: 2,
+                                    child: SizedBox(
+                                      width: 180,
+                                      child: Center(
+                                        child: Text(
+                                          widget.products.data![index].name,
+                                          style: theme.textTheme.bodyLarge
+                                              ?.copyWith(
+                                            color: theme.colorScheme.onSurface,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 1,
+                                    child: Text(
+                                      "${widget.products.data![index].price.toString().seRagham().toPersianDigit()} تومان",
+                                      style:
+                                          theme.textTheme.bodyLarge?.copyWith(
+                                        color: theme.colorScheme.onSurface,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Text(
-                          "${widget.products.data![index].price.toString().seRagham().toPersianDigit()} تومان",
-                          style: theme.textTheme.bodyLarge?.copyWith(
-                            color: theme.colorScheme.onSurface,
-                          ),
-                        ),
-                      )
-                    ],
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: Visibility(
+                    visible: context.read<ProductsCubit>().state.isLoadingMore,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: theme.colorScheme.primaryContainer,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(color: Colors.black, blurRadius: 4)
+                          ]),
+                      padding: const EdgeInsets.all(8.0),
+                      height: 30.0,
+                      width: 30.0,
+                      child: CircularProgressIndicator(
+                        color: theme.colorScheme.primary,
+                        strokeWidth: 3.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
   }
 }
