@@ -28,10 +28,14 @@ class ProductApiClient {
   final _productsEndpoint = "api/products";
 
   /// Fetches all of the products and returns a list of them.
-  Future<Product> getAllProducts({String? serachEntry}) async {
+  Future<Product> getAllProducts({
+    String? serachEntry,
+    required int page,
+  }) async {
     final Map<String, dynamic> query = {
       "searchTerm": serachEntry,
       "pageSize": "6",
+      "page": page,
     };
     try {
       final productsRequest = Uri.http(
