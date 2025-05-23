@@ -6,7 +6,10 @@ import 'package:equatable/equatable.dart';
 part 'products_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState> {
-  ProductsCubit(this._productsRepostitory) : super(ProductsState());
+  ProductsCubit(this._productsRepostitory)
+      : super(ProductsState(
+          products: Product(),
+        ));
   final ProductsRepostitory _productsRepostitory;
 
   Future<void> fetchProducts() async {
@@ -30,7 +33,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       final product = await _productsRepostitory.getProductById(id: id);
       emit(state.copyWith(
         status: ProductsStatus.success,
-        products: [product],
+        products: product,
       ));
     } on Exception {
       emit(state.copyWith(status: ProductsStatus.failure));

@@ -11,16 +11,16 @@ extension ProductsStatusX on ProductsStatus {
 
 final class ProductsState extends Equatable {
   final ProductsStatus status;
-  final List<Product> products;
+  final Product products;
 
-  ProductsState({
+  const ProductsState({
     this.status = ProductsStatus.initial,
-    List<Product>? products,
-  }) : products = products ?? [];
+    required this.products,
+  });
 
   ProductsState copyWith({
     ProductsStatus? status,
-    List<Product>? products,
+    Product? products,
   }) {
     return ProductsState(
       status: status ?? this.status,
