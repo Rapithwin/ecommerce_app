@@ -4,6 +4,8 @@ import 'package:e_commerce_data/products_data/product_api_client.dart';
 /// {@template products_repository}
 /// A repository that handles `Product` related requests.
 /// {@endtemplate}
+///
+// TODO: Fix typo
 class ProductsRepostitory {
   /// {@macro products_repository}
   ProductsRepostitory({ProductApiClient? productApi})
