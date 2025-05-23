@@ -11,7 +11,8 @@ class ProductsRepostitory {
   final ProductApiClient _productApi;
 
   /// Provides a [List] of all the available products.
-  Future<Product> getProducts() => _productApi.getAllProducts();
+  Future<Product> getProducts({String? serachEntry}) =>
+      _productApi.getAllProducts(serachEntry: serachEntry);
 
   /// Provides a product of a given `id`.
   Future<Product> getProductById({required int id}) =>
