@@ -1,6 +1,5 @@
 import 'package:e_commerce/product_details/widgets/widgets.dart';
 import 'package:e_commerce/products/presentation/cubit/products_cubit.dart';
-import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:e_commerce_repository/products_repository/products_repostitory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,9 +35,6 @@ class ProductDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
