@@ -34,7 +34,7 @@ class ProductApiClient {
   }) async {
     final Map<String, dynamic> query = {
       "searchTerm": serachEntry,
-      "pageSize": "6",
+      "pageSize": "20",
       "page": page.toString(),
     };
     try {
