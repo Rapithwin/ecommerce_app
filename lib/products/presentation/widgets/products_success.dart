@@ -1,9 +1,11 @@
 import 'package:e_commerce/product_details/view/product_details.dart';
+import 'package:e_commerce/products/presentation/cubit/products_cubit.dart';
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
-class ProductsSuccess extends StatelessWidget {
+class ProductsSuccess extends StatefulWidget {
   const ProductsSuccess({
     super.key,
     required this.products,
@@ -12,22 +14,63 @@ class ProductsSuccess extends StatelessWidget {
   final Product products;
 
   @override
+  State<ProductsSuccess> createState() => _ProductsSuccessState();
+}
+
+class _ProductsSuccessState extends State<ProductsSuccess> {
+  late final ScrollController _scrollController;
+  int _page = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_isBottom) {
+      context.read<ProductsCubit>().fetchProducts(page: ++_page);
+    }
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final products = widget.products.data ?? [];
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Expanded(
         flex: 9,
         child: GridView.builder(
+          controller: _scrollController,
           padding: EdgeInsets.symmetric(horizontal: 13),
-          itemCount: products.data?.length,
+          itemCount: products.length + 1,
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 200,
             crossAxisSpacing: 10,
             childAspectRatio: 0.7,
           ),
           itemBuilder: (context, index) {
+            if (index == products.length) {
+              // Show loading indicator at the end
+              return Center(child: CircularProgressIndicator());
+            }
             return Padding(
               padding: const EdgeInsets.only(top: 5, bottom: 5),
               child: InkWell(
@@ -35,7 +78,7 @@ class ProductsSuccess extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    ProductDetails.route(products.data![index].id),
+                    ProductDetails.route(widget.products.data![index].id),
                   );
                 },
                 child: Container(
@@ -76,7 +119,7 @@ class ProductsSuccess extends StatelessWidget {
                           width: 180,
                           child: Center(
                             child: Text(
-                              products.data![index].name,
+                              widget.products.data![index].name,
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 color: theme.colorScheme.onSurface,
                               ),
@@ -88,7 +131,7 @@ class ProductsSuccess extends StatelessWidget {
                       Flexible(
                         flex: 1,
                         child: Text(
-                          "${products.data![index].price.toString().seRagham().toPersianDigit()} تومان",
+                          "${widget.products.data![index].price.toString().seRagham().toPersianDigit()} تومان",
                           style: theme.textTheme.bodyLarge?.copyWith(
                             color: theme.colorScheme.onSurface,
                           ),
