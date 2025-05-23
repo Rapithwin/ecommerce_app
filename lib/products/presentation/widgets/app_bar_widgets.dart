@@ -51,7 +51,7 @@ class AppBarWidgets {
       Flexible(
         flex: flex ?? 1,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 13.0),
           child: SizedBox(
             height: size.height / 18,
             child: Directionality(
