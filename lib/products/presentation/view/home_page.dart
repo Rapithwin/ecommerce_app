@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
     return BlocProvider(
       create: (context) {
         final cubit = ProductsCubit(context.read<ProductsRepostitory>());
-        cubit.fetchProducts();
+        cubit.fetchProducts(page: 1);
         return cubit;
       },
       child: HomeView(),
@@ -43,7 +43,10 @@ class _HomeViewState extends State<HomeView> {
   void _onSearchChanged(String value) {
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 700), () {
-      context.read<ProductsCubit>().fetchProducts(serachEntry: value);
+      context.read<ProductsCubit>().fetchProducts(
+            serachEntry: value,
+            page: 1,
+          );
     });
   }
 
@@ -79,7 +82,9 @@ class _HomeViewState extends State<HomeView> {
                   leading: IconButton(
                     onPressed: () {
                       context.read<ProductsCubit>().fetchProducts(
-                          serachEntry: _sreachBarController.text);
+                            serachEntry: _sreachBarController.text,
+                            page: 1,
+                          );
                     },
                     icon: Icon(Icons.search),
                     splashRadius: 1,
