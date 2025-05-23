@@ -32,6 +32,9 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final Size size = MediaQuery.sizeOf(context);
+    final ProductData data = widget.product.data![0];
+
+    final convertedPrice = data.price.toString().seRagham().toPersianDigit();
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surfaceBright,
@@ -45,7 +48,7 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
           children: <Widget>[
             Text(
               textDirection: TextDirection.rtl,
-              "123 تومان",
+              "$convertedPrice تومان",
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: theme.colorScheme.onSurface,
@@ -138,7 +141,7 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    "placeholder",
+                    data.name,
                     style: theme.textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: theme.colorScheme.onSurface,
@@ -158,7 +161,7 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
                       wordSpacing: 0.4,
                     ),
                     child: ReadMoreText(
-                      "placeholder",
+                      data.description,
                       trimCollapsedText: "بیشتر",
                       trimExpandedText: "بستن",
                       trimLength: 450,
