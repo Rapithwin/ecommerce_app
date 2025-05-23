@@ -10,9 +10,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductsCubit(
-        context.read<ProductsRepostitory>(),
-      ),
+      create: (context) {
+        final cubit = ProductsCubit(context.read<ProductsRepostitory>());
+        cubit.fetchProducts();
+        return cubit;
+      },
       child: HomeView(),
     );
   }
@@ -25,7 +27,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
-    context.read<ProductsCubit>().fetchProducts();
 
     return Scaffold(
       appBar: AppBar(
