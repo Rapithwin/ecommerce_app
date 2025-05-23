@@ -12,11 +12,12 @@ class ProductsCubit extends Cubit<ProductsState> {
         ));
   final ProductsRepostitory _productsRepostitory;
 
-  Future<void> fetchProducts() async {
+  Future<void> fetchProducts({String? serachEntry}) async {
     emit(state.copyWith(status: ProductsStatus.loading));
 
     try {
-      final products = await _productsRepostitory.getProducts();
+      final products =
+          await _productsRepostitory.getProducts(serachEntry: serachEntry);
       emit(state.copyWith(
         status: ProductsStatus.success,
         products: products,
