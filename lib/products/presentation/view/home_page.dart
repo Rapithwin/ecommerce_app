@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_commerce/products/presentation/cubit/products_cubit.dart';
 import 'package:e_commerce/products/presentation/widgets/widgets.dart';
 import 'package:e_commerce_repository/products_repository/products_repostitory.dart';
@@ -29,11 +31,20 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final _sreachBarController = SearchController();
+  Timer? _debounce;
 
   @override
   void dispose() {
-    super.dispose();
     _sreachBarController.dispose();
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  void _onSearchChanged(String value) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 700), () {
+      context.read<ProductsCubit>().fetchProducts(serachEntry: value);
+    });
   }
 
   @override
@@ -58,6 +69,7 @@ class _HomeViewState extends State<HomeView> {
                 textDirection: TextDirection.rtl,
                 child: SearchBar(
                   controller: _sreachBarController,
+                  onChanged: _onSearchChanged,
                   onTapOutside: (event) {
                     FocusManager.instance.primaryFocus?.unfocus();
                   },
