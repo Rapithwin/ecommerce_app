@@ -157,11 +157,15 @@ class _ProductsSuccessState extends State<ProductsSuccess> {
                     visible: context.read<ProductsCubit>().state.isLoadingMore,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: theme.colorScheme.primaryContainer,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(color: Colors.black, blurRadius: 4)
-                          ]),
+                        color: theme.colorScheme.primaryContainer,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: theme.colorScheme.surface,
+                            blurRadius: 4,
+                          )
+                        ],
+                      ),
                       padding: const EdgeInsets.all(8.0),
                       height: 30.0,
                       width: 30.0,
