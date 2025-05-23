@@ -35,7 +35,7 @@ class ProductApiClient {
     final Map<String, dynamic> query = {
       "searchTerm": serachEntry,
       "pageSize": "6",
-      "page": page,
+      "page": page.toString(),
     };
     try {
       final productsRequest = Uri.http(
