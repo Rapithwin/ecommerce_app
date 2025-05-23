@@ -11,7 +11,7 @@ class ProductsRepostitory {
   final ProductApiClient _productApi;
 
   /// Provides a [List] of all the available products.
-  Future<List<Product>> getProducts() => _productApi.getAllProducts();
+  Future<Product> getProducts() => _productApi.getAllProducts();
 
   /// Provides a product of a given `id`.
   Future<Product> getProductById({required int id}) =>
