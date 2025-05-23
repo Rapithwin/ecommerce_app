@@ -1,3 +1,5 @@
+import 'package:e_commerce_data/auth_data/models/models.dart';
+
 class LoginRequestModel {
   final String email;
   final String password;
@@ -36,7 +38,7 @@ class LoginResponseModel {
 class LoginData {
   final String token;
   final DateTime expiration;
-  final User user;
+  final UserModel user;
 
   LoginData({
     required this.token,
@@ -48,36 +50,7 @@ class LoginData {
     return LoginData(
       token: json['token'],
       expiration: DateTime.parse(json['expiration']),
-      user: User.fromJson(json['user']),
-    );
-  }
-}
-
-class User {
-  final String id;
-  final String email;
-  final String firstName;
-  final String lastName;
-  final String address;
-  final String? phoneNumber;
-
-  User({
-    required this.id,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.address,
-    this.phoneNumber,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      email: json['email'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      address: json['address'],
-      phoneNumber: json['phoneNumber'],
+      user: UserModel.fromJson(json['user']),
     );
   }
 }
