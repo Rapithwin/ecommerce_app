@@ -1,4 +1,4 @@
-import 'package:e_commerce/products/presentation/view/product_details.dart';
+import 'package:e_commerce/product_details/view/product_details.dart';
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -30,7 +30,12 @@ class ProductsSuccess extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5, bottom: 5),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  ProductDetails.route(products.data![index].id),
+                );
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.transparent,
