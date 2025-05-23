@@ -1,6 +1,7 @@
 import 'package:e_commerce/products/presentation/view/product_details.dart';
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 class ProductsSuccess extends StatelessWidget {
   const ProductsSuccess({
@@ -8,7 +9,7 @@ class ProductsSuccess extends StatelessWidget {
     required this.products,
   });
 
-  final List<Product> products;
+  final Product products;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ProductsSuccess extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: GridView.builder(
         padding: EdgeInsets.symmetric(horizontal: 13),
-        itemCount: products.length,
+        itemCount: products.data?.length,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
           crossAxisSpacing: 10,
@@ -29,12 +30,7 @@ class ProductsSuccess extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5, bottom: 5),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  ProductDetails.route(products[index]),
-                );
-              },
+              onTap: () {},
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.transparent,
@@ -73,7 +69,7 @@ class ProductsSuccess extends StatelessWidget {
                         width: 180,
                         child: Center(
                           child: Text(
-                            products[index].name,
+                            products.data![index].name,
                             style: theme.textTheme.bodyLarge?.copyWith(
                               color: theme.colorScheme.onSurface,
                             ),
@@ -85,7 +81,7 @@ class ProductsSuccess extends StatelessWidget {
                     Flexible(
                       flex: 1,
                       child: Text(
-                        products[index].price.toString(),
+                        "${products.data![index].price.toString().seRagham().toPersianDigit()} تومان",
                         style: theme.textTheme.bodyLarge?.copyWith(
                           color: theme.colorScheme.onSurface,
                         ),
