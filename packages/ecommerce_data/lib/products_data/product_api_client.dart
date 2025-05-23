@@ -47,7 +47,7 @@ class ProductApiClient {
       // elements to a Map<String, dynamic>
       final result = Product.fromJson(products);
 
-      if (result.data != null && result.data!.isEmpty) {
+      if (result.data == null || result.data!.isEmpty) {
         throw ProductsEmptyFailure();
       }
 
