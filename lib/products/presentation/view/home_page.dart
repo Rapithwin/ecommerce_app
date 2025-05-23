@@ -20,8 +20,21 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final _sreachBarController = SearchController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _sreachBarController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +44,61 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        toolbarHeight: size.height / 7.2,
         actions: AppBarWidgets.appBarActions(size, theme),
         backgroundColor: theme.colorScheme.surfaceContainerLow,
       ),
-      body: BlocBuilder<ProductsCubit, ProductsState>(
-        builder: (context, state) {
-          return switch (state.status) {
-            ProductsStatus.initial => const ProductsLoading(),
-            ProductsStatus.loading => const ProductsLoading(),
-            ProductsStatus.failure => const ProductsFailure(),
-            ProductsStatus.success => ProductsSuccess(products: state.products),
-          };
-        },
+      body: Column(
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 13.0, vertical: 10.0),
+            child: SizedBox(
+              height: size.height / 18,
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: SearchBar(
+                  controller: _sreachBarController,
+                  onTapOutside: (event) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  backgroundColor: WidgetStatePropertyAll(
+                      theme.colorScheme.surfaceContainerHighest),
+                  shadowColor: WidgetStatePropertyAll(Colors.transparent),
+                  leading: IconButton(
+                    onPressed: () {
+                      context.read<ProductsCubit>().fetchProducts(
+                          serachEntry: _sreachBarController.text);
+                    },
+                    icon: Icon(Icons.search),
+                    splashRadius: 1,
+                  ),
+                  hintText: "جستجو...",
+                  hintStyle: WidgetStatePropertyAll(
+                    theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          BlocBuilder<ProductsCubit, ProductsState>(
+            builder: (context, state) {
+              return switch (state.status) {
+                ProductsStatus.initial => const ProductsLoading(),
+                ProductsStatus.loading => const ProductsLoading(),
+                ProductsStatus.failure => const ProductsFailure(),
+                ProductsStatus.success =>
+                  ProductsSuccess(products: state.products),
+              };
+            },
+          ),
+        ],
       ),
     );
   }
