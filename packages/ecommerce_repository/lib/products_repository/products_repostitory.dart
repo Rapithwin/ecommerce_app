@@ -15,7 +15,7 @@ class ProductsRepostitory {
   /// Provides a [List] of all the available products.
   Future<Product> getProducts({
     String? serachEntry,
-    required int page,
+    int page = 1,
   }) =>
       _productApi.getAllProducts(
         serachEntry: serachEntry,

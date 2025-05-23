@@ -30,7 +30,7 @@ class ProductApiClient {
   /// Fetches all of the products and returns a list of them.
   Future<Product> getAllProducts({
     String? serachEntry,
-    required int page,
+    int page = 1,
   }) async {
     final Map<String, dynamic> query = {
       "searchTerm": serachEntry,

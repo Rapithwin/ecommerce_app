@@ -45,7 +45,6 @@ class _HomeViewState extends State<HomeView> {
     _debounce = Timer(const Duration(milliseconds: 700), () {
       context.read<ProductsCubit>().fetchProducts(
             serachEntry: value,
-            page: 1,
           );
     });
   }
@@ -83,7 +82,6 @@ class _HomeViewState extends State<HomeView> {
                     onPressed: () {
                       context.read<ProductsCubit>().fetchProducts(
                             serachEntry: _sreachBarController.text,
-                            page: 1,
                           );
                     },
                     icon: Icon(Icons.search),
