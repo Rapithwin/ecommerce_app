@@ -88,7 +88,7 @@ class AuthApiClient {
     try {
       final updateRequest = Uri.http(
         Constants.authority,
-        "$_usersEndpoint/me",
+        "$_usersEndpoint/profile",
       );
 
       final updateResponse = await _httpClient.put(
