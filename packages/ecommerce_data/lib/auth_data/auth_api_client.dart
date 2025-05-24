@@ -69,10 +69,14 @@ class AuthApiClient {
 
       final userResponse = await _httpClient.get(userRequest);
 
-      final userJson = jsonDecode(userResponse.body) as Map<String, dynamic>;
-      final result = UserModel.fromJson(userJson);
-
-      return result;
+      final responseJson =
+          jsonDecode(userResponse.body) as Map<String, dynamic>;
+      if (responseJson['isSuccess'] == true && responseJson['data'] != null) {
+        final userJson = responseJson['data'] as Map<String, dynamic>;
+        final result = UserModel.fromJson(userJson);
+        return result;
+      }
+      throw Exception(responseJson['error'] ?? 'Failed to get user data');
     } catch (error, stacktrace) {
       log("Error during api call $error");
       log("Stacktrace $stacktrace");
