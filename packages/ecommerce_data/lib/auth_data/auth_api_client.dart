@@ -36,4 +36,27 @@ class AuthApiClient {
       rethrow;
     }
   }
+
+  Future<LoginResponseModel> loginUser(UserModel userData) async {
+    try {
+      final registerRequest = Uri.http(
+        Constants.authority,
+        "$_usersEndpoint/login",
+      );
+
+      final loginResponse = await _httpClient.post(
+        registerRequest,
+        body: userData.toJson(),
+      );
+
+      final loginJson = jsonDecode(loginResponse.body) as Map<String, dynamic>;
+      final result = LoginResponseModel.fromJson(loginJson);
+
+      return result;
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
+    }
+  }
 }
