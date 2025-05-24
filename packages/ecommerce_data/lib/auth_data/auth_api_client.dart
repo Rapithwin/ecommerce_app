@@ -83,4 +83,31 @@ class AuthApiClient {
       rethrow;
     }
   }
+
+  Future<UserModel> updateUser(UserModel userData) async {
+    try {
+      final updateRequest = Uri.http(
+        Constants.authority,
+        "$_usersEndpoint/me",
+      );
+
+      final updateResponse = await _httpClient.put(
+        updateRequest,
+        body: userData.toJson(),
+      );
+
+      final responseJson =
+          jsonDecode(updateResponse.body) as Map<String, dynamic>;
+      if (responseJson['isSuccess'] == true && responseJson['data'] != null) {
+        final updateJson = responseJson['data'] as Map<String, dynamic>;
+        final result = UserModel.fromJson(updateJson);
+        return result;
+      }
+      throw Exception(responseJson['error'] ?? 'Failed to get user data');
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
+    }
+  }
 }
