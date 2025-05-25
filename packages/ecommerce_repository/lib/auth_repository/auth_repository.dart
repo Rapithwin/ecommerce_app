@@ -7,8 +7,11 @@ class AuthRepository {
   final AuthApiClient _authApi;
 
   Future<RegisterResponseModel> registerUser(UserModel userData) async =>
-      _authApi.registerUser(userData);
+      await _authApi.registerUser(userData);
 
   Future<LoginResponseModel> loginUser(UserModel userData) async =>
-      _authApi.loginUser(userData);
+      await _authApi.loginUser(userData);
+
+  Future<UserModel> getUser(String token) async =>
+      await _authApi.getUser(token);
 }
