@@ -1,4 +1,8 @@
 // Events
+import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 abstract class AuthEvent {}
 
 class AppStarted extends AuthEvent {}
@@ -18,3 +22,20 @@ class AuthInitial extends AuthState {}
 class Authenticated extends AuthState {}
 
 class Unauthenticated extends AuthState {}
+
+// Bloc
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc() : super(AuthInitial()) {
+    on<AppStarted>(_onAppStarted);
+  }
+
+  FutureOr<void> _onAppStarted(event, emit) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("jwt_token");
+    if (token != null && token.isNotEmpty) {
+      emit(Authenticated());
+    } else {
+      emit(Unauthenticated());
+    }
+  }
+}
