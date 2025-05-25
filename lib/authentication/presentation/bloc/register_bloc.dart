@@ -9,3 +9,12 @@ class LoggedIn extends AuthEvent {
 }
 
 class LoggedOut extends AuthEvent {}
+
+// States
+abstract class AuthState {}
+
+class AuthInitial extends AuthState {}
+
+class Authenticated extends AuthState {}
+
+class Unauthenticated extends AuthState {}
