@@ -53,11 +53,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoading());
     try {
       final loginData = await _authRepository.loginUser(event.userData);
-      if (loginData.isSuccess == true && loginData.data != null) {
+      if (loginData.isSuccess && loginData.data != null) {
         _authBloc.add(LoggedIn(loginData.data!.token));
         emit(LoginSuccess());
       } else {
-        emit(LoginFailure(loginData.error ?? "Unkown error"));
+        emit(LoginFailure(loginData.error ?? "Unkown login error"));
       }
     } catch (e) {
       emit(LoginFailure("Login failed: ${e.toString()}"));
