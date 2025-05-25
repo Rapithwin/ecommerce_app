@@ -1,15 +1,22 @@
 // Events
 import 'dart:async';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class AuthEvent {}
+abstract class AuthEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class AppStarted extends AuthEvent {}
 
 class LoggedIn extends AuthEvent {
   final String token;
   LoggedIn(this.token);
+
+  @override
+  List<Object?> get props => [token];
 }
 
 class LoggedOut extends AuthEvent {}
