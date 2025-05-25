@@ -35,9 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     on<AppStarted>(_onAppStarted);
     on<LoggedIn>(_onLoginRequested);
-    on<LoggedOut>(
-      _onLogoutRequested,
-    );
+    on<LoggedOut>(_onLogoutRequested);
   }
 
   FutureOr<void> _onLogoutRequested(event, emit) async {
