@@ -1,5 +1,7 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:e_commerce/authentication/presentation/view/login_page.dart';
 import 'package:e_commerce/root/view/root.dart';
+import 'package:e_commerce/splash_screen.dart';
 import 'package:e_commerce/theme/app_theme.dart';
 import 'package:e_commerce/theme/cubit/theme_cubit.dart';
 import 'package:e_commerce_repository/ecommerce_repository.dart';
@@ -44,15 +46,22 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
-        return BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is Authenticated) {}
-          },
-          child: MaterialApp(
-            theme: AppTheme.light,
-            darkTheme: AppTheme.dark,
-            themeMode: state.themeMode,
-            home: RootPage(),
+        return MaterialApp(
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: state.themeMode,
+          home: BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (!context.mounted) return;
+              switch (state) {
+                case Authenticated():
+                  Navigator.pushReplacement(context, RootPage.route());
+                case Unauthenticated():
+                  Navigator.pushReplacement(context, LoginPage.route());
+                default:
+              }
+            },
+            child: SplashScreen(),
           ),
         );
       },
