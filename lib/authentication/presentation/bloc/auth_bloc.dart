@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class AuthEvent extends Equatable {
+sealed class AuthEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
@@ -22,7 +22,7 @@ class LoggedIn extends AuthEvent {
 class LoggedOut extends AuthEvent {}
 
 // States
-abstract class AuthState {}
+sealed class AuthState {}
 
 class AuthInitial extends AuthState {}
 

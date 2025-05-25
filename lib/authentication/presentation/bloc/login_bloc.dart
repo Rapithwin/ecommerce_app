@@ -1,7 +1,9 @@
+import 'package:e_commerce_repository/ecommerce_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Events
-abstract class LoginEvent extends Equatable {
+sealed class LoginEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
@@ -17,7 +19,7 @@ class LoginSubmitted extends LoginEvent {
 }
 
 // States
-abstract class LoginState extends Equatable {
+sealed class LoginState extends Equatable {
   @override
   List<Object?> get props => [];
 }
