@@ -9,6 +9,12 @@ import 'package:e_commerce/products/presentation/view/view.dart';
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
 
+  static Route<RootPage> route() {
+    return MaterialPageRoute(
+      builder: (_) => RootPage(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
