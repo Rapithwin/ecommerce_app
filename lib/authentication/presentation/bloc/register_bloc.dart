@@ -1,64 +1,36 @@
-// Events
-import 'dart:async';
+import 'package:e_commerce_data/auth_data/models/models.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class AuthEvent extends Equatable {
+sealed class RegisterEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class AppStarted extends AuthEvent {}
+class RegisterSubmitted extends RegisterEvent {
+  RegisterSubmitted(this.userData);
 
-class LoggedIn extends AuthEvent {
-  final String token;
-  LoggedIn(this.token);
+  final UserModel userData;
 
   @override
-  List<Object?> get props => [token];
+  List<Object> get props => [userData];
 }
 
-class LoggedOut extends AuthEvent {}
-
 // States
-abstract class AuthState {}
+sealed class RegisterState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
-class AuthInitial extends AuthState {}
+class RegisterInitial extends RegisterState {}
 
-class Authenticated extends AuthState {}
+class RegisterLoading extends RegisterState {}
 
-class Unauthenticated extends AuthState {}
+class RegisterSuccess extends RegisterState {}
 
-// Bloc
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthInitial()) {
-    on<AppStarted>(_onAppStarted);
-    on<LoggedIn>(_onLoginRequested);
-    on<LoggedOut>(
-      _onLogoutRequested,
-    );
-  }
+class RegisterFailure extends RegisterState {
+  final String error;
+  RegisterFailure(this.error);
 
-  FutureOr<void> _onLogoutRequested(event, emit) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove("jwt_token");
-    emit(Unauthenticated());
-  }
-
-  FutureOr<void> _onLoginRequested(event, emit) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("jwt_token", event.token);
-    emit(Authenticated());
-  }
-
-  FutureOr<void> _onAppStarted(event, emit) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString("jwt_token");
-    if (token != null && token.isNotEmpty) {
-      emit(Authenticated());
-    } else {
-      emit(Unauthenticated());
-    }
-  }
+  @override
+  List<Object?> get props => [error];
 }
