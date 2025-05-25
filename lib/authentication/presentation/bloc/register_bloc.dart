@@ -28,6 +28,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     on<AppStarted>(_onAppStarted);
     on<LoggedIn>(_onLoginRequested);
+    on<LoggedOut>(
+      _onLogoutRequested,
+    );
+  }
+
+  FutureOr<void> _onLogoutRequested(event, emit) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove("jwt_token");
+    emit(Unauthenticated());
   }
 
   FutureOr<void> _onLoginRequested(event, emit) async {
