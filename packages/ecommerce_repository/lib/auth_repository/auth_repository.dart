@@ -14,4 +14,7 @@ class AuthRepository {
 
   Future<UserModel> getUser(String token) async =>
       await _authApi.getUser(token);
+
+  Future<UserModel> updateUser(UserModel userData, String token) async =>
+      await _authApi.updateUser(userData, token);
 }
