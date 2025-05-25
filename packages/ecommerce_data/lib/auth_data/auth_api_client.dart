@@ -121,4 +121,6 @@ class AuthApiClient {
       rethrow;
     }
   }
+
+  void close() => _httpClient.close();
 }

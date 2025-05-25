@@ -17,4 +17,6 @@ class AuthRepository {
 
   Future<UserModel> updateUser(UserModel userData, String token) async =>
       await _authApi.updateUser(userData, token);
+
+  void dispose() => _authApi.close();
 }
