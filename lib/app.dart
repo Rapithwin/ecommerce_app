@@ -1,3 +1,4 @@
+import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/root/view/root.dart';
 import 'package:e_commerce/theme/app_theme.dart';
 import 'package:e_commerce/theme/cubit/theme_cubit.dart';
@@ -25,6 +26,9 @@ class MainApp extends StatelessWidget {
         providers: [
           BlocProvider<ThemeCubit>(
             create: (context) => ThemeCubit(),
+          ),
+          BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(),
           )
         ],
         child: AppView(),
@@ -40,11 +44,16 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
-        return MaterialApp(
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
-          themeMode: state.themeMode,
-          home: RootPage(),
+        return BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is Authenticated) {}
+          },
+          child: MaterialApp(
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: state.themeMode,
+            home: RootPage(),
+          ),
         );
       },
     );
