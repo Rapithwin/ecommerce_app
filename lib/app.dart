@@ -1,7 +1,7 @@
 import 'package:e_commerce/root/view/root.dart';
 import 'package:e_commerce/theme/app_theme.dart';
 import 'package:e_commerce/theme/cubit/theme_cubit.dart';
-import 'package:e_commerce_repository/products_repository/products_repostitory.dart';
+import 'package:e_commerce_repository/ecommerce_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +14,10 @@ class MainApp extends StatelessWidget {
       providers: [
         RepositoryProvider<ProductsRepostitory>(
           create: (context) => ProductsRepostitory(),
+          dispose: (repository) => repository.dispose(),
+        ),
+        RepositoryProvider<AuthRepository>(
+          create: (context) => AuthRepository(),
           dispose: (repository) => repository.dispose(),
         ),
       ],
