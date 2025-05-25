@@ -4,7 +4,6 @@ import 'package:e_commerce_data/auth_data/models/models.dart';
 import 'package:e_commerce_repository/ecommerce_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // Events
 sealed class LoginEvent extends Equatable {
