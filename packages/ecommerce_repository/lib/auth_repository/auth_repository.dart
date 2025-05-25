@@ -8,4 +8,7 @@ class AuthRepository {
 
   Future<RegisterResponseModel> registerUser(UserModel userData) async =>
       _authApi.registerUser(userData);
+
+  Future<LoginResponseModel> loginUser(UserModel userData) async =>
+      _authApi.loginUser(userData);
 }
