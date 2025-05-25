@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer' show log;
+import 'dart:io';
 
 import 'package:e_commerce_data/auth_data/models/models.dart';
 import 'package:e_commerce_data/data_constants.dart';
@@ -60,14 +61,20 @@ class AuthApiClient {
     }
   }
 
-  Future<UserModel> getUser() async {
+  Future<UserModel> getUser(String token) async {
     try {
       final userRequest = Uri.http(
         Constants.authority,
         "$_usersEndpoint/me",
       );
 
-      final userResponse = await _httpClient.get(userRequest);
+      final userResponse = await _httpClient.get(
+        userRequest,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+      );
 
       final responseJson =
           jsonDecode(userResponse.body) as Map<String, dynamic>;
@@ -84,7 +91,7 @@ class AuthApiClient {
     }
   }
 
-  Future<UserModel> updateUser(UserModel userData) async {
+  Future<UserModel> updateUser(UserModel userData, String token) async {
     try {
       final updateRequest = Uri.http(
         Constants.authority,
@@ -93,6 +100,10 @@ class AuthApiClient {
 
       final updateResponse = await _httpClient.put(
         updateRequest,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
         body: userData.toJson(),
       );
 
