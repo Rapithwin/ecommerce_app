@@ -62,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                 textDirection: TextDirection.ltr,
                 inputAction: TextInputAction.next,
                 controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
                 theme: theme,
               ),
               CustomFormField(
@@ -69,6 +70,9 @@ class _LoginPageState extends State<LoginPage> {
                 textDirection: TextDirection.ltr,
                 inputAction: TextInputAction.next,
                 controller: _passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                maxLines: 1,
+                obscureText: true,
                 theme: theme,
               ),
               Container(
