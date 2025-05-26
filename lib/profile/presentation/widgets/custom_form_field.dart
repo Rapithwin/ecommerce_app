@@ -13,6 +13,7 @@ class CustomFormField extends StatelessWidget {
     this.obscureText,
     required this.controller,
     required this.theme,
+    this.maxLines,
   });
 
   final String? initialValue;
@@ -25,6 +26,7 @@ class CustomFormField extends StatelessWidget {
   final bool? obscureText;
   final TextEditingController controller;
   final ThemeData theme;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class CustomFormField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
         child: TextFormField(
-          maxLines: 4,
+          maxLines: maxLines ?? 4,
           minLines: 1,
           maxLength: null,
           controller: controller,
