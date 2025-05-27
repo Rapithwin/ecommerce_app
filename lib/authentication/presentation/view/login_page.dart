@@ -63,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 CustomFormField(
                   labelName: "رمز عبور",
@@ -73,12 +74,15 @@ class _LoginPageState extends State<LoginPage> {
                   maxLines: 1,
                   obscureText: true,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 Container(
                   width: size.width,
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (!_formKey.currentState!.validate()) return;
+                    },
                     child: Text(
                       "ورود",
                       style: theme.textTheme.labelLarge?.copyWith(
@@ -108,5 +112,12 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  String? emptyValidator(String? value) {
+    if (value!.isEmpty) {
+      return "این فیلد نباید خالی باشد";
+    }
+    return null;
   }
 }
