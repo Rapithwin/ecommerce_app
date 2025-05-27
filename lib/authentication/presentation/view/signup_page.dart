@@ -170,7 +170,10 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                   ),
-                  child: const Text("ورود"),
+                  child: const Text(
+                    "حساب کاربری دارید؟ وارد شوید.",
+                    textDirection: TextDirection.rtl,
+                  ),
                 )
               ],
             ),

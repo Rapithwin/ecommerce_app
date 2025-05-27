@@ -104,7 +104,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  child: const Text("ثبت نام"),
+                  child: const Text(
+                    "حساب کاربری ندارید؟ ثبت نام کنید.",
+                    textDirection: TextDirection.rtl,
+                  ),
                 )
               ],
             ),
