@@ -1,4 +1,5 @@
 import 'package:e_commerce/authentication/presentation/view/login_page.dart';
+import 'package:e_commerce/extensions.dart';
 import 'package:e_commerce/profile/presentation/widgets/custom_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -76,6 +77,15 @@ class _SignupPageState extends State<SignupPage> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   theme: theme,
+                  validator: (String? value) {
+                    if (!value!.isEmailValid) {
+                      return "ایمیل نامعتبر";
+                    }
+                    if (value.isEmpty) {
+                      return "این فیلد نباید خالی باشد";
+                    }
+                    return null;
+                  },
                 ),
                 CustomFormField(
                   labelName: "رمز عبور",
@@ -86,20 +96,34 @@ class _SignupPageState extends State<SignupPage> {
                   maxLines: 1,
                   obscureText: true,
                   theme: theme,
+                  validator: (String? value) {
+                    if (value!.length < 8) {
+                      return "رمز عبور باید دارای حداقل ۸ کاراکتر باشد";
+                    }
+                    if (!value.isPasswordValid) {
+                      return "رمز عبور باید شامل حروف بزرگ، حروف کوچک، ارقام و کاراکتر مخصوص باشد";
+                    }
+                    if (value.isEmpty) {
+                      return "این فیلد نباید خالی باشد";
+                    }
+                    return null;
+                  },
                 ),
                 CustomFormField(
                   labelName: "نام",
                   textDirection: TextDirection.rtl,
                   inputAction: TextInputAction.next,
-                  controller: _passwordController,
+                  controller: _firstNameController,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 CustomFormField(
                   labelName: "نام خانوادگی",
                   textDirection: TextDirection.rtl,
                   inputAction: TextInputAction.next,
-                  controller: _passwordController,
+                  controller: _lastNameController,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 CustomFormField(
                   labelName: "آدرس پستی",
@@ -107,20 +131,24 @@ class _SignupPageState extends State<SignupPage> {
                   inputAction: TextInputAction.next,
                   controller: _passwordController,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 CustomFormField(
                   labelName: "شماره تماس",
                   textDirection: TextDirection.ltr,
                   inputAction: TextInputAction.next,
-                  controller: _passwordController,
+                  controller: _phoneController,
                   keyboardType: TextInputType.phone,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 Container(
                   width: size.width,
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (!_formKey.currentState!.validate()) return;
+                    },
                     child: Text(
                       "ثبت نام",
                       style: theme.textTheme.labelLarge?.copyWith(
@@ -150,5 +178,12 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
     );
+  }
+
+  String? emptyValidator(String? value) {
+    if (value!.isEmpty) {
+      return "این فیلد نباید خالی باشد";
+    }
+    return null;
   }
 }
