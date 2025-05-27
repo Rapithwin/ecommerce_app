@@ -50,6 +50,7 @@ class CustomFormField extends StatelessWidget {
           ),
           validator: validator,
           decoration: InputDecoration(
+            errorMaxLines: 2,
             errorStyle: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.error,
               fontSize: 12,
