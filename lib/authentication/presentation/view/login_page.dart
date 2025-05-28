@@ -67,7 +67,9 @@ class _LoginViewState extends State<LoginView> {
           child: Text(
             "ورود",
             textDirection: TextDirection.rtl,
-            style: theme.textTheme.headlineLarge,
+            style: theme.textTheme.headlineLarge?.copyWith(
+              color: theme.colorScheme.onSurface,
+            ),
           ),
         ),
       ),

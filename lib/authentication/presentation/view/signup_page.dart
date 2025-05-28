@@ -77,7 +77,9 @@ class _SignupViewState extends State<SignupView> {
           child: Text(
             "ثبت نام",
             textDirection: TextDirection.rtl,
-            style: theme.textTheme.headlineLarge,
+            style: theme.textTheme.headlineLarge?.copyWith(
+              color: theme.colorScheme.onSurface,
+            ),
           ),
         ),
       ),
