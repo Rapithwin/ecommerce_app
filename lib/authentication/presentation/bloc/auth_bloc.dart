@@ -22,11 +22,20 @@ class LoggedIn extends AuthEvent {
 class LoggedOut extends AuthEvent {}
 
 // States
-sealed class AuthState {}
+sealed class AuthState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class AuthInitial extends AuthState {}
 
-class Authenticated extends AuthState {}
+class Authenticated extends AuthState {
+  final String token;
+
+  Authenticated({required this.token});
+  @override
+  List<Object?> get props => [token];
+}
 
 class Unauthenticated extends AuthState {}
 
@@ -47,14 +56,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _onLoginRequested(event, emit) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("jwt_token", event.token);
-    emit(Authenticated());
+    emit(Authenticated(token: event.token));
   }
 
   FutureOr<void> _onAppStarted(event, emit) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("jwt_token");
     if (token != null && token.isNotEmpty) {
-      emit(Authenticated());
+      emit(Authenticated(token: token));
     } else {
       emit(Unauthenticated());
     }
