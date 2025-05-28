@@ -100,6 +100,21 @@ class _SignupViewState extends State<SignupView> {
                 ),
               );
           }
+          if (state is RegisterSuccess) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "ثبت نام با موفقیت انجام شد",
+                    textDirection: TextDirection.rtl,
+                    style: theme.textTheme.labelLarge,
+                  ),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            Navigator.pushReplacement(context, LoginPage.route());
+          }
         },
         child: SingleChildScrollView(
           child: Form(
@@ -167,7 +182,7 @@ class _SignupViewState extends State<SignupView> {
                     labelName: "آدرس پستی",
                     textDirection: TextDirection.rtl,
                     inputAction: TextInputAction.next,
-                    controller: _passwordController,
+                    controller: _addressController,
                     theme: theme,
                     validator: emptyValidator,
                   ),
@@ -199,8 +214,9 @@ class _SignupViewState extends State<SignupView> {
                           onPressed: isLoading
                               ? null
                               : () {
-                                  if (!_formKey.currentState!.validate())
+                                  if (!_formKey.currentState!.validate()) {
                                     return;
+                                  }
                                   context.read<RegisterBloc>().add(
                                         RegisterSubmitted(userData),
                                       );

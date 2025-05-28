@@ -3,6 +3,7 @@ import 'package:e_commerce/authentication/presentation/bloc/login_bloc.dart';
 import 'package:e_commerce/authentication/presentation/view/signup_page.dart';
 import 'package:e_commerce/extensions.dart';
 import 'package:e_commerce/profile/presentation/widgets/custom_form_field.dart';
+import 'package:e_commerce/root/view/root.dart';
 import 'package:e_commerce_data/auth_data/models/models.dart';
 import 'package:e_commerce_repository/ecommerce_repository.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,9 @@ class _LoginViewState extends State<LoginView> {
                   backgroundColor: theme.colorScheme.error,
                 ),
               );
+          }
+          if (state is LoginSuccess) {
+            Navigator.pushReplacement(context, RootPage.route());
           }
         },
         child: SingleChildScrollView(
