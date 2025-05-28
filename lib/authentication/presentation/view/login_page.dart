@@ -1,8 +1,13 @@
+import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:e_commerce/authentication/presentation/bloc/login_bloc.dart';
 import 'package:e_commerce/authentication/presentation/view/signup_page.dart';
 import 'package:e_commerce/profile/presentation/widgets/custom_form_field.dart';
+import 'package:e_commerce_data/auth_data/models/models.dart';
+import 'package:e_commerce_repository/ecommerce_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   static Route<LoginPage> route() {
@@ -12,10 +17,25 @@ class LoginPage extends StatefulWidget {
   }
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider<LoginBloc>(
+      create: (context) => LoginBloc(
+        context.read<AuthRepository>(),
+        context.read<AuthBloc>(),
+      ),
+      child: LoginView(),
+    );
+  }
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController _emailController, _passwordController;
 
@@ -79,17 +99,47 @@ class _LoginPageState extends State<LoginPage> {
                 Container(
                   width: size.width,
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (!_formKey.currentState!.validate()) return;
+                  child: BlocBuilder<LoginBloc, LoginState>(
+                    builder: (context, state) {
+                      final UserModel userData = UserModel(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      );
+                      final bool isLoading = state is LoginLoading;
+                      return ElevatedButton(
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (!_formKey.currentState!.validate()) return;
+                                context.read<LoginBloc>().add(
+                                      LoginSubmitted(userData),
+                                    );
+                              },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 10,
+                          children: [
+                            Visibility(
+                              visible: isLoading,
+                              child: SizedBox(
+                                height: 15,
+                                width: 15,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 3,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "ورود",
+                              style: theme.textTheme.labelLarge?.copyWith(
+                                color: theme.colorScheme.onSurface,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
                     },
-                    child: Text(
-                      "ورود",
-                      style: theme.textTheme.labelLarge?.copyWith(
-                        color: theme.colorScheme.onSurface,
-                        fontSize: 15,
-                      ),
-                    ),
                   ),
                 ),
                 TextButton(
