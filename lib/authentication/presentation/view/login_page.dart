@@ -129,15 +129,15 @@ class _LoginViewState extends State<LoginView> {
                         EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     child: BlocBuilder<LoginBloc, LoginState>(
                       builder: (context, state) {
-                        final UserModel userData = UserModel(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        );
                         final bool isLoading = state is LoginLoading;
                         return ElevatedButton(
                           onPressed: isLoading
                               ? null
                               : () {
+                                  final UserModel userData = UserModel(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
                                   if (!_formKey.currentState!.validate()) {
                                     return;
                                   }

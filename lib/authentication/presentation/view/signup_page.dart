@@ -203,19 +203,19 @@ class _SignupViewState extends State<SignupView> {
                         EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     child: BlocBuilder<RegisterBloc, RegisterState>(
                       builder: (context, state) {
-                        final UserModel userData = UserModel(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          firstName: _firstNameController.text,
-                          lastName: _lastNameController.text,
-                          address: _addressController.text,
-                          phoneNumber: _phoneController.text,
-                        );
                         final bool isLoading = state is RegisterLoading;
                         return ElevatedButton(
                           onPressed: isLoading
                               ? null
                               : () {
+                                  final UserModel userData = UserModel(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                    firstName: _firstNameController.text,
+                                    lastName: _lastNameController.text,
+                                    address: _addressController.text,
+                                    phoneNumber: _phoneController.text,
+                                  );
                                   if (!_formKey.currentState!.validate()) {
                                     return;
                                   }
