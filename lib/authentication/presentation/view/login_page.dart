@@ -1,6 +1,7 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/authentication/presentation/bloc/login_bloc.dart';
 import 'package:e_commerce/authentication/presentation/view/signup_page.dart';
+import 'package:e_commerce/extensions.dart';
 import 'package:e_commerce/profile/presentation/widgets/custom_form_field.dart';
 import 'package:e_commerce_data/auth_data/models/models.dart';
 import 'package:e_commerce_repository/ecommerce_repository.dart';
@@ -69,97 +70,121 @@ class _LoginViewState extends State<LoginView> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 40.0),
-            child: Column(
-              children: <Widget>[
-                CustomFormField(
-                  labelName: "ایمیل",
-                  textDirection: TextDirection.ltr,
-                  inputAction: TextInputAction.next,
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  theme: theme,
-                  validator: emptyValidator,
-                ),
-                CustomFormField(
-                  labelName: "رمز عبور",
-                  textDirection: TextDirection.ltr,
-                  inputAction: TextInputAction.next,
-                  controller: _passwordController,
-                  keyboardType: TextInputType.visiblePassword,
-                  maxLines: 1,
-                  obscureText: true,
-                  theme: theme,
-                  validator: emptyValidator,
-                ),
-                Container(
-                  width: size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: BlocBuilder<LoginBloc, LoginState>(
-                    builder: (context, state) {
-                      final UserModel userData = UserModel(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      );
-                      final bool isLoading = state is LoginLoading;
-                      return ElevatedButton(
-                        onPressed: isLoading
-                            ? null
-                            : () {
-                                if (!_formKey.currentState!.validate()) return;
-                                context.read<LoginBloc>().add(
-                                      LoginSubmitted(userData),
-                                    );
-                              },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          spacing: 10,
-                          children: [
-                            Visibility(
-                              visible: isLoading,
-                              child: SizedBox(
-                                height: 15,
-                                width: 15,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 3,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "ورود",
-                              style: theme.textTheme.labelLarge?.copyWith(
-                                color: theme.colorScheme.onSurface,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pushReplacement(
-                    context,
-                    SignupPage.route(),
-                  ),
-                  style: ButtonStyle(
-                    textStyle: WidgetStatePropertyAll(
-                      theme.textTheme.labelLarge?.copyWith(
-                        color: theme.colorScheme.tertiaryFixed,
-                      ),
+      body: BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
+          if (state is LoginFailure) {
+            final errorMessage = state.error;
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(
+                    errorMessage.authErrorTranslate,
+                    textDirection: TextDirection.rtl,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onError,
                     ),
                   ),
-                  child: const Text(
-                    "حساب کاربری ندارید؟ ثبت نام کنید.",
-                    textDirection: TextDirection.rtl,
+                  backgroundColor: theme.colorScheme.error,
+                ),
+              );
+          }
+        },
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 40.0),
+              child: Column(
+                children: <Widget>[
+                  CustomFormField(
+                    labelName: "ایمیل",
+                    textDirection: TextDirection.ltr,
+                    inputAction: TextInputAction.next,
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    theme: theme,
+                    validator: emptyValidator,
                   ),
-                )
-              ],
+                  CustomFormField(
+                    labelName: "رمز عبور",
+                    textDirection: TextDirection.ltr,
+                    inputAction: TextInputAction.next,
+                    controller: _passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    maxLines: 1,
+                    obscureText: true,
+                    theme: theme,
+                    validator: emptyValidator,
+                  ),
+                  Container(
+                    width: size.width,
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    child: BlocBuilder<LoginBloc, LoginState>(
+                      builder: (context, state) {
+                        final UserModel userData = UserModel(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                        final bool isLoading = state is LoginLoading;
+                        return ElevatedButton(
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  if (!_formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                                  context.read<LoginBloc>().add(
+                                        LoginSubmitted(userData),
+                                      );
+                                },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 10,
+                            children: [
+                              Visibility(
+                                visible: isLoading,
+                                child: SizedBox(
+                                  height: 15,
+                                  width: 15,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                "ورود",
+                                style: theme.textTheme.labelLarge?.copyWith(
+                                  color: theme.colorScheme.onSurface,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pushReplacement(
+                      context,
+                      SignupPage.route(),
+                    ),
+                    style: ButtonStyle(
+                      textStyle: WidgetStatePropertyAll(
+                        theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.tertiaryFixed,
+                        ),
+                      ),
+                    ),
+                    child: const Text(
+                      "حساب کاربری ندارید؟ ثبت نام کنید.",
+                      textDirection: TextDirection.rtl,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
