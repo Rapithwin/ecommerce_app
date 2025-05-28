@@ -1,8 +1,11 @@
+import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:e_commerce/authentication/presentation/view/login_page.dart';
 import 'package:e_commerce/orders/presentation/view/orders_page.dart';
 import 'package:e_commerce/profile/presentation/view/edit_details.dart';
 import 'package:e_commerce/settings/view/settings_page.dart';
 import 'package:e_commerce/settings/widgets/custom_options.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileLoaded extends StatelessWidget {
   const ProfileLoaded({super.key});
@@ -89,6 +92,49 @@ class ProfileLoaded extends StatelessWidget {
             SettingsPage.route(),
           ),
           icon: "assets/images/profile_page/settings.png",
+        ),
+        CustomSettingsOption(
+          theme: theme,
+          title: "خروج",
+          onTap: () {
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Text(
+                  'خروج',
+                  textDirection: TextDirection.rtl,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+                content: Text(
+                  'از حساب خود خارج می‌شوید؟',
+                  textDirection: TextDirection.rtl,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text('خیر', textDirection: TextDirection.rtl),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(LoggedOut());
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        LoginPage.route(),
+                        (_) => false,
+                      );
+                    },
+                    child: const Text('بله', textDirection: TextDirection.rtl),
+                  ),
+                ],
+              ),
+            );
+          },
+          icon: "assets/images/profile_page/logout.png",
         ),
       ],
     );
