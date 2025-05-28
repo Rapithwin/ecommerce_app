@@ -4,11 +4,14 @@ import 'package:e_commerce/orders/presentation/view/orders_page.dart';
 import 'package:e_commerce/profile/presentation/view/edit_details.dart';
 import 'package:e_commerce/settings/view/settings_page.dart';
 import 'package:e_commerce/settings/widgets/custom_options.dart';
+import 'package:e_commerce_data/auth_data/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileLoaded extends StatelessWidget {
-  const ProfileLoaded({super.key});
+  const ProfileLoaded({super.key, required this.userdata});
+
+  final UserModel userdata;
 
   Widget infoText(String title, ThemeData theme) {
     return Align(
@@ -52,7 +55,7 @@ class ProfileLoaded extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "نام نام خانوادگی",
+                      userdata.firstName! + userdata.lastName!,
                       style: theme.textTheme.titleLarge?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -60,15 +63,11 @@ class ProfileLoaded extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    infoText("Username", theme),
+                    infoText(userdata.email!, theme),
                     SizedBox(
                       height: 10,
                     ),
-                    infoText("test@example.com", theme),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    infoText("+989000000000", theme),
+                    infoText(userdata.phoneNumber!, theme),
                   ],
                 ),
               ),
