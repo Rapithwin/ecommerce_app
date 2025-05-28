@@ -44,10 +44,12 @@ class AuthApiClient {
         Constants.authority,
         "$_usersEndpoint/login",
       );
-
       final loginResponse = await _httpClient.post(
         loginRequest,
-        body: userData.toJson(),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: jsonEncode(userData.toJson()),
       );
 
       final loginJson = jsonDecode(loginResponse.body) as Map<String, dynamic>;
