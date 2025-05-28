@@ -23,7 +23,10 @@ class AuthApiClient {
 
       final registerResponse = await _httpClient.post(
         registerRequest,
-        body: userData.toJson(),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: jsonEncode(userData.toJson()),
       );
 
       final registerJson =
