@@ -15,7 +15,7 @@ final class ProfileState extends Equatable {
   final String? error;
 
   const ProfileState({
-    required this.status,
+    this.status = ProfileStatus.initial,
     this.userData,
     this.error,
   });
