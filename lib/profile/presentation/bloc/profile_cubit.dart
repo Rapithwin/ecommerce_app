@@ -24,4 +24,8 @@ class ProfileCubit extends Cubit<ProfileState> {
       );
     }
   }
+
+  void clearUserData() {
+    emit(ProfileState());
+  }
 }
