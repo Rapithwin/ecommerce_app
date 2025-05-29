@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 sealed class AuthEvent extends Equatable {
@@ -62,9 +63,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _onAppStarted(event, emit) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("jwt_token");
-    if (token != null && token.isNotEmpty) {
+    if (token != null && token.isNotEmpty && !JwtDecoder.isExpired(token)) {
       emit(Authenticated(token: token));
     } else {
+      prefs.remove("jwt_token");
       emit(Unauthenticated());
     }
   }
