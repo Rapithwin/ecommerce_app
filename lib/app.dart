@@ -1,5 +1,6 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/authentication/presentation/view/login_page.dart';
+import 'package:e_commerce/profile/presentation/bloc/profile_cubit.dart';
 import 'package:e_commerce/root/view/root.dart';
 import 'package:e_commerce/splash_screen.dart';
 import 'package:e_commerce/theme/app_theme.dart';
@@ -31,6 +32,9 @@ class MainApp extends StatelessWidget {
           ),
           BlocProvider<AuthBloc>(
             create: (context) => AuthBloc(),
+          ),
+          BlocProvider(
+            create: (context) => ProfileCubit(context.read<AuthRepository>()),
           )
         ],
         child: AppView(),
@@ -56,7 +60,10 @@ class AppView extends StatelessWidget {
               switch (state) {
                 case Authenticated():
                   Navigator.pushReplacement(context, RootPage.route());
+                  context.read<ProfileCubit>().fetchUserDetails(state.token);
+
                 case Unauthenticated():
+                  context.read<ProfileCubit>().clearUserData();
                   Navigator.pushReplacement(context, LoginPage.route());
                 default:
               }

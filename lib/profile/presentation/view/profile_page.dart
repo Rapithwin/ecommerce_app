@@ -1,7 +1,5 @@
-import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/profile/presentation/bloc/profile_cubit.dart';
 import 'package:e_commerce/profile/presentation/widgets/widgets.dart';
-import 'package:e_commerce_repository/ecommerce_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,18 +8,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ProfileCubit>(
-      create: (context) {
-        final cubit = ProfileCubit(context.read<AuthRepository>());
-        final authState = context.read<AuthBloc>().state;
-
-        if (authState is Authenticated) {
-          cubit.fetchUserDetails(authState.token);
-        }
-        return cubit;
-      },
-      child: ProfileView(),
-    );
+    return ProfileView();
   }
 }
 
