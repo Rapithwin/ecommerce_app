@@ -55,7 +55,7 @@ class ProfileLoaded extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      userdata.firstName! + userdata.lastName!,
+                      "${userdata.firstName} ${userdata.lastName}",
                       style: theme.textTheme.titleLarge?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
