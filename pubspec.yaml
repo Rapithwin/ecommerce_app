@@ -24,6 +24,7 @@ dependencies:
   smooth_page_indicator: ^1.2.1
   persian_number_utility: ^1.1.6
   readmore: ^3.0.0
+  jwt_decoder: ^2.0.1
 
 
 dev_dependencies:
