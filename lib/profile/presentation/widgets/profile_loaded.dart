@@ -36,7 +36,7 @@ class ProfileLoaded extends StatelessWidget {
         Card(
           color: theme.colorScheme.surfaceBright.withAlpha(180),
           clipBehavior: Clip.hardEdge,
-          margin: EdgeInsets.all(15.0),
+          margin: const EdgeInsets.all(15.0),
           child: InkWell(
             onTap: () => Navigator.push(
               context,
@@ -65,7 +65,7 @@ class ProfileLoaded extends StatelessWidget {
                       height: 20,
                     ),
                     infoText(userdata.email!, theme),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     infoText(userdata.phoneNumber!, theme),

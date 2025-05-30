@@ -236,10 +236,10 @@ class UserRatings extends StatelessWidget {
                     color: Colors.orange,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
-                Icon(
+                const Icon(
                   Icons.star,
                   color: Colors.orange,
                 ),

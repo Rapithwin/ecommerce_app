@@ -17,7 +17,7 @@ class CartLoaded extends StatelessWidget {
           child: Align(
             alignment: Alignment.centerRight,
             child: ConstrainedBox(
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 maxWidth: 600,
               ),
               child: Container(
@@ -73,9 +73,9 @@ class CartLoaded extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Flexible(
+                    const Flexible(
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: EdgeInsets.all(15.0),
                         child: Image(
                           image: NetworkImage(
                               "https://static.owayo-cdn.com/newhp/img/productHome/productSeitenansicht/productservice/tshirts_classic_herren_basic_productservice/st2020_gyh.png"),

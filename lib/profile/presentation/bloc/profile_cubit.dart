@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit(this._authRepository) : super(ProfileState());
+  ProfileCubit(this._authRepository) : super(const ProfileState());
   final AuthRepository _authRepository;
 
   Future<void> fetchUserDetails(String token) async {
@@ -26,6 +26,6 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void clearUserData() {
-    emit(ProfileState());
+    emit(const ProfileState());
   }
 }

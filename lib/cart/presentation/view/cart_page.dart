@@ -19,7 +19,7 @@ class CartPage extends StatelessWidget {
           title: "سبد خرید",
         ),
       ),
-      body: CartLoaded(),
+      body: const CartLoaded(),
     );
   }
 }

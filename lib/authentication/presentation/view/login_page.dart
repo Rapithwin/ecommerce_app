@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
 
   static Route<LoginPage> route() {
     return MaterialPageRoute(
-      builder: (_) => LoginPage(),
+      builder: (_) => const LoginPage(),
     );
   }
 
@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
         context.read<AuthRepository>(),
         context.read<AuthBloc>(),
       ),
-      child: LoginView(),
+      child: const LoginView(),
     );
   }
 }
@@ -126,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                   Container(
                     width: size.width,
                     margin:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     child: BlocBuilder<LoginBloc, LoginState>(
                       builder: (context, state) {
                         final bool isLoading = state is LoginLoading;
@@ -151,7 +151,7 @@ class _LoginViewState extends State<LoginView> {
                             children: [
                               Visibility(
                                 visible: isLoading,
-                                child: SizedBox(
+                                child: const SizedBox(
                                   height: 15,
                                   width: 15,
                                   child: CircularProgressIndicator(

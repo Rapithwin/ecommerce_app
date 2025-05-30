@@ -5,7 +5,7 @@ class OrdersPage extends StatelessWidget {
 
   static Route<OrdersPage> route() {
     return MaterialPageRoute(
-      builder: (_) => OrdersPage(),
+      builder: (_) => const OrdersPage(),
     );
   }
 

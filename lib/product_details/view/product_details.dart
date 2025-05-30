@@ -25,7 +25,7 @@ class ProductDetails extends StatelessWidget {
         cubit.fetchProductsById(id: id);
         return cubit;
       },
-      child: ProductDetailsView(),
+      child: const ProductDetailsView(),
     );
   }
 }

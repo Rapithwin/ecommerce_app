@@ -8,13 +8,13 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Align(
-        alignment: Alignment(0, -1 / 3),
+        alignment: const Alignment(0, -1 / 3),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             _UsernameInput(),
             const Padding(padding: EdgeInsets.all(12)),
-            _PasswordInput(),
+            const _PasswordInput(),
             const Padding(padding: EdgeInsets.all(12)),
           ],
         ),

@@ -9,7 +9,7 @@ class SettingsPage extends StatefulWidget {
 
   static Route<void> route() {
     return MaterialPageRoute(
-      builder: (_) => SettingsPage._(),
+      builder: (_) => const SettingsPage._(),
     );
   }
 
@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
         backdropOpacity: 0,
         minHeight: 0,
         maxHeight: size.height / 3.5,
-        panel: ThemeRadioList(),
+        panel: const ThemeRadioList(),
         body: ListView(
           children: [
             CustomSettingsOption(

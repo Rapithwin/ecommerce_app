@@ -8,7 +8,7 @@ part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartRepository _cartRepository = CartRepository();
+  final CartRepository _cartRepository = CartRepository();
 
   CartBloc() : super(CartInitial()) {
     on<LoadCart>(_onLoad());

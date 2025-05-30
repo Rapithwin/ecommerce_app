@@ -11,7 +11,7 @@ class RootPage extends StatelessWidget {
 
   static Route<RootPage> route() {
     return MaterialPageRoute(
-      builder: (_) => RootPage(),
+      builder: (_) => const RootPage(),
     );
   }
 
@@ -27,10 +27,10 @@ class RootPage extends StatelessWidget {
 class RootView extends StatelessWidget {
   RootView({super.key});
   final List<Widget> _pages = [
-    HomePage(),
-    CatalogPage(),
-    CartPage(),
-    ProfilePage()
+    const HomePage(),
+    const CatalogPage(),
+    const CartPage(),
+    const ProfilePage()
   ];
 
   @override
@@ -43,7 +43,7 @@ class RootView extends StatelessWidget {
         body: size.width < 800
             ? IndexedStack(
                 index: selectedTab.index,
-                children: <Widget>[
+                children: const <Widget>[
                   HomePage(),
                   CatalogPage(),
                   CartPage(),
@@ -166,7 +166,7 @@ class RootView extends StatelessWidget {
           height: 34,
           width: 34,
         ),
-        label: Text('خانه'),
+        label: const Text('خانه'),
       ),
       NavigationRailDestination(
         selectedIcon: Image.asset(
@@ -181,7 +181,7 @@ class RootView extends StatelessWidget {
           height: 34,
           width: 34,
         ),
-        label: Text('علاقه‌مندی‌ها'),
+        label: const Text('علاقه‌مندی‌ها'),
       ),
       NavigationRailDestination(
         selectedIcon: Image.asset(
@@ -196,7 +196,7 @@ class RootView extends StatelessWidget {
           height: 34,
           width: 34,
         ),
-        label: Text('سبد خرید'),
+        label: const Text('سبد خرید'),
       ),
       NavigationRailDestination(
         selectedIcon: Image.asset(
@@ -211,7 +211,7 @@ class RootView extends StatelessWidget {
           height: 34,
           width: 34,
         ),
-        label: Text('پروفایل'),
+        label: const Text('پروفایل'),
       ),
     ];
   }

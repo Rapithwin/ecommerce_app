@@ -53,7 +53,7 @@ class _ProductsSuccessState extends State<ProductsSuccess> {
     final products = widget.products.data ?? [];
 
     return products == []
-        ? Center(
+        ? const Center(
             child: Text("محصولی برای نمایش وحود ندارد"),
           )
         : Expanded(
@@ -65,9 +65,9 @@ class _ProductsSuccessState extends State<ProductsSuccess> {
                     flex: 9,
                     child: GridView.builder(
                       controller: _scrollController,
-                      padding: EdgeInsets.symmetric(horizontal: 13),
+                      padding: const EdgeInsets.symmetric(horizontal: 13),
                       itemCount: products.length,
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         crossAxisSpacing: 10,
                         childAspectRatio: 0.7,
@@ -99,13 +99,13 @@ class _ProductsSuccessState extends State<ProductsSuccess> {
                                     flex: 7,
                                     child: Container(
                                       width: double.infinity,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         // color: theme.colorScheme.secondaryContainer,
                                         borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(7),
                                         ),
                                       ),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.image,
                                         size: 120,
                                       ),

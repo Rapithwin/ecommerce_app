@@ -37,7 +37,7 @@ class CustomSettingsOption extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 7,
                       ),
                       Image.asset(
@@ -48,8 +48,8 @@ class CustomSettingsOption extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 5.0),
                     child: Icon(
                       Icons.arrow_back_ios,
                       size: 21,

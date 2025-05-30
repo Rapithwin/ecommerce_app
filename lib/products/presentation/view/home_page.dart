@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         cubit.fetchProducts(page: 1);
         return cubit;
       },
-      child: HomeView(),
+      child: const HomeView(),
     );
   }
 }
@@ -77,14 +77,14 @@ class _HomeViewState extends State<HomeView> {
                   },
                   backgroundColor: WidgetStatePropertyAll(
                       theme.colorScheme.surfaceContainerHighest),
-                  shadowColor: WidgetStatePropertyAll(Colors.transparent),
+                  shadowColor: const WidgetStatePropertyAll(Colors.transparent),
                   leading: IconButton(
                     onPressed: () {
                       context.read<ProductsCubit>().fetchProducts(
                             serachEntry: _sreachBarController.text,
                           );
                     },
-                    icon: Icon(Icons.search),
+                    icon: const Icon(Icons.search),
                     splashRadius: 1,
                   ),
                   hintText: "جستجو...",

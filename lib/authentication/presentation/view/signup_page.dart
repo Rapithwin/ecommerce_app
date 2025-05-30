@@ -12,7 +12,7 @@ class SignupPage extends StatelessWidget {
 
   static Route<SignupPage> route() {
     return MaterialPageRoute(
-      builder: (_) => SignupPage(),
+      builder: (_) => const SignupPage(),
     );
   }
 
@@ -22,7 +22,7 @@ class SignupPage extends StatelessWidget {
       create: (context) => RegisterBloc(
         context.read<AuthRepository>(),
       ),
-      child: SignupView(),
+      child: const SignupView(),
     );
   }
 }
@@ -200,7 +200,7 @@ class _SignupViewState extends State<SignupView> {
                   Container(
                     width: size.width,
                     margin:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     child: BlocBuilder<RegisterBloc, RegisterState>(
                       builder: (context, state) {
                         final bool isLoading = state is RegisterLoading;
@@ -229,7 +229,7 @@ class _SignupViewState extends State<SignupView> {
                             children: [
                               Visibility(
                                 visible: isLoading,
-                                child: SizedBox(
+                                child: const SizedBox(
                                   height: 15,
                                   width: 15,
                                   child: CircularProgressIndicator(

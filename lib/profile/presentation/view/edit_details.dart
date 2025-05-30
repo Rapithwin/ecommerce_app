@@ -6,7 +6,7 @@ class EditDetailsPage extends StatefulWidget {
 
   static Route<EditDetailsPage> route() {
     return MaterialPageRoute(
-      builder: (_) => EditDetailsPage(),
+      builder: (_) => const EditDetailsPage(),
     );
   }
 
@@ -69,7 +69,7 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   CustomFormField(
@@ -128,7 +128,7 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                   Container(
                     width: size.width,
                     margin:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     child: ElevatedButton(
                       onPressed: () {},
                       child: Text(

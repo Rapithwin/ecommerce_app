@@ -77,7 +77,7 @@ class AppView extends StatelessWidget {
             );
           },
           onGenerateRoute: (_) => MaterialPageRoute(
-            builder: (context) => SplashScreen(),
+            builder: (context) => const SplashScreen(),
           ),
         );
       },

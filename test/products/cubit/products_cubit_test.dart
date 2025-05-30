@@ -21,7 +21,7 @@ void main() {
 
     test("Initial state is correct", () {
       cubit = ProductsCubit(repository);
-      expect(cubit.state, ProductsState());
+      expect(cubit.state, const ProductsState());
     });
 
     group("fetchProducts", () {
@@ -33,8 +33,8 @@ void main() {
         build: () => cubit,
         act: (cubit) => cubit.fetchProducts(),
         expect: () => <ProductsState>[
-          ProductsState(status: ProductsStatus.loading),
-          ProductsState(status: ProductsStatus.failure),
+          const ProductsState(status: ProductsStatus.loading),
+          const ProductsState(status: ProductsStatus.failure),
         ],
       );
       blocTest<ProductsCubit, ProductsState>(
@@ -48,7 +48,7 @@ void main() {
         build: () => cubit,
         act: (cubit) => cubit.fetchProducts(),
         expect: () => <dynamic>[
-          ProductsState(status: ProductsStatus.loading),
+          const ProductsState(status: ProductsStatus.loading),
           isA<ProductsState>()
               .having((p) => p.status, "status", ProductsStatus.success)
               .having(
@@ -74,8 +74,8 @@ void main() {
         build: () => cubit,
         act: (cubit) => cubit.fetchProductsById(id: 1),
         expect: () => <ProductsState>[
-          ProductsState(status: ProductsStatus.loading),
-          ProductsState(status: ProductsStatus.failure),
+          const ProductsState(status: ProductsStatus.loading),
+          const ProductsState(status: ProductsStatus.failure),
         ],
       );
       blocTest<ProductsCubit, ProductsState>(
@@ -88,7 +88,7 @@ void main() {
         build: () => cubit,
         act: (cubit) => cubit.fetchProductsById(id: 1),
         expect: () => <dynamic>[
-          ProductsState(status: ProductsStatus.loading),
+          const ProductsState(status: ProductsStatus.loading),
           isA<ProductsState>()
               .having((p) => p.status, "status", ProductsStatus.success)
               .having(
