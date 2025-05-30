@@ -12,7 +12,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   CartBloc() : super(CartInitial()) {
     on<LoadCart>(_onLoad());
-    on<ClearCart>(_onClear());
     on<AddItemToCart>(_onAddItem());
     on<RemoveItemFromCart>(_onRemoveItem());
   }

@@ -9,8 +9,6 @@ sealed class CartEvent extends Equatable {
 
 class LoadCart extends CartEvent {}
 
-class ClearCart extends CartEvent {}
-
 class AddItemToCart extends CartEvent {
   final Cart item;
 
