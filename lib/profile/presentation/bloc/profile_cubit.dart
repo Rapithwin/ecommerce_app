@@ -25,6 +25,22 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
+  Future<void> updateUserDetails(String token, UserModel userData) async {
+    emit(state.copyWith(status: ProfileStatus.loading));
+    try {
+      final updateResponse = await _authRepository.updateUser(userData, token);
+      emit(state.copyWith(
+          userData: updateResponse, status: ProfileStatus.success));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: ProfileStatus.failure,
+          error: e.toString(),
+        ),
+      );
+    }
+  }
+
   void clearUserData() {
     emit(const ProfileState());
   }
