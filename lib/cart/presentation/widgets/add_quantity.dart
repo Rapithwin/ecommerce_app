@@ -1,4 +1,8 @@
+import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:e_commerce/cart/presentation/bloc/cart_bloc.dart';
+import 'package:e_commerce_data/cart_data/models/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddQuantity extends StatefulWidget {
   const AddQuantity(
@@ -7,11 +11,13 @@ class AddQuantity extends StatefulWidget {
       required this.maxNumber,
       required this.iconSize,
       required this.value,
-      required this.valueChanged});
+      required this.valueChanged,
+      required this.item});
   final int minNumber;
   final int maxNumber;
   final double iconSize;
   final int value;
+  final CartItems item;
   final ValueChanged valueChanged;
 
   @override
@@ -34,13 +40,12 @@ class _AddQuantityState extends State<AddQuantity> {
       children: <Widget>[
         IconButton(
           onPressed: () {
-            setState(
-              () {
-                value =
-                    value == widget.minNumber ? widget.minNumber : value -= 1;
-                widget.valueChanged(value);
-              },
-            );
+            final authState = context.read<AuthBloc>().state;
+            if (authState is Authenticated) {
+              context
+                  .read<CartBloc>()
+                  .add(RemoveItemFromCart(widget.item.id!, authState.token));
+            }
           },
           icon: const Icon(Icons.remove),
         ),
@@ -62,13 +67,11 @@ class _AddQuantityState extends State<AddQuantity> {
         ),
         IconButton(
           onPressed: () {
-            setState(
-              () {
-                value =
-                    value == widget.maxNumber ? widget.maxNumber : value += 1;
-                widget.valueChanged(value);
-              },
-            );
+            final authState = context.read<AuthBloc>().state;
+            if (authState is Authenticated) {
+              context.read<CartBloc>().add(
+                  AddItemToCart(widget.item.productId!, 1, authState.token));
+            }
           },
           icon: const Icon(Icons.add),
         ),

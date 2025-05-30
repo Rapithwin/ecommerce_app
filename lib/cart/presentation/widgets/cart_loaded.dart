@@ -58,6 +58,7 @@ class CartSuccess extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               AddQuantity(
+                                item: cartItems![index],
                                 minNumber: 0,
                                 maxNumber: 20,
                                 iconSize: 017,

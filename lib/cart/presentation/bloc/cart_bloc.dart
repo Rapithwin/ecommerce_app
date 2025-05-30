@@ -46,21 +46,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   FutureOr<void> _onRemoveItem(event, emit) async {
-    if (state is CartLoaded) {
-      try {
-        await _cartRepository.deleteItemFromCart(
-          itemId: event.itemId,
-          token: event.token,
-        );
-        final cartData = await _cartRepository.getCart(event.token);
-        if (cartData.data != null && cartData.data!.items != null) {
-          emit(CartLoaded(items: cartData.data!.items!));
-        }
-      } on CartEmptyFailure {
-        emit(const CartError("cart-empty"));
-      } catch (e) {
-        emit(CartError(e.toString()));
+    emit(ItemRemoveInitial());
+    try {
+      await _cartRepository.deleteItemFromCart(
+        itemId: event.itemId,
+        token: event.token,
+      );
+      final cartData = await _cartRepository.getCart(event.token);
+      if (cartData.data != null && cartData.data!.items != null) {
+        emit(CartLoaded(items: cartData.data!.items!));
       }
+    } on CartEmptyFailure {
+      emit(const CartError("cart-empty"));
+    } catch (e) {
+      emit(CartError(e.toString()));
     }
   }
 }
