@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:e_commerce_data/cart_data/models/cart.dart';
 import 'package:e_commerce_data/data_constants.dart';
@@ -19,23 +20,35 @@ class CartApiClient {
       : _httpClient = httpClient ?? http.Client();
   final http.Client _httpClient;
 
-  final _cartEndpoint = "api/Carts";
+  final _cartEndpoint = "api/basket";
 
   /// Fetches the cart and all the items in it.
-  Future<Cart> getCart({required String userId}) async {
-    final cartRequest = Uri.http(Constants.authority, "$_cartEndpoint/$userId");
+  Future<Cart> getCart(String token) async {
+    final cartRequest = Uri.http(
+      Constants.authority,
+      _cartEndpoint,
+    );
 
-    final cartResponse = await _httpClient.get(cartRequest);
-
-    if (cartResponse.statusCode != 200) throw CartRequestFailure();
+    final cartResponse = await _httpClient.get(
+      cartRequest,
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $token",
+        HttpHeaders.contentTypeHeader: "application/json",
+      },
+    );
 
     final cartJson = jsonDecode(cartResponse.body);
 
-    final result = Cart.fromJson(cartJson);
+    if (cartJson['isSuccess'] == true && cartJson['data'] != null) {
+      final updateJson = cartJson['data'] as Map<String, dynamic>;
+      final result = Cart.fromJson(updateJson);
+      final items = result.data?.items ?? [];
 
-    if (result.cartItems.isEmpty) throw CartEmptyFailure();
+      if (items.isEmpty) throw CartEmptyFailure();
 
-    return result;
+      return result;
+    }
+    throw Exception(cartJson['error'] ?? "Failed to get cart");
   }
 
   /// Used to create a cart and add items to a cart.
