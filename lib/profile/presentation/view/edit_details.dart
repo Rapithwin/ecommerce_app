@@ -1,12 +1,17 @@
 import 'package:e_commerce/profile/presentation/widgets/custom_form_field.dart';
+import 'package:e_commerce_data/auth_data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class EditDetailsPage extends StatefulWidget {
-  const EditDetailsPage({super.key});
+  const EditDetailsPage({super.key, required this.userData});
 
-  static Route<EditDetailsPage> route() {
+  final UserModel userData;
+
+  static Route<EditDetailsPage> route(UserModel userData) {
     return MaterialPageRoute(
-      builder: (_) => const EditDetailsPage(),
+      builder: (_) => EditDetailsPage(
+        userData: userData,
+      ),
     );
   }
 
@@ -19,31 +24,26 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
 
   late TextEditingController _firstNameController,
       _lastNameController,
-      _usernameController,
       _emailController,
       _phoneController,
-      _postCodeController,
       _addressController;
 
   @override
   void initState() {
     super.initState();
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
-    _usernameController = TextEditingController();
-    _emailController = TextEditingController();
-    _phoneController = TextEditingController();
-    _postCodeController = TextEditingController();
-    _addressController = TextEditingController();
+    _firstNameController =
+        TextEditingController(text: widget.userData.firstName);
+    _lastNameController = TextEditingController(text: widget.userData.lastName);
+    _emailController = TextEditingController(text: widget.userData.email);
+    _phoneController = TextEditingController(text: widget.userData.phoneNumber);
+    _addressController = TextEditingController(text: widget.userData.address);
   }
 
   @override
   void dispose() {
     _addressController.dispose();
-    _postCodeController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
-    _usernameController.dispose();
     _lastNameController.dispose();
     _firstNameController.dispose();
     super.dispose();
@@ -87,13 +87,6 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                     theme: theme,
                   ),
                   CustomFormField(
-                    labelName: "نام کاربری",
-                    textDirection: TextDirection.ltr,
-                    inputAction: TextInputAction.next,
-                    controller: _usernameController,
-                    theme: theme,
-                  ),
-                  CustomFormField(
                     labelName: "آدرس ایمیل",
                     textDirection: TextDirection.ltr,
                     inputAction: TextInputAction.next,
@@ -110,14 +103,6 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                     theme: theme,
                   ),
                   CustomFormField(
-                    labelName: "کد پستی",
-                    textDirection: TextDirection.ltr,
-                    inputAction: TextInputAction.next,
-                    keyboardType: TextInputType.number,
-                    controller: _postCodeController,
-                    theme: theme,
-                  ),
-                  CustomFormField(
                     labelName: "آدرس پستی",
                     textDirection: TextDirection.rtl,
                     inputAction: TextInputAction.done,
@@ -127,8 +112,8 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                   ),
                   Container(
                     width: size.width,
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 5.0),
                     child: ElevatedButton(
                       onPressed: () {},
                       child: Text(

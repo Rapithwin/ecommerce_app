@@ -40,7 +40,7 @@ class ProfileLoaded extends StatelessWidget {
           child: InkWell(
             onTap: () => Navigator.push(
               context,
-              EditDetailsPage.route(),
+              EditDetailsPage.route(userdata),
             ),
             child: SizedBox(
               width: size.width,
