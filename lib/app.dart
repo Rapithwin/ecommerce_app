@@ -44,31 +44,40 @@ class MainApp extends StatelessWidget {
 }
 
 class AppView extends StatelessWidget {
-  const AppView({super.key});
+  AppView({super.key});
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  NavigatorState get _navigator => _navigatorKey.currentState!;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return MaterialApp(
+          navigatorKey: _navigatorKey,
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
           themeMode: state.themeMode,
-          home: BlocListener<AuthBloc, AuthState>(
-            listener: (context, state) {
-              if (!context.mounted) return;
-              switch (state) {
-                case Authenticated():
-                  Navigator.pushReplacement(context, RootPage.route());
-                  context.read<ProfileCubit>().fetchUserDetails(state.token);
-
-                case Unauthenticated():
-                  context.read<ProfileCubit>().clearUserData();
-                  Navigator.pushReplacement(context, LoginPage.route());
-                default:
-              }
-            },
-            child: SplashScreen(),
+          builder: (context, child) {
+            return BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (!context.mounted) return;
+                switch (state) {
+                  case Authenticated():
+                    context.read<ProfileCubit>().fetchUserDetails(state.token);
+                    _navigator.pushAndRemoveUntil(
+                        RootPage.route(), (route) => false);
+                  case Unauthenticated():
+                    _navigator.pushAndRemoveUntil(
+                        LoginPage.route(), (route) => false);
+                  default:
+                }
+              },
+              child: child,
+            );
+          },
+          onGenerateRoute: (_) => MaterialPageRoute(
+            builder: (context) => SplashScreen(),
           ),
         );
       },
