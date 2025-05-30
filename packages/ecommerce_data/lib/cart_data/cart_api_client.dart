@@ -52,27 +52,39 @@ class CartApiClient {
   }
 
   /// Used to create a cart and add items to a cart.
-  Future<Cart> addToCart({required Cart query}) async {
+  Future<Cart> addToCart(
+      {required int productId,
+      required int quantity,
+      required int token}) async {
     final cartRequest = Uri.http(
       Constants.authority,
-      _cartEndpoint,
+      "$_cartEndpoint/items",
     );
 
     final cartResponse = await _httpClient.post(
       cartRequest,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(query.toJson()),
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $token",
+        HttpHeaders.contentTypeHeader: "application/json",
+      },
+      body: {
+        "productId": productId,
+        "quantity": quantity,
+      },
     );
-
-    if (cartResponse.statusCode != 200) throw CartRequestFailure();
 
     final cartJson = jsonDecode(cartResponse.body);
 
-    final result = Cart.fromJson(cartJson);
+    if (cartJson['isSuccess'] == true && cartJson['data'] != null) {
+      final updateJson = cartJson['data'] as Map<String, dynamic>;
+      final result = Cart.fromJson(updateJson);
+      final items = result.data?.items ?? [];
 
-    if (result.cartItems.isEmpty) throw CartEmptyFailure();
+      if (items.isEmpty) throw CartEmptyFailure();
 
-    return result;
+      return result;
+    }
+    throw Exception(cartJson['error'] ?? "Failed to add to cart");
   }
 
   // TODO: Delete
