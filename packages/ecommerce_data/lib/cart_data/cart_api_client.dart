@@ -40,8 +40,7 @@ class CartApiClient {
     final cartJson = jsonDecode(cartResponse.body);
 
     if (cartJson['isSuccess'] == true && cartJson['data'] != null) {
-      final updateJson = cartJson['data'] as Map<String, dynamic>;
-      final result = Cart.fromJson(updateJson);
+      final result = Cart.fromJson(cartJson);
       final items = result.data?.items ?? [];
 
       if (items.isEmpty) throw CartEmptyFailure();
