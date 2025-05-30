@@ -32,38 +32,35 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   FutureOr<void> _onAddItem(event, emit) async {
-    emit(CartLoading());
+    emit(ItemAddInitial());
     try {
-      final updatedCart = await _cartRepository.addToCart(
+      await _cartRepository.addToCart(
         productId: event.productId,
         quantity: event.quantity,
         token: event.token,
       );
-      emit(
-        CartLoaded(
-          items: updatedCart.data!.items!,
-        ),
-      );
+      emit(ItemAddSuccess());
     } catch (e) {
       emit(CartError(e.toString()));
     }
   }
 
   FutureOr<void> _onRemoveItem(event, emit) async {
-    emit(CartLoading());
-    try {
-      await _cartRepository.deleteItemFromCart(
-        itemId: event.itemId,
-        token: event.token,
-      );
-      final cartData = await _cartRepository.getCart(event.token);
-      if (cartData.data != null && cartData.data!.items != null) {
-        emit(CartLoaded(items: cartData.data!.items!));
+    if (state is CartLoaded) {
+      try {
+        await _cartRepository.deleteItemFromCart(
+          itemId: event.itemId,
+          token: event.token,
+        );
+        final cartData = await _cartRepository.getCart(event.token);
+        if (cartData.data != null && cartData.data!.items != null) {
+          emit(CartLoaded(items: cartData.data!.items!));
+        }
+      } on CartEmptyFailure {
+        emit(const CartError("cart-empty"));
+      } catch (e) {
+        emit(CartError(e.toString()));
       }
-    } on CartEmptyFailure {
-      emit(const CartError("cart-empty"));
-    } catch (e) {
-      emit(CartError(e.toString()));
     }
   }
 }

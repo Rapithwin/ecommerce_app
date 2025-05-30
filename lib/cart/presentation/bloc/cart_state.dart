@@ -21,6 +21,14 @@ final class CartLoaded extends CartState {
   List<Object?> get props => [items, loadingItemId];
 }
 
+final class ItemAddSuccess extends CartState {}
+
+final class ItemAddInitial extends CartState {}
+
+final class ItemRemoveSuccess extends CartState {}
+
+final class ItemRemoveInitial extends CartState {}
+
 final class CartError extends CartState {
   final String message;
 
