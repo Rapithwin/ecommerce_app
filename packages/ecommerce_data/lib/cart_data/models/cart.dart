@@ -1,40 +1,60 @@
-import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'cart.g.dart';
 
 @JsonSerializable()
-class Cart extends Equatable {
-  final int? id;
-  final String userId;
-  final List<CartItems> cartItems;
+class Cart {
+  final bool? isSuccess;
+  final CartData? data;
+  final String? error;
 
   const Cart({
-    this.id,
-    required this.userId,
-    required this.cartItems,
+    this.isSuccess,
+    this.data,
+    this.error,
   });
 
   factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
 
   Map<String, dynamic> toJson() => _$CartToJson(this);
+}
 
-  @override
-  List<Object?> get props => [id, userId, cartItems];
+@JsonSerializable()
+class CartData {
+  final int? id;
+  final String? userId;
+  final List<CartItems>? items;
+  final double? totalPrice;
+
+  factory CartData.fromJson(Map<String, dynamic> json) =>
+      _$CartDataFromJson(json);
+
+  CartData({
+    this.id,
+    this.userId,
+    this.items,
+    this.totalPrice,
+  });
+
+  Map<String, dynamic> toJson() => _$CartDataToJson(this);
 }
 
 @JsonSerializable()
 class CartItems {
   final int? id;
-  final int productId;
+  final int? productId;
   final String? productName;
-  final int quantity;
+  final double? unitPrice;
+  final int? quantity;
+  final double? totalPrice;
 
   CartItems({
     this.id,
-    required this.productId,
+    this.productId,
     this.productName,
-    required this.quantity,
+    this.unitPrice,
+    this.quantity,
+    this.totalPrice,
   });
 
   factory CartItems.fromJson(Map<String, dynamic> json) =>
