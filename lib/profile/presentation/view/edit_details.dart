@@ -1,5 +1,4 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
-import 'package:e_commerce/authentication/presentation/bloc/register_bloc.dart';
 import 'package:e_commerce/extensions.dart';
 import 'package:e_commerce/profile/presentation/bloc/profile_cubit.dart';
 import 'package:e_commerce/profile/presentation/widgets/custom_form_field.dart';
@@ -82,130 +81,165 @@ class _EditDetailsViewState extends State<EditDetailsView> {
       appBar: AppBar(
         backgroundColor: theme.colorScheme.surfaceContainerLow,
       ),
-      body: SingleChildScrollView(
-        child: Align(
-          alignment: AlignmentDirectional.center,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: 600,
-              maxHeight: size.height,
-            ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  CustomFormField(
-                    labelName: "نام",
+      body: BlocListener<ProfileCubit, ProfileState>(
+        listener: (context, state) {
+          if (state.status == ProfileStatus.failure) {
+            final errorMessage = state.error;
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(
+                    errorMessage!.authErrorTranslate,
                     textDirection: TextDirection.rtl,
-                    inputAction: TextInputAction.next,
-                    controller: _firstNameController,
-                    theme: theme,
-                    validator: emptyValidator,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onError,
+                    ),
                   ),
-                  CustomFormField(
-                    labelName: "نام خانوادگی",
+                  backgroundColor: theme.colorScheme.error,
+                ),
+              );
+          }
+          if (state.status == ProfileStatus.success) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "تغییرات با موفقیت ثبت شد",
                     textDirection: TextDirection.rtl,
-                    inputAction: TextInputAction.next,
-                    controller: _lastNameController,
-                    theme: theme,
-                    validator: emptyValidator,
+                    style: theme.textTheme.labelLarge,
                   ),
-                  CustomFormField(
-                    labelName: "آدرس ایمیل",
-                    textDirection: TextDirection.ltr,
-                    inputAction: TextInputAction.next,
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailController,
-                    theme: theme,
-                    validator: (String? value) {
-                      if (!value!.isEmailValid) {
-                        return "ایمیل نامعتبر";
-                      }
-                      if (value.isEmpty) {
-                        return "این فیلد نباید خالی باشد";
-                      }
-                      return null;
-                    },
-                  ),
-                  CustomFormField(
-                    labelName: "شماره تماس",
-                    textDirection: TextDirection.ltr,
-                    inputAction: TextInputAction.next,
-                    keyboardType: TextInputType.phone,
-                    controller: _phoneController,
-                    theme: theme,
-                    validator: emptyValidator,
-                  ),
-                  CustomFormField(
-                    labelName: "آدرس پستی",
-                    textDirection: TextDirection.rtl,
-                    inputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    controller: _addressController,
-                    theme: theme,
-                    validator: emptyValidator,
-                  ),
-                  Container(
-                    width: size.width,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 5.0),
-                    child: BlocBuilder<ProfileCubit, ProfileState>(
-                      builder: (context, state) {
-                        final authState = context.watch<AuthBloc>().state;
-                        final bool isLoading =
-                            state.status == ProfileStatus.loading;
-                        return ElevatedButton(
-                          onPressed: isLoading
-                              ? null
-                              : () {
-                                  final UserModel userData = UserModel(
-                                    email: _emailController.text,
-                                    firstName: _firstNameController.text,
-                                    lastName: _lastNameController.text,
-                                    address: _addressController.text,
-                                    phoneNumber: _phoneController.text,
-                                  );
-                                  if (!_formKey.currentState!.validate()) {
-                                    return;
-                                  }
-                                  if (authState is Authenticated) {
-                                    context
-                                        .read<ProfileCubit>()
-                                        .updateUserDetails(
-                                            authState.token, userData);
-                                  }
-                                },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            spacing: 10,
-                            children: [
-                              Visibility(
-                                visible: isLoading,
-                                child: const SizedBox(
-                                  height: 15,
-                                  width: 15,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 3,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "ذخیره",
-                                style: theme.textTheme.labelLarge?.copyWith(
-                                  color: theme.colorScheme.onSurface,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                  backgroundColor: Colors.green,
+                ),
+              );
+          }
+        },
+        child: SingleChildScrollView(
+          child: Align(
+            alignment: AlignmentDirectional.center,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 600,
+                maxHeight: size.height,
+              ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    CustomFormField(
+                      labelName: "نام",
+                      textDirection: TextDirection.rtl,
+                      inputAction: TextInputAction.next,
+                      controller: _firstNameController,
+                      theme: theme,
+                      validator: emptyValidator,
+                    ),
+                    CustomFormField(
+                      labelName: "نام خانوادگی",
+                      textDirection: TextDirection.rtl,
+                      inputAction: TextInputAction.next,
+                      controller: _lastNameController,
+                      theme: theme,
+                      validator: emptyValidator,
+                    ),
+                    CustomFormField(
+                      labelName: "آدرس ایمیل",
+                      textDirection: TextDirection.ltr,
+                      inputAction: TextInputAction.next,
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _emailController,
+                      theme: theme,
+                      validator: (String? value) {
+                        if (!value!.isEmailValid) {
+                          return "ایمیل نامعتبر";
+                        }
+                        if (value.isEmpty) {
+                          return "این فیلد نباید خالی باشد";
+                        }
+                        return null;
                       },
                     ),
-                  )
-                ],
+                    CustomFormField(
+                      labelName: "شماره تماس",
+                      textDirection: TextDirection.ltr,
+                      inputAction: TextInputAction.next,
+                      keyboardType: TextInputType.phone,
+                      controller: _phoneController,
+                      theme: theme,
+                      validator: emptyValidator,
+                    ),
+                    CustomFormField(
+                      labelName: "آدرس پستی",
+                      textDirection: TextDirection.rtl,
+                      inputAction: TextInputAction.done,
+                      keyboardType: TextInputType.text,
+                      controller: _addressController,
+                      theme: theme,
+                      validator: emptyValidator,
+                    ),
+                    Container(
+                      width: size.width,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 5.0),
+                      child: BlocBuilder<ProfileCubit, ProfileState>(
+                        builder: (context, state) {
+                          final authState = context.watch<AuthBloc>().state;
+                          final bool isLoading =
+                              state.status == ProfileStatus.loading;
+                          return ElevatedButton(
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    final UserModel userData = UserModel(
+                                      email: _emailController.text,
+                                      firstName: _firstNameController.text,
+                                      lastName: _lastNameController.text,
+                                      address: _addressController.text,
+                                      phoneNumber: _phoneController.text,
+                                    );
+                                    if (!_formKey.currentState!.validate()) {
+                                      return;
+                                    }
+                                    if (authState is Authenticated) {
+                                      context
+                                          .read<ProfileCubit>()
+                                          .updateUserDetails(
+                                              authState.token, userData);
+                                    }
+                                  },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              spacing: 10,
+                              children: [
+                                Visibility(
+                                  visible: isLoading,
+                                  child: const SizedBox(
+                                    height: 15,
+                                    width: 15,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "ذخیره",
+                                  style: theme.textTheme.labelLarge?.copyWith(
+                                    color: theme.colorScheme.onSurface,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
