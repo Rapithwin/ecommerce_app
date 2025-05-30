@@ -1,9 +1,11 @@
 import 'package:e_commerce/cart/presentation/widgets/add_quantity.dart';
+import 'package:e_commerce_data/cart_data/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class CartSuccess extends StatelessWidget {
-  const CartSuccess({super.key});
+  const CartSuccess({super.key, required this.cartItems});
+  final List<CartItems>? cartItems;
 
   @override
   Widget build(BuildContext context) {
