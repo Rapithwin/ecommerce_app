@@ -109,7 +109,7 @@ class AuthApiClient {
           HttpHeaders.authorizationHeader: "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
         },
-        body: userData.toJson(),
+        body: jsonEncode(userData.toJson()),
       );
 
       final responseJson =
