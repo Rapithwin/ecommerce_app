@@ -1,6 +1,7 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/authentication/presentation/view/login_page.dart';
 import 'package:e_commerce/orders/presentation/view/orders_page.dart';
+import 'package:e_commerce/profile/presentation/bloc/profile_cubit.dart';
 import 'package:e_commerce/profile/presentation/view/edit_details.dart';
 import 'package:e_commerce/settings/view/settings_page.dart';
 import 'package:e_commerce/settings/widgets/custom_options.dart';
@@ -121,6 +122,8 @@ class ProfileLoaded extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       context.read<AuthBloc>().add(LoggedOut());
+                      context.read<ProfileCubit>().clearUserData();
+
                       Navigator.pushAndRemoveUntil(
                         context,
                         LoginPage.route(),
