@@ -47,7 +47,10 @@ class _AddQuantityState extends State<AddQuantity> {
                   .add(RemoveItemFromCart(widget.item.id!, authState.token));
             }
           },
-          icon: const Icon(Icons.remove),
+          icon: const Icon(
+            Icons.delete,
+            color: Colors.red,
+          ),
         ),
         Container(
           width: widget.iconSize + 10,
