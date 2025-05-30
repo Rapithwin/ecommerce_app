@@ -1,5 +1,8 @@
+import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:e_commerce/cart/presentation/bloc/cart_bloc.dart';
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -60,7 +63,14 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
                 height: size.height / 10,
                 child: ElevatedButton(
                   style: theme.elevatedButtonTheme.style,
-                  onPressed: () {},
+                  onPressed: () {
+                    final authState = context.read<AuthBloc>().state;
+                    if (authState is Authenticated) {
+                      context
+                          .read<CartBloc>()
+                          .add(AddItemToCart(data.id, 1, authState.token));
+                    }
+                  },
                   child: Text(
                     "افزودن به سبد خرید",
                     style: theme.textTheme.labelLarge?.copyWith(
@@ -98,86 +108,119 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: size.height / 3,
-                child: PageView.builder(
-                  itemCount: testNetworkImg.length,
-                  reverse: true,
-                  itemBuilder: imageBuilder,
-                  controller: pageController,
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              SmoothPageIndicator(
-                textDirection: TextDirection.rtl,
-                controller: pageController,
-                count: testNetworkImg.length,
-                effect: ExpandingDotsEffect(
-                  dotHeight: 10.0,
-                  dotWidth: 10.0,
-                  expansionFactor: 2,
-                  activeDotColor: theme.colorScheme.secondary,
-                  dotColor: theme.colorScheme.onSurface.withAlpha(60),
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              UserRatings(theme: theme),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    data.name,
-                    style: theme.textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.onSurface,
-                    ),
+      body: BlocListener<CartBloc, CartState>(
+        listener: (context, state) {
+          if (state is CartError) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "محصول به سبد خرید اضافه نشد",
                     textDirection: TextDirection.rtl,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onError,
+                    ),
+                  ),
+                  backgroundColor: theme.colorScheme.error,
+                ),
+              );
+          } else if (state is ItemAddSuccess) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "محصول به سبد خرید اضافه شد",
+                    textDirection: TextDirection.rtl,
+                    style: theme.textTheme.labelLarge,
+                  ),
+                  backgroundColor: Colors.green,
+                ),
+              );
+          }
+        },
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: size.height / 3,
+                  child: PageView.builder(
+                    itemCount: testNetworkImg.length,
+                    reverse: true,
+                    itemBuilder: imageBuilder,
+                    controller: pageController,
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Material(
-                    color: Colors.transparent,
-                    textStyle: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.onSurface,
-                      wordSpacing: 0.4,
-                    ),
-                    child: ReadMoreText(
-                      data.description,
-                      trimCollapsedText: "بیشتر",
-                      trimExpandedText: "بستن",
-                      trimLength: 450,
-                      moreStyle: theme.textTheme.labelLarge?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                      lessStyle: theme.textTheme.labelLarge?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                const SizedBox(
+                  height: 12,
+                ),
+                SmoothPageIndicator(
+                  textDirection: TextDirection.rtl,
+                  controller: pageController,
+                  count: testNetworkImg.length,
+                  effect: ExpandingDotsEffect(
+                    dotHeight: 10.0,
+                    dotWidth: 10.0,
+                    expansionFactor: 2,
+                    activeDotColor: theme.colorScheme.secondary,
+                    dotColor: theme.colorScheme.onSurface.withAlpha(60),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                UserRatings(theme: theme),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      data.name,
+                      style: theme.textTheme.headlineLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onSurface,
                       ),
                       textDirection: TextDirection.rtl,
-                      textAlign: TextAlign.justify,
                     ),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Material(
+                      color: Colors.transparent,
+                      textStyle: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                        wordSpacing: 0.4,
+                      ),
+                      child: ReadMoreText(
+                        data.description,
+                        trimCollapsedText: "بیشتر",
+                        trimExpandedText: "بستن",
+                        trimLength: 450,
+                        moreStyle: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                        lessStyle: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.justify,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

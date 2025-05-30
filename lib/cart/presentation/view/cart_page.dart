@@ -65,6 +65,8 @@ class CartView extends StatelessWidget {
               return CartSuccess(
                 cartItems: state.items,
               );
+            default:
+              return CartLoadingPage();
           }
         },
       ),
