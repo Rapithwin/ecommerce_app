@@ -51,7 +51,7 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
           children: <Widget>[
             Text(
               textDirection: TextDirection.rtl,
-              "$convertedPrice تومان",
+              data.stockQuantity != 0 ? "$convertedPrice تومان" : "ناموجود",
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: theme.colorScheme.onSurface,
@@ -63,14 +63,15 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
                 height: size.height / 10,
                 child: ElevatedButton(
                   style: theme.elevatedButtonTheme.style,
-                  onPressed: () {
-                    final authState = context.read<AuthBloc>().state;
-                    if (authState is Authenticated) {
-                      context
-                          .read<CartBloc>()
-                          .add(AddItemToCart(data.id, 1, authState.token));
-                    }
-                  },
+                  onPressed: data.stockQuantity != 0
+                      ? () {
+                          final authState = context.read<AuthBloc>().state;
+                          if (authState is Authenticated) {
+                            context.read<CartBloc>().add(
+                                AddItemToCart(data.id, 1, authState.token));
+                          }
+                        }
+                      : null,
                   child: Text(
                     "افزودن به سبد خرید",
                     style: theme.textTheme.labelLarge?.copyWith(

@@ -67,7 +67,8 @@ class _ProductsSuccessState extends State<ProductsSuccess> {
                       controller: _scrollController,
                       padding: const EdgeInsets.symmetric(horizontal: 13),
                       itemCount: products.length,
-                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         crossAxisSpacing: 10,
                         childAspectRatio: 0.7,
@@ -135,7 +136,11 @@ class _ProductsSuccessState extends State<ProductsSuccess> {
                                   Flexible(
                                     flex: 1,
                                     child: Text(
-                                      "${widget.products.data![index].price.toString().seRagham().toPersianDigit()} تومان",
+                                      widget.products.data![index]
+                                                  .stockQuantity !=
+                                              0
+                                          ? "${widget.products.data![index].price.toString().seRagham().toPersianDigit()} تومان"
+                                          : "ناموجود",
                                       style:
                                           theme.textTheme.bodyLarge?.copyWith(
                                         color: theme.colorScheme.onSurface,
