@@ -125,8 +125,8 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   Container(
                     width: size.width,
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 5.0),
                     child: BlocBuilder<LoginBloc, LoginState>(
                       builder: (context, state) {
                         final bool isLoading = state is LoginLoading;
