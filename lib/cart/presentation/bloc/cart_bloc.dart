@@ -66,10 +66,4 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(CartError(e.toString()));
     }
   }
-
-  @override
-  Future<void> close() {
-    _cartRepository.dispose();
-    return super.close();
-  }
 }
