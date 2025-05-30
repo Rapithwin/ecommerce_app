@@ -125,7 +125,7 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
                   backgroundColor: theme.colorScheme.error,
                 ),
               );
-          } else if (state is ItemAddSuccess) {
+          } else if (state is CartLoaded) {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(

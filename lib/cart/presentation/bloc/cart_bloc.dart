@@ -34,12 +34,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   FutureOr<void> _onAddItem(event, emit) async {
     emit(ItemAddInitial());
     try {
-      await _cartRepository.addToCart(
+      final updatedCart = await _cartRepository.addToCart(
         productId: event.productId,
         quantity: event.quantity,
         token: event.token,
       );
-      emit(ItemAddSuccess());
+      emit(CartLoaded(items: updatedCart.data!.items!));
     } catch (e) {
       emit(CartError(e.toString()));
     }
