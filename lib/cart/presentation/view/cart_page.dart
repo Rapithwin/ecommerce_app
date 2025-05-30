@@ -1,5 +1,8 @@
+import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/cart/presentation/bloc/cart_bloc.dart';
-import 'package:e_commerce/cart/presentation/widgets/widgets.dart';
+import 'package:e_commerce/cart/presentation/widgets/cart_error.dart';
+import 'package:e_commerce/cart/presentation/widgets/cart_loaded.dart';
+import 'package:e_commerce/cart/presentation/widgets/cart_loading.dart';
 import 'package:e_commerce/profile/presentation/widgets/app_bar_widgets.dart';
 import 'package:e_commerce_repository/ecommerce_repository.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +13,15 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CartBloc(
-        context.read<CartRepository>(),
-      ),
+    return BlocProvider<CartBloc>(
+      create: (context) {
+        final authState = context.watch<AuthBloc>().state;
+        final cartBloc = CartBloc(context.read<CartRepository>());
+        if (authState is Authenticated) {
+          cartBloc.add(LoadCart(authState.token));
+        }
+        return cartBloc;
+      },
       child: const CartView(),
     );
   }
@@ -36,7 +44,16 @@ class CartView extends StatelessWidget {
           title: "سبد خرید",
         ),
       ),
-      body: const CartSuccess(),
+      body: BlocBuilder<CartBloc, CartState>(
+        builder: (context, state) {
+          return switch (state) {
+            CartError() => const CartErrorPage(),
+            CartInitial() => const CartLoadingPage(),
+            CartLoading() => const CartLoadingPage(),
+            CartLoaded() => const CartSuccess(),
+          };
+        },
+      ),
     );
   }
 }
