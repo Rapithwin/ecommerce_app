@@ -12,9 +12,10 @@ class CartSuccess extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final Size size = MediaQuery.sizeOf(context);
 
-    return ListView(
-      children: <Widget>[
-        Padding(
+    return ListView.builder(
+      itemCount: cartItems!.length,
+      itemBuilder: (context, index) {
+        return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Align(
             alignment: Alignment.centerRight,
@@ -45,7 +46,7 @@ class CartSuccess extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Text(
-                            " تتسیبنشیبت یشس بشینبت ش شیمحصول فلایبلسیبل سیبل سب لسیب لسیبل سیبل سیبل بیشبسشسیبسیبشسیبشین",
+                            cartItems![index].productName!,
                             textDirection: TextDirection.rtl,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
@@ -60,11 +61,11 @@ class CartSuccess extends StatelessWidget {
                                 minNumber: 0,
                                 maxNumber: 20,
                                 iconSize: 017,
-                                value: 2,
+                                value: cartItems![index].quantity!,
                                 valueChanged: (quantity) {},
                               ),
                               Text(
-                                "${"13000000".seRagham().toPersianDigit()} تومان",
+                                "${cartItems![index].unitPrice!.round().toString().seRagham().toPersianDigit()} تومان",
                                 style: theme.textTheme.bodyLarge?.copyWith(
                                   color: theme.colorScheme.onSurfaceVariant,
                                 ),
@@ -90,8 +91,8 @@ class CartSuccess extends StatelessWidget {
               ),
             ),
           ),
-        )
-      ],
+        );
+      },
     );
   }
 }
