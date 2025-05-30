@@ -13,13 +13,28 @@ class CartRepository {
 
   /// Provides an instanse of [Cart] which includes the cart
   /// items.
-  Future<Cart> getCart({required String userId}) =>
-      _cartApi.getCart(userId: userId);
+  Future<Cart> getCart(token) async => await _cartApi.getCart(token);
 
   /// Handles adding items to the cart and returns an
   /// instance of [Cart].
-  Future<Cart> addToCart({required Cart query}) =>
-      _cartApi.addToCart(query: query);
+  Future<Cart> addToCart(
+          {required int productId,
+          required int quantity,
+          required String token}) async =>
+      await _cartApi.addToCart(
+        productId: productId,
+        quantity: quantity,
+        token: token,
+      );
+
+  Future<Cart> deleteItemFromCart({
+    required int itemId,
+    required String token,
+  }) async =>
+      await _cartApi.deleteItemFromCart(
+        itemId: itemId,
+        token: token,
+      );
 
   void dispose() => _cartApi.close();
 }
