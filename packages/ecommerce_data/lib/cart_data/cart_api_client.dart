@@ -94,7 +94,7 @@ class CartApiClient {
       "$_cartEndpoint/items/$itemId",
     );
 
-    final cartResponse = await _httpClient.post(
+    final cartResponse = await _httpClient.delete(
       cartRequest,
       headers: {
         HttpHeaders.authorizationHeader: "Bearer $token",
