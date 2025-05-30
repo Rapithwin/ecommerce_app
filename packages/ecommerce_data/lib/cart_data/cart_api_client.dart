@@ -55,7 +55,7 @@ class CartApiClient {
   Future<Cart> addToCart(
       {required int productId,
       required int quantity,
-      required int token}) async {
+      required String token}) async {
     final cartRequest = Uri.http(
       Constants.authority,
       "$_cartEndpoint/items",
@@ -87,7 +87,33 @@ class CartApiClient {
     throw Exception(cartJson['error'] ?? "Failed to add to cart");
   }
 
-  // TODO: Delete
+  Future<Cart> deleteItemFromCart({
+    required int itemId,
+    required String token,
+  }) async {
+    final cartRequest = Uri.http(
+      Constants.authority,
+      "$_cartEndpoint/items/$itemId",
+    );
+
+    final cartResponse = await _httpClient.post(
+      cartRequest,
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $token",
+        HttpHeaders.contentTypeHeader: "application/json",
+      },
+    );
+
+    if (cartResponse.statusCode == 204) {
+      return Cart(
+        isSuccess: true,
+      );
+    } else {
+      final cartJson = jsonDecode(cartResponse.body);
+      final result = Cart.fromJson(cartJson);
+      throw Exception(result.error ?? "Failed to add remove from cart");
+    }
+  }
 
   void close() => _httpClient.close();
 }
