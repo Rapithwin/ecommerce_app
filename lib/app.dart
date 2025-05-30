@@ -24,6 +24,10 @@ class MainApp extends StatelessWidget {
           create: (context) => AuthRepository(),
           dispose: (repository) => repository.dispose(),
         ),
+        RepositoryProvider<CartRepository>(
+          create: (context) => CartRepository(),
+          dispose: (repository) => repository.dispose(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
