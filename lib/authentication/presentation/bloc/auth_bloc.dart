@@ -1,7 +1,7 @@
 // Events
 import 'dart:async';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +41,7 @@ class Authenticated extends AuthState {
 class Unauthenticated extends AuthState {}
 
 // Bloc
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
+class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     on<AppStarted>(_onAppStarted);
     on<LoggedIn>(_onLoginRequested);
@@ -69,5 +69,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       prefs.remove("jwt_token");
       emit(Unauthenticated());
     }
+  }
+
+  @override
+  AuthState? fromJson(Map<String, dynamic> json) {
+    if (json['token'] != null) {
+      return Authenticated(token: json['token']);
+    }
+    return Unauthenticated();
+  }
+
+  @override
+  Map<String, dynamic>? toJson(AuthState state) {
+    if (state is Authenticated) {
+      return {'token': state.token};
+    }
+    return null;
   }
 }
