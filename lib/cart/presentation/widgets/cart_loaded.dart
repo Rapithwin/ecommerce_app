@@ -77,11 +77,15 @@ class CartSuccess extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Flexible(
+                    Flexible(
                       child: Padding(
-                        padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15.0),
                         child: Image(
-                          image: NetworkImage(
+                          loadingBuilder: (context, child, loadingProgress) =>
+                              const Placeholder(),
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Placeholder(),
+                          image: const NetworkImage(
                               "https://static.owayo-cdn.com/newhp/img/productHome/productSeitenansicht/productservice/tshirts_classic_herren_basic_productservice/st2020_gyh.png"),
                           fit: BoxFit.contain,
                         ),
