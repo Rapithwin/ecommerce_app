@@ -60,10 +60,18 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   Future<void> removeFavorite(String token, int itemId) async {
     emit(state.copyWith(isLoadingMore: true, error: null));
     try {
-      final result = await _favoritesRepository.removeFavorite(token, itemId);
+      await _favoritesRepository.removeFavorite(token, itemId);
+      final favorites = await _favoritesRepository.getFavorites(token);
+
       emit(state.copyWith(
         isLoadingMore: false,
-        favorites: result,
+        favorites: favorites,
+        error: null,
+      ));
+    } on FavoritesEmptyFailure {
+      emit(state.copyWith(
+        status: FavoritesStatus.success,
+        favorites: FavoritesModel(data: FavoritesData(items: [], count: 0)),
         error: null,
       ));
     } catch (e) {

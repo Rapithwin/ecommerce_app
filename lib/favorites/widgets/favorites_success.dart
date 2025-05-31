@@ -1,5 +1,8 @@
+import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:e_commerce/favorites/cubit/favorites_cubit.dart';
 import 'package:e_commerce_data/favorites_data/models/favorites_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class FavoritesSuccess extends StatelessWidget {
@@ -63,7 +66,18 @@ class FavoritesSuccess extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        final authState =
+                                            context.read<AuthBloc>().state;
+                                        if (authState is Authenticated) {
+                                          context
+                                              .read<FavoritesCubit>()
+                                              .removeFavorite(
+                                                authState.token,
+                                                items[index].id!,
+                                              );
+                                        }
+                                      },
                                       icon: const Icon(
                                         Icons.delete,
                                         color: Colors.red,
