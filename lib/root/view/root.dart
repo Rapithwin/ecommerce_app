@@ -1,4 +1,5 @@
 import 'package:e_commerce/cart/presentation/view/cart_page.dart';
+import 'package:e_commerce/favorites/view/favorites_page.dart';
 import 'package:e_commerce/profile/presentation/view/profile_page.dart';
 import 'package:e_commerce/root/cubit/root_cubit.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class RootView extends StatelessWidget {
   RootView({super.key});
   final List<Widget> _pages = [
     const HomePage(),
-    const CatalogPage(),
+    const FavoritesPage(),
     const CartPage(),
     const ProfilePage()
   ];
@@ -45,7 +46,7 @@ class RootView extends StatelessWidget {
                 index: selectedTab.index,
                 children: const <Widget>[
                   HomePage(),
-                  CatalogPage(),
+                  FavoritesPage(),
                   CartPage(),
                   ProfilePage(),
                 ],
