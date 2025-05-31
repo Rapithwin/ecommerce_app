@@ -1,12 +1,14 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/authentication/presentation/view/login_page.dart';
 import 'package:e_commerce/cart/presentation/bloc/cart_bloc.dart';
+import 'package:e_commerce/favorites/cubit/favorites_cubit.dart';
 import 'package:e_commerce/profile/presentation/bloc/profile_cubit.dart';
 import 'package:e_commerce/root/view/root.dart';
 import 'package:e_commerce/splash_screen.dart';
 import 'package:e_commerce/theme/app_theme.dart';
 import 'package:e_commerce/theme/cubit/theme_cubit.dart';
 import 'package:e_commerce_repository/ecommerce_repository.dart';
+import 'package:e_commerce_repository/favorites_repository/favorites_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,6 +31,9 @@ class MainApp extends StatelessWidget {
           create: (context) => CartRepository(),
           dispose: (repository) => repository.dispose(),
         ),
+        RepositoryProvider<FavoritesRepository>(
+          create: (context) => FavoritesRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -43,6 +48,10 @@ class MainApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => CartBloc(context.read<CartRepository>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                FavoritesCubit(context.read<FavoritesRepository>()),
           ),
         ],
         child: AppView(),
