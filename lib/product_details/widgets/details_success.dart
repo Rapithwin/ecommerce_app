@@ -1,5 +1,6 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/cart/presentation/bloc/cart_bloc.dart';
+import 'package:e_commerce/favorites/cubit/favorites_cubit.dart';
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,11 +25,25 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
   ];
 
   final PageController pageController = PageController();
+  bool _addedToFavoritesManually = false;
+  bool _removedFromFavoritesManually = false;
 
   @override
   void dispose() {
     pageController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final authState = context.read<AuthBloc>().state;
+    if (authState is Authenticated) {
+      context.read<FavoritesCubit>().fetchFavorites(authState.token);
+      context
+          .read<FavoritesCubit>()
+          .checkIsFavorited(authState.token, widget.product.data![0].id);
+    }
   }
 
   @override
@@ -90,57 +105,149 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 4.0),
-            child: IconButton(
-              onPressed: () {},
-              icon: Image.asset(
-                "assets/images/icons/heart-outlined.png",
-                height: 40,
-                width: 40,
-                color: theme.colorScheme.onSurface,
-              ),
-              selectedIcon: Image.asset(
-                "assets/images/icons/heart-filled.png",
-                height: 40,
-                width: 40,
-                color: theme.colorScheme.onSurface,
-              ),
-              iconSize: 30,
+            child: BlocBuilder<FavoritesCubit, FavoritesState>(
+              builder: (context, favState) {
+                return IconButton(
+                  onPressed: () async {
+                    final authState = context.read<AuthBloc>().state;
+                    if (authState is Authenticated) {
+                      if (!favState.isFavorited) {
+                        setState(() {
+                          _addedToFavoritesManually = true;
+                        });
+                        await context
+                            .read<FavoritesCubit>()
+                            .addToFavorites(authState.token, data.id);
+                        // Fetch updated favorites so the new item (with its id) is available for removal
+                        if (!context.mounted) return;
+                        await context
+                            .read<FavoritesCubit>()
+                            .fetchFavorites(authState.token);
+                      } else {
+                        // Find the favorite item id associated with this product id
+                        final favItems = favState.favorites.data?.items ?? [];
+                        final favItem = favItems.firstWhere(
+                          (item) => item.productId == data.id,
+                          orElse: () =>
+                              null as dynamic, // workaround for null return
+                        );
+                        if (favItem != null && favItem.id != null) {
+                          setState(() {
+                            _removedFromFavoritesManually = true;
+                          });
+                          await context
+                              .read<FavoritesCubit>()
+                              .removeFavorite(authState.token, favItem.id!);
+                        }
+                      }
+                    }
+                  },
+                  isSelected: favState.isFavorited,
+                  icon: Image.asset(
+                    "assets/images/icons/heart-outlined.png",
+                    height: 40,
+                    width: 40,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  selectedIcon: Image.asset(
+                    "assets/images/icons/heart-filled.png",
+                    height: 40,
+                    width: 40,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  iconSize: 30,
+                );
+              },
             ),
           )
         ],
       ),
-      body: BlocListener<CartBloc, CartState>(
-        listener: (context, state) {
-          if (state is CartError) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(
-                    "محصول به سبد خرید اضافه نشد",
-                    textDirection: TextDirection.rtl,
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: theme.colorScheme.onError,
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<CartBloc, CartState>(
+            listener: (context, state) {
+              if (state is CartError) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "محصول به سبد خرید اضافه نشد",
+                        textDirection: TextDirection.rtl,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onError,
+                        ),
+                      ),
+                      backgroundColor: theme.colorScheme.error,
                     ),
-                  ),
-                  backgroundColor: theme.colorScheme.error,
-                ),
-              );
-          } else if (state is CartLoaded) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(
-                    "محصول به سبد خرید اضافه شد",
-                    textDirection: TextDirection.rtl,
-                    style: theme.textTheme.labelLarge,
-                  ),
-                  backgroundColor: Colors.green,
-                ),
-              );
-          }
-        },
+                  );
+              } else if (state is CartLoaded) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "محصول به سبد خرید اضافه شد",
+                        textDirection: TextDirection.rtl,
+                        style: theme.textTheme.labelLarge,
+                      ),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+              }
+            },
+          ),
+          BlocListener<FavoritesCubit, FavoritesState>(
+            listenWhen: (previous, current) =>
+                previous.isFavorited == false && current.isFavorited == true,
+            listener: (context, state) {
+              if (_addedToFavoritesManually) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "محصول به لیست علاقه‌مندی‌ها اضافه شد",
+                        textDirection: TextDirection.rtl,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onError,
+                        ),
+                      ),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                setState(() {
+                  _addedToFavoritesManually = false;
+                });
+              }
+            },
+          ),
+          BlocListener<FavoritesCubit, FavoritesState>(
+            listenWhen: (previous, current) =>
+                previous.isFavorited == true && current.isFavorited == false,
+            listener: (context, state) {
+              if (_removedFromFavoritesManually) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "محصول از لیست علاقه‌مندی‌ها حذف شد",
+                        textDirection: TextDirection.rtl,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onError,
+                        ),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                setState(() {
+                  _removedFromFavoritesManually = false;
+                });
+              }
+            },
+          ),
+        ],
         child: SingleChildScrollView(
           child: Center(
             child: Column(

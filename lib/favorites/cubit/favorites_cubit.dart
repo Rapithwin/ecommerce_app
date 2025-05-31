@@ -66,12 +66,14 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       emit(state.copyWith(
         isLoadingMore: false,
         favorites: favorites,
+        isFavorited: false, // Ensure this is set!
         error: null,
       ));
     } on FavoritesEmptyFailure {
       emit(state.copyWith(
         status: FavoritesStatus.success,
         favorites: FavoritesModel(data: FavoritesData(items: [], count: 0)),
+        isFavorited: false, // Ensure this is set!
         error: null,
       ));
     } catch (e) {

@@ -47,10 +47,10 @@ class FavoritesView extends StatelessWidget {
               FavoritesStatus.initial => const FavoritesLoading(),
               FavoritesStatus.loading => const FavoritesLoading(),
               FavoritesStatus.failure => FavoritesFailure(
-                  message: state.error!,
+                  message: state.error ?? "unknown",
                 ),
               FavoritesStatus.success => FavoritesSuccess(
-                  items: state.favorites.data!.items!,
+                  items: state.favorites.data!.items ?? [],
                 ),
             };
           },
