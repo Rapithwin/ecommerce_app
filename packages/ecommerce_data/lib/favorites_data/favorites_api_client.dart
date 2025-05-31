@@ -52,19 +52,51 @@ class AuthApiClient {
         _usersEndpoint,
       );
 
-      final favoritesResponse = await _httpClient.post(favoritesRequest,
-          headers: {
-            HttpHeaders.authorizationHeader: "Bearer $token",
-            HttpHeaders.contentTypeHeader: "application/json",
-          },
-          body: jsonEncode({
-            "productId": productId,
-          }));
+      final favoritesResponse = await _httpClient.post(
+        favoritesRequest,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: jsonEncode({
+          "productId": productId,
+        }),
+      );
 
       final favoritesJson =
           jsonDecode(favoritesResponse.body) as Map<String, dynamic>;
       final result = FavoritesModel.fromJson(favoritesJson);
       return result;
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
+    }
+  }
+
+  Future<FavoritesModel> removeFavorite(String token, int itemId) async {
+    try {
+      final favoritesRequest = Uri.http(
+        Constants.authority,
+        "$_usersEndpoint/$itemId",
+      );
+
+      final favoritesResponse = await _httpClient.delete(
+        favoritesRequest,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+      );
+
+      if (favoritesResponse.statusCode == 204) {
+        return FavoritesModel(isSuccess: true);
+      } else {
+        final favoritesJson =
+            jsonDecode(favoritesResponse.body) as Map<String, dynamic>;
+        final result = FavoritesModel.fromJson(favoritesJson);
+        return result;
+      }
     } catch (error, stacktrace) {
       log("Error during api call $error");
       log("Stacktrace $stacktrace");
