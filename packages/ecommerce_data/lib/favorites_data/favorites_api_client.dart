@@ -103,4 +103,27 @@ class AuthApiClient {
       rethrow;
     }
   }
+
+  Future<bool> isFavorited(String token, int productId) async {
+    try {
+      final favoritesRequest = Uri.http(
+        Constants.authority,
+        "$_usersEndpoint/check/$productId",
+      );
+
+      final favoritesResponse = await _httpClient.get(
+        favoritesRequest,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+      );
+
+      return favoritesResponse.statusCode == 200;
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
+    }
+  }
 }
