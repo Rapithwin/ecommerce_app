@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 
 class FavoritesEmptyFailure implements Exception {}
 
-class AuthApiClient {
-  AuthApiClient({http.Client? httpClient})
+class FavoritesApiClient {
+  FavoritesApiClient({http.Client? httpClient})
       : _httpClient = httpClient ?? http.Client();
 
   final http.Client _httpClient;
