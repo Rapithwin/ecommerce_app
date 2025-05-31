@@ -110,4 +110,25 @@ class CommentApiClient {
       rethrow;
     }
   }
+
+  Future<bool> deleteComment(String token, int commentId) async {
+    final commentRequest = Uri.http(
+      Constants.authority,
+      "$_commentEndpoint/$commentId",
+    );
+    try {
+      final commentResponse = await _httpClient.delete(
+        commentRequest,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+      );
+      return commentResponse.statusCode == 204;
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
+    }
+  }
 }
