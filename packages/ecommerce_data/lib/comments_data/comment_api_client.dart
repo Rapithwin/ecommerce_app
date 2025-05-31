@@ -69,4 +69,45 @@ class CommentApiClient {
       rethrow;
     }
   }
+
+  Future<CommentModel> postComment({
+    required String token,
+    required String content,
+    required int productId,
+    required int rating,
+  }) async {
+    final commentRequest = Uri.http(
+      Constants.authority,
+      _commentEndpoint,
+    );
+    try {
+      final commentResponse = await _httpClient.post(
+        commentRequest,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: jsonEncode({
+          "productId": productId,
+          "content": content,
+          "rating": rating,
+        }),
+      );
+      if (commentResponse.statusCode == 201) {
+        return CommentModel(
+          isSuccess: true,
+        );
+      } else {
+        final json = jsonDecode(commentResponse.body) as Map<String, dynamic>;
+        return CommentModel(
+          isSuccess: false,
+          error: json['error'],
+        );
+      }
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
+    }
+  }
 }
