@@ -16,7 +16,7 @@ class AuthApiClient {
 
   final _usersEndpoint = "api/favorites";
 
-  Future<FavoritesModel> getFavorites() async {
+  Future<FavoritesModel> getFavorites(String token) async {
     try {
       final favoritesRequest = Uri.http(
         Constants.authority,
@@ -26,6 +26,7 @@ class AuthApiClient {
       final favoritesResponse = await _httpClient.get(
         favoritesRequest,
         headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
         },
       );
@@ -36,6 +37,33 @@ class AuthApiClient {
       if (result.data != null && result.data!.items!.isEmpty) {
         throw FavoritesEmptyFailure();
       }
+      return result;
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
+    }
+  }
+
+  Future<FavoritesModel> addToFavorites(String token, int productId) async {
+    try {
+      final favoritesRequest = Uri.http(
+        Constants.authority,
+        _usersEndpoint,
+      );
+
+      final favoritesResponse = await _httpClient.post(favoritesRequest,
+          headers: {
+            HttpHeaders.authorizationHeader: "Bearer $token",
+            HttpHeaders.contentTypeHeader: "application/json",
+          },
+          body: jsonEncode({
+            "productId": productId,
+          }));
+
+      final favoritesJson =
+          jsonDecode(favoritesResponse.body) as Map<String, dynamic>;
+      final result = FavoritesModel.fromJson(favoritesJson);
       return result;
     } catch (error, stacktrace) {
       log("Error during api call $error");
