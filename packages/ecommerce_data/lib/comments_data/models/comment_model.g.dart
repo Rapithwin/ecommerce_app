@@ -26,6 +26,24 @@ CommentModel _$CommentModelFromJson(Map<String, dynamic> json) =>
       },
     );
 
+UserCommentModel _$UserCommentModelFromJson(Map<String, dynamic> json) =>
+    $checkedCreate(
+      'UserCommentModel',
+      json,
+      ($checkedConvert) {
+        final val = UserCommentModel(
+          isSuccess: $checkedConvert('isSuccess', (v) => v as bool?),
+          data: $checkedConvert(
+              'data',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => Comments.fromJson(e as Map<String, dynamic>))
+                  .toList()),
+          error: $checkedConvert('error', (v) => v as String?),
+        );
+        return val;
+      },
+    );
+
 CommentData _$CommentDataFromJson(Map<String, dynamic> json) => $checkedCreate(
       'CommentData',
       json,

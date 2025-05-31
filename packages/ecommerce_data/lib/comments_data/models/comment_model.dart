@@ -19,6 +19,18 @@ class CommentModel {
 }
 
 @JsonSerializable()
+class UserCommentModel {
+  final bool? isSuccess;
+  final List<Comments>? data;
+  final String? error;
+
+  UserCommentModel({this.isSuccess, this.data, this.error});
+
+  factory UserCommentModel.fromJson(Map<String, dynamic> json) =>
+      _$UserCommentModelFromJson(json);
+}
+
+@JsonSerializable()
 class CommentData {
   final List<Comments> comments;
   final int count;
