@@ -56,133 +56,130 @@ class _ProductsSuccessState extends State<ProductsSuccess> {
         ? const Center(
             child: Text("محصولی برای نمایش وحود ندارد"),
           )
-        : Expanded(
-            child: Column(
-              children: [
-                Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Expanded(
-                    flex: 9,
-                    child: GridView.builder(
-                      controller: _scrollController,
-                      padding: const EdgeInsets.symmetric(horizontal: 13),
-                      itemCount: products.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: 0.7,
-                      ),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 5, bottom: 5),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(10),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                ProductDetails.route(
-                                    widget.products.data![index].id),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                border: Border.all(
-                                  color: theme.colorScheme.outline,
-                                  width: 1.2,
+        : Column(
+            children: [
+              Directionality(
+                textDirection: TextDirection.rtl,
+                child: Expanded(
+                  flex: 9,
+                  child: GridView.builder(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.symmetric(horizontal: 13),
+                    itemCount: products.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 0.7,
+                    ),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 5, bottom: 5),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(10),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              ProductDetails.route(
+                                  widget.products.data![index].id),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              border: Border.all(
+                                color: theme.colorScheme.outline,
+                                width: 1.2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 7,
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: const BoxDecoration(
+                                      // color: theme.colorScheme.secondaryContainer,
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(7),
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.image,
+                                      size: 120,
+                                    ),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                children: <Widget>[
-                                  Expanded(
-                                    flex: 7,
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: const BoxDecoration(
-                                        // color: theme.colorScheme.secondaryContainer,
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(7),
+                                Divider(
+                                  height: 0,
+                                  thickness: 0.5,
+                                  color: theme.colorScheme.outlineVariant,
+                                ),
+                                Flexible(
+                                  flex: 2,
+                                  child: SizedBox(
+                                    width: 180,
+                                    child: Center(
+                                      child: Text(
+                                        widget.products.data![index].name,
+                                        style:
+                                            theme.textTheme.bodyLarge?.copyWith(
+                                          color: theme.colorScheme.onSurface,
                                         ),
-                                      ),
-                                      child: const Icon(
-                                        Icons.image,
-                                        size: 120,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ),
-                                  Divider(
-                                    height: 0,
-                                    thickness: 0.5,
-                                    color: theme.colorScheme.outlineVariant,
-                                  ),
-                                  Flexible(
-                                    flex: 2,
-                                    child: SizedBox(
-                                      width: 180,
-                                      child: Center(
-                                        child: Text(
-                                          widget.products.data![index].name,
-                                          style: theme.textTheme.bodyLarge
-                                              ?.copyWith(
-                                            color: theme.colorScheme.onSurface,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: Text(
+                                    widget.products.data![index]
+                                                .stockQuantity !=
+                                            0
+                                        ? "${widget.products.data![index].price.toString().seRagham().toPersianDigit()} تومان"
+                                        : "ناموجود",
+                                    style: theme.textTheme.bodyLarge?.copyWith(
+                                      color: theme.colorScheme.onSurface,
                                     ),
                                   ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: Text(
-                                      widget.products.data![index]
-                                                  .stockQuantity !=
-                                              0
-                                          ? "${widget.products.data![index].price.toString().seRagham().toPersianDigit()} تومان"
-                                          : "ناموجود",
-                                      style:
-                                          theme.textTheme.bodyLarge?.copyWith(
-                                        color: theme.colorScheme.onSurface,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5.0),
+                child: Visibility(
+                  visible: context.read<ProductsCubit>().state.isLoadingMore,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primaryContainer,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: theme.colorScheme.surface,
+                          blurRadius: 4,
+                        )
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(8.0),
+                    height: 30.0,
+                    width: 30.0,
+                    child: CircularProgressIndicator(
+                      color: theme.colorScheme.primary,
+                      strokeWidth: 3.0,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5.0),
-                  child: Visibility(
-                    visible: context.read<ProductsCubit>().state.isLoadingMore,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.primaryContainer,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: theme.colorScheme.surface,
-                            blurRadius: 4,
-                          )
-                        ],
-                      ),
-                      padding: const EdgeInsets.all(8.0),
-                      height: 30.0,
-                      width: 30.0,
-                      child: CircularProgressIndicator(
-                        color: theme.colorScheme.primary,
-                        strokeWidth: 3.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           );
   }
 }

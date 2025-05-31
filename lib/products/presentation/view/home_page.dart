@@ -102,16 +102,22 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
           ),
-          BlocBuilder<ProductsCubit, ProductsState>(
-            builder: (context, state) {
-              return switch (state.status) {
-                ProductsStatus.initial => const ProductsLoading(),
-                ProductsStatus.loading => const ProductsLoading(),
-                ProductsStatus.failure => const ProductsFailure(),
-                ProductsStatus.success =>
-                  ProductsSuccess(products: state.products),
-              };
-            },
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () => context.read<ProductsCubit>().fetchProducts(),
+              child: BlocBuilder<ProductsCubit, ProductsState>(
+                builder: (context, state) {
+                  return switch (state.status) {
+                    ProductsStatus.initial => const ProductsLoading(),
+                    ProductsStatus.loading => const ProductsLoading(),
+                    ProductsStatus.failure => const ProductsFailure(),
+                    ProductsStatus.success => ProductsSuccess(
+                        products: state.products,
+                      ),
+                  };
+                },
+              ),
+            ),
           ),
         ],
       ),
