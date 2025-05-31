@@ -42,4 +42,31 @@ class CommentApiClient {
       rethrow;
     }
   }
+
+  Future<UserCommentModel> getUserComments(String token) async {
+    final commentRequest = Uri.http(
+      Constants.authority,
+      "$_commentEndpoint/user",
+    );
+    try {
+      final commentResponse = await _httpClient.get(
+        commentRequest,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+      );
+      final commentJson =
+          jsonDecode(commentResponse.body) as Map<String, dynamic>;
+      final result = UserCommentModel.fromJson(commentJson);
+      if (result.data != null && result.data!.isEmpty) {
+        throw CommentsEmptyFailure();
+      }
+      return result;
+    } catch (error, stacktrace) {
+      log("Error during api call $error");
+      log("Stacktrace $stacktrace");
+      rethrow;
+    }
+  }
 }
