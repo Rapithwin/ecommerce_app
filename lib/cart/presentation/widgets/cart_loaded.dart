@@ -24,9 +24,8 @@ class CartSuccess extends StatelessWidget {
                 maxWidth: 600,
               ),
               child: Container(
-                height: size.height / 6,
+                height: size.height / 7,
                 // width: size.width,
-
                 decoration: BoxDecoration(
                   color: theme.colorScheme.surfaceContainerHigh,
                   borderRadius: const BorderRadius.all(
