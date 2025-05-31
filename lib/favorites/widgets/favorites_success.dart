@@ -83,14 +83,37 @@ class FavoritesSuccess extends StatelessWidget {
                                         color: Colors.red,
                                       ),
                                     ),
-                                    Text(
-                                      "${items[index].productPrice?.round().toString().seRagham().toPersianDigit()} تومان",
-                                      style:
-                                          theme.textTheme.bodyLarge?.copyWith(
-                                        color:
-                                            theme.colorScheme.onSurfaceVariant,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Expanded(
+                                        child: SizedBox(
+                                          child: ElevatedButton(
+                                            style:
+                                                theme.elevatedButtonTheme.style,
+                                            onPressed: () {},
+                                            child: Text(
+                                              "افزودن به سبد خرید",
+                                              style: theme.textTheme.labelLarge
+                                                  ?.copyWith(
+                                                color:
+                                                    theme.colorScheme.onSurface,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      textDirection: TextDirection.rtl,
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        "${items[index].productPrice?.round().toString().seRagham().toPersianDigit()} تومان",
+                                        style:
+                                            theme.textTheme.bodyLarge?.copyWith(
+                                          color: theme
+                                              .colorScheme.onSurfaceVariant,
+                                        ),
+                                        textDirection: TextDirection.rtl,
+                                      ),
                                     ),
                                   ],
                                 ),
