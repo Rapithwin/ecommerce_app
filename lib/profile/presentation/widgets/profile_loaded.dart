@@ -1,5 +1,6 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/authentication/presentation/view/login_page.dart';
+import 'package:e_commerce/comments/view/user_comments.dart';
 import 'package:e_commerce/orders/presentation/view/orders_page.dart';
 import 'package:e_commerce/profile/presentation/bloc/profile_cubit.dart';
 import 'package:e_commerce/profile/presentation/view/edit_details.dart';
@@ -92,6 +93,15 @@ class ProfileLoaded extends StatelessWidget {
             SettingsPage.route(),
           ),
           icon: "assets/images/profile_page/settings.png",
+        ),
+        CustomSettingsOption(
+          theme: theme,
+          title: "دیدگاه‌های من",
+          onTap: () => Navigator.push(
+            context,
+            UserCommentsPage.route(),
+          ),
+          icon: "assets/images/profile_page/comments.png",
         ),
         CustomSettingsOption(
           theme: theme,
