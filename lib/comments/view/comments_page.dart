@@ -123,12 +123,21 @@ class _CommentsViewState extends State<CommentsView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
+          Navigator.of(context)
+              .push(
             MaterialPageRoute(
               builder: (context) => const PostCommentsPage(),
               settings: RouteSettings(arguments: widget.productId),
             ),
-          );
+          )
+              .then((value) {
+            if (!context.mounted) return;
+            final authState = context.read<AuthBloc>().state;
+            if (authState is Authenticated) {
+              context.read<CommentsBloc>().add(FetchComments(
+                  token: authState.token, productId: widget.productId));
+            }
+          });
         },
         tooltip: 'ثبت دیدگاه',
         child: const Icon(Icons.add_comment),
