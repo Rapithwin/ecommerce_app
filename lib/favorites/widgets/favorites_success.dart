@@ -17,8 +17,13 @@ class FavoritesSuccess extends StatelessWidget {
     final Size size = MediaQuery.sizeOf(context);
 
     return items.isEmpty
-        ? const Center(
-            child: Text("لیست علاقه‌مندی‌ها خالی است"),
+        ? Center(
+            child: Text(
+              "لیست علاقه‌مندی‌ها خالی است",
+              textDirection: TextDirection.rtl,
+              style: theme.textTheme.bodyLarge
+                  ?.copyWith(color: theme.colorScheme.onSurface),
+            ),
           )
         : Scaffold(
             body: BlocListener<CartBloc, CartState>(
