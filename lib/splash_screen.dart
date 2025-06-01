@@ -20,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final authState = context.watch<AuthBloc>().state;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (authState is Authenticated) {
@@ -37,8 +38,8 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(context).pushReplacement(LoginPage.route());
         }
       },
-      child: const Scaffold(
-        backgroundColor: Colors.blue,
+      child: Scaffold(
+        backgroundColor: theme.colorScheme.primary,
       ),
     );
   }
