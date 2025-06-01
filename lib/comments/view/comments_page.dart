@@ -39,12 +39,10 @@ class _CommentsViewState extends State<CommentsView> {
     super.initState();
     final authState = context.read<AuthBloc>().state;
     if (authState is Authenticated) {
-      context.read<CommentsBloc>().add(
-            FetchComments(
-              token: authState.token,
-              productId: widget.productId,
-            ),
-          );
+      context.read<CommentsBloc>().add(FetchComments(
+            token: authState.token,
+            productId: widget.productId,
+          ));
     }
   }
 
@@ -125,7 +123,12 @@ class _CommentsViewState extends State<CommentsView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, PostCommentsPage.route());
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const PostCommentsPage(),
+              settings: RouteSettings(arguments: widget.productId),
+            ),
+          );
         },
         tooltip: 'ثبت نظر',
         child: const Icon(Icons.add_comment),
