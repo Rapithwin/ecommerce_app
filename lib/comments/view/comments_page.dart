@@ -69,10 +69,12 @@ class _CommentsViewState extends State<CommentsView> {
           } else if (state is CommentsLoaded) {
             final comments = state.comments;
             if (comments.isEmpty) {
-              return const Center(
+              return Center(
                   child: Text(
                 'دیدگاهی ثبت نشده است.',
                 textDirection: TextDirection.rtl,
+                style: theme.textTheme.bodyLarge
+                    ?.copyWith(color: theme.colorScheme.onSurface),
               ));
             }
             return ListView.separated(

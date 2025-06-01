@@ -122,7 +122,9 @@ class _PostCommentsViewState extends State<PostCommentsView> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          state.message,
+                          state.message.contains("update")
+                              ? "شما برای این کالا قبلا دیدگاه ثبت کرده‌اید"
+                              : state.message,
                           style: theme.textTheme.bodySmall
                               ?.copyWith(color: theme.colorScheme.onError),
                         ),
