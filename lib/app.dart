@@ -1,12 +1,14 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/authentication/presentation/view/login_page.dart';
 import 'package:e_commerce/cart/presentation/bloc/cart_bloc.dart';
+import 'package:e_commerce/comments/bloc/comments_bloc.dart';
 import 'package:e_commerce/favorites/cubit/favorites_cubit.dart';
 import 'package:e_commerce/profile/presentation/bloc/profile_cubit.dart';
 import 'package:e_commerce/root/view/root.dart';
 import 'package:e_commerce/splash_screen.dart';
 import 'package:e_commerce/theme/app_theme.dart';
 import 'package:e_commerce/theme/cubit/theme_cubit.dart';
+import 'package:e_commerce_repository/comments_repository/comments_repository.dart';
 import 'package:e_commerce_repository/ecommerce_repository.dart';
 import 'package:e_commerce_repository/favorites_repository/favorites_repository.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,9 @@ class MainApp extends StatelessWidget {
         RepositoryProvider<FavoritesRepository>(
           create: (context) => FavoritesRepository(),
         ),
+        RepositoryProvider<CommentsRepository>(
+          create: (context) => CommentsRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -52,6 +57,10 @@ class MainApp extends StatelessWidget {
           BlocProvider(
             create: (context) =>
                 FavoritesCubit(context.read<FavoritesRepository>()),
+          ),
+          BlocProvider(
+            create: (context) => CommentsBloc(
+                commentsRepository: context.read<CommentsRepository>()),
           ),
         ],
         child: AppView(),
