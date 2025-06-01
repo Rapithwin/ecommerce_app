@@ -17,6 +17,10 @@ extension ExtString on String {
         return "ایمیل یا رمز عبور اشتباه است";
       case "User with this email already exists":
         return "کاربر با این ایمیل وجود دارد";
+      case "ورود ناموفق. وضعیت اتصال به اینترنت را بررسی کنید.":
+        return this;
+      case "ثبت نام ناموفق. وضعیت اتصال به اینترنت را بررسی کنید.":
+        return this;
       default:
         return "خطای ناشناخته‌ای رخ داده است";
     }

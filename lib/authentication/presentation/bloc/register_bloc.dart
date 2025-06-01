@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:e_commerce_data/auth_data/models/models.dart';
 import 'package:e_commerce_repository/ecommerce_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -55,6 +56,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       } else {
         emit(RegisterFailure(registerData.error ?? "Unkown register error"));
       }
+    } on SocketException {
+      emit(RegisterFailure(
+          "ثبت نام ناموفق. وضعیت اتصال به اینترنت را بررسی کنید."));
     } catch (e) {
       emit(RegisterFailure("Register Failed ${e.toString()}"));
     }

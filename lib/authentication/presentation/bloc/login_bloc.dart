@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce_data/auth_data/models/models.dart';
 import 'package:e_commerce_repository/ecommerce_repository.dart';
@@ -59,6 +60,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } else {
         emit(LoginFailure(loginData.error ?? "Unkown login error"));
       }
+    } on SocketException {
+      emit(LoginFailure("ورود ناموفق. وضعیت اتصال به اینترنت را بررسی کنید."));
     } catch (e) {
       emit(LoginFailure("Login failed: ${e.toString()}"));
     }
