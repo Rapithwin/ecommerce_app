@@ -51,7 +51,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(CommentPosted());
         add(FetchComments(token: event.token, productId: event.productId));
       } else {
-        emit(CommentsError(result.error ?? 'خطا در ثبت نظر'));
+        emit(CommentsError(result.error ?? 'خطا در ثبت دیدگاه'));
       }
     } catch (e) {
       emit(CommentsError(e.toString()));
@@ -68,7 +68,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(CommentDeleted());
         add(FetchComments(token: event.token, productId: event.productId));
       } else {
-        emit(const CommentsError('خطا در حذف نظر'));
+        emit(const CommentsError('خطا در حذف دیدگاه'));
       }
     } catch (e) {
       emit(CommentsError(e.toString()));

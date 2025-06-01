@@ -400,7 +400,7 @@ class _UserRatingsState extends State<UserRatings> {
                     child: Center(
                       child: Text(
                         state is CommentsLoaded
-                            ? "${state.comments.length.toString().toPersianDigit()} نظر"
+                            ? "${state.comments.length.toString().toPersianDigit()} دیدگاه"
                             : "",
                         style: widget.theme.textTheme.labelLarge?.copyWith(
                           color: widget.theme.colorScheme.onSecondaryContainer,

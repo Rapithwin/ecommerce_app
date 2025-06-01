@@ -54,7 +54,7 @@ class _CommentsViewState extends State<CommentsView> {
         title: const Align(
           alignment: Alignment.centerRight,
           child: Text(
-            'نظرات کاربران',
+            'دیدگاه کاربران',
             textDirection: TextDirection.rtl,
           ),
         ),
@@ -70,7 +70,7 @@ class _CommentsViewState extends State<CommentsView> {
             if (comments.isEmpty) {
               return const Center(
                   child: Text(
-                'نظری ثبت نشده است.',
+                'دیدگاهی ثبت نشده است.',
                 textDirection: TextDirection.rtl,
               ));
             }
@@ -130,7 +130,7 @@ class _CommentsViewState extends State<CommentsView> {
             ),
           );
         },
-        tooltip: 'ثبت نظر',
+        tooltip: 'ثبت دیدگاه',
         child: const Icon(Icons.add_comment),
       ),
     );

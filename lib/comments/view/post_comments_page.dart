@@ -45,7 +45,7 @@ class _PostCommentsViewState extends State<PostCommentsView> {
         title: const Align(
           alignment: Alignment.centerRight,
           child: Text(
-            'ثبت نظر',
+            'ثبت دیدگاه',
             textDirection: TextDirection.rtl,
           ),
         ),
@@ -66,12 +66,12 @@ class _PostCommentsViewState extends State<PostCommentsView> {
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: theme.colorScheme.onSurface),
                   decoration: const InputDecoration(
-                    labelText: 'متن نظر',
+                    labelText: 'متن دیدگاه',
                     hintTextDirection: TextDirection.rtl,
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) => value == null || value.isEmpty
-                      ? 'متن نظر را وارد کنید'
+                      ? 'متن دیدگاه را وارد کنید'
                       : null,
                 ),
               ),
@@ -110,7 +110,7 @@ class _PostCommentsViewState extends State<PostCommentsView> {
                   if (state is CommentPosted) {
                     Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('نظر شما ثبت شد!')),
+                      const SnackBar(content: Text('دیدگاه شما ثبت شد!')),
                     );
                   } else if (state is CommentsError) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -137,7 +137,7 @@ class _PostCommentsViewState extends State<PostCommentsView> {
                           },
                     child: state is CommentPosting
                         ? const CircularProgressIndicator()
-                        : const Text('ثبت نظر'),
+                        : const Text('ثبت دیدگاه'),
                   );
                 },
               ),
