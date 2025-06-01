@@ -30,7 +30,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
       ));
     } catch (e) {
       if (e is CommentsEmptyFailure) {
-        emit(CommentsLoaded(comments: [], count: 0, averageRating: 0.0));
+        emit(const CommentsLoaded(comments: [], count: 0, averageRating: 0.0));
       } else {
         emit(CommentsError(e.toString()));
       }
@@ -69,7 +69,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(CommentDeleted());
         // Optionally, you may want to refetch comments after deletion
       } else {
-        emit(CommentsError('خطا در حذف نظر'));
+        emit(const CommentsError('خطا در حذف نظر'));
       }
     } catch (e) {
       emit(CommentsError(e.toString()));
@@ -85,7 +85,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
       emit(UserCommentsLoaded(comments: userCommentsModel.data ?? []));
     } catch (e) {
       if (e is CommentsEmptyFailure) {
-        emit(UserCommentsLoaded(comments: []));
+        emit(const UserCommentsLoaded(comments: []));
       } else {
         emit(CommentsError(e.toString()));
       }
