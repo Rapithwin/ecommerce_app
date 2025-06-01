@@ -35,7 +35,7 @@ This project is a modern e-commerce mobile application built with Flutter. It de
 
 1. **Clone the repository:**
    ```powershell
-   git clone <your-repo-url>
+   git clone https://github.com/Rapithwin/ecommerce_app.git
    cd ecommerce_app
    ```
 2. **Install dependencies:**
