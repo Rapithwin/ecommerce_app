@@ -110,11 +110,24 @@ class _PostCommentsViewState extends State<PostCommentsView> {
                   if (state is CommentPosted) {
                     Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('دیدگاه شما ثبت شد!')),
+                      const SnackBar(
+                        content: Text(
+                          'دیدگاه شما ثبت شد!',
+                          textDirection: TextDirection.rtl,
+                        ),
+                        backgroundColor: Colors.green,
+                      ),
                     );
                   } else if (state is CommentsError) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.message)),
+                      SnackBar(
+                        content: Text(
+                          state.message,
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(color: theme.colorScheme.onError),
+                        ),
+                        backgroundColor: theme.colorScheme.error,
+                      ),
                     );
                   }
                 },
