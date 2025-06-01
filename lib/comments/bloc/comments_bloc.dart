@@ -49,7 +49,6 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
       );
       if (result.isSuccess == true) {
         emit(CommentPosted());
-        // Optionally, refetch comments after posting
         add(FetchComments(token: event.token, productId: event.productId));
       } else {
         emit(CommentsError(result.error ?? 'خطا در ثبت نظر'));
@@ -67,7 +66,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
           await commentsRepository.deleteComment(event.token, event.commentId);
       if (result) {
         emit(CommentDeleted());
-        // Optionally, you may want to refetch comments after deletion
+        add(FetchComments(token: event.token, productId: event.productId));
       } else {
         emit(const CommentsError('خطا در حذف نظر'));
       }

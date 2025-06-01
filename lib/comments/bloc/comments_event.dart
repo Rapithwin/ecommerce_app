@@ -35,10 +35,15 @@ class PostComment extends CommentsEvent {
 class DeleteComment extends CommentsEvent {
   final String token;
   final int commentId;
-  const DeleteComment({required this.token, required this.commentId});
+  final int productId;
+  const DeleteComment({
+    required this.token,
+    required this.commentId,
+    required this.productId,
+  });
 
   @override
-  List<Object?> get props => [token, commentId];
+  List<Object?> get props => [token, commentId, productId];
 }
 
 class FetchUserComments extends CommentsEvent {
