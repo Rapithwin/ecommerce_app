@@ -80,6 +80,7 @@ class AppView extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           navigatorKey: _navigatorKey,
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
