@@ -3,6 +3,7 @@ import 'package:e_commerce/comments/bloc/comments_bloc.dart';
 import 'package:e_commerce/comments/view/post_comments_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 class CommentsPage extends StatelessWidget {
   const CommentsPage({super.key, required this.productId});
@@ -107,7 +108,7 @@ class _CommentsViewState extends State<CommentsView> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          comment.createdAt,
+                          DateTime.parse(comment.createdAt).toPersianDate(),
                           style: theme.textTheme.bodySmall
                               ?.copyWith(color: theme.colorScheme.onSurface),
                         ),
