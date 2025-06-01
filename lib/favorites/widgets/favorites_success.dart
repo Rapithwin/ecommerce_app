@@ -127,35 +127,32 @@ class FavoritesSuccess extends StatelessWidget {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Expanded(
-                                            child: SizedBox(
-                                              child: ElevatedButton(
+                                          child: SizedBox(
+                                            child: ElevatedButton(
+                                              style: theme
+                                                  .elevatedButtonTheme.style,
+                                              onPressed: () {
+                                                final authState = context
+                                                    .read<AuthBloc>()
+                                                    .state;
+                                                if (authState
+                                                    is Authenticated) {
+                                                  context.read<CartBloc>().add(
+                                                      AddItemToCart(
+                                                          items[index]
+                                                              .productId!,
+                                                          1,
+                                                          authState.token));
+                                                }
+                                              },
+                                              child: Text(
+                                                "افزودن به سبد خرید",
                                                 style: theme
-                                                    .elevatedButtonTheme.style,
-                                                onPressed: () {
-                                                  final authState = context
-                                                      .read<AuthBloc>()
-                                                      .state;
-                                                  if (authState
-                                                      is Authenticated) {
-                                                    context
-                                                        .read<CartBloc>()
-                                                        .add(AddItemToCart(
-                                                            items[index]
-                                                                .productId!,
-                                                            1,
-                                                            authState.token));
-                                                  }
-                                                },
-                                                child: Text(
-                                                  "افزودن به سبد خرید",
-                                                  style: theme
-                                                      .textTheme.labelLarge
-                                                      ?.copyWith(
-                                                    color: theme
-                                                        .colorScheme.onSurface,
-                                                    fontSize: 14,
-                                                  ),
+                                                    .textTheme.labelLarge
+                                                    ?.copyWith(
+                                                  color: theme
+                                                      .colorScheme.onSurface,
+                                                  fontSize: 14,
                                                 ),
                                               ),
                                             ),

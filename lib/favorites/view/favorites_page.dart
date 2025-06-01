@@ -40,21 +40,19 @@ class FavoritesView extends StatelessWidget {
           context,
         ),
       ),
-      body: Expanded(
-        child: BlocBuilder<FavoritesCubit, FavoritesState>(
-          builder: (context, state) {
-            return switch (state.status) {
-              FavoritesStatus.initial => const FavoritesLoading(),
-              FavoritesStatus.loading => const FavoritesLoading(),
-              FavoritesStatus.failure => FavoritesFailure(
-                  message: state.error ?? "unknown",
-                ),
-              FavoritesStatus.success => FavoritesSuccess(
-                  items: state.favorites.data!.items ?? [],
-                ),
-            };
-          },
-        ),
+      body: BlocBuilder<FavoritesCubit, FavoritesState>(
+        builder: (context, state) {
+          return switch (state.status) {
+            FavoritesStatus.initial => const FavoritesLoading(),
+            FavoritesStatus.loading => const FavoritesLoading(),
+            FavoritesStatus.failure => FavoritesFailure(
+                message: state.error ?? "unknown",
+              ),
+            FavoritesStatus.success => FavoritesSuccess(
+                items: state.favorites.data!.items ?? [],
+              ),
+          };
+        },
       ),
     );
   }
