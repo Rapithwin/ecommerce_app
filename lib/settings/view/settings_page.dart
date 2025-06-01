@@ -28,7 +28,13 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: theme.colorScheme.surfaceContainerLow,
+        title: const Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "تنظیمات",
+            textDirection: TextDirection.rtl,
+          ),
+        ),
       ),
       body: SlidingUpPanel(
         controller: _panelController,
