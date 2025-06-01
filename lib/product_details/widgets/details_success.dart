@@ -133,7 +133,7 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
                           orElse: () =>
                               null as dynamic, // workaround for null return
                         );
-                        if (favItem != null && favItem.id != null) {
+                        if (favItem.id != null) {
                           setState(() {
                             _removedFromFavoritesManually = true;
                           });

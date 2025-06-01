@@ -8,13 +8,13 @@ class PostCommentsPage extends StatelessWidget {
 
   static Route<PostCommentsPage> route() {
     return MaterialPageRoute(
-      builder: (context) => PostCommentsPage(),
+      builder: (context) => const PostCommentsPage(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return PostCommentsView();
+    return const PostCommentsView();
   }
 }
 
