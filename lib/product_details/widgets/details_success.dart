@@ -1,5 +1,7 @@
 import 'package:e_commerce/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/cart/presentation/bloc/cart_bloc.dart';
+import 'package:e_commerce/comments/bloc/comments_bloc.dart';
+import 'package:e_commerce/comments/view/comments_page.dart';
 import 'package:e_commerce/favorites/cubit/favorites_cubit.dart';
 import 'package:e_commerce_data/products_data/models/product.dart';
 import 'package:flutter/material.dart';
@@ -282,7 +284,10 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
                 const SizedBox(
                   height: 30,
                 ),
-                UserRatings(theme: theme),
+                UserRatings(
+                  theme: theme,
+                  productId: data.id,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -346,13 +351,30 @@ class _DetailsSuccessState extends State<DetailsSuccess> {
   }
 }
 
-class UserRatings extends StatelessWidget {
+class UserRatings extends StatefulWidget {
   const UserRatings({
     super.key,
     required this.theme,
+    required this.productId,
   });
 
   final ThemeData theme;
+  final int productId;
+
+  @override
+  State<UserRatings> createState() => _UserRatingsState();
+}
+
+class _UserRatingsState extends State<UserRatings> {
+  @override
+  void initState() {
+    super.initState();
+    final authState = context.read<AuthBloc>().state;
+    if (authState is Authenticated) {
+      context.read<CommentsBloc>().add(
+          FetchComments(token: authState.token, productId: widget.productId));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -360,43 +382,55 @@ class UserRatings extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              height: 35,
-              width: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: theme.colorScheme.secondaryContainer,
-              ),
-              child: Center(
-                child: Text(
-                  "${"1111".toPersianDigit()} نظر",
-                  style: theme.textTheme.labelLarge?.copyWith(
-                    color: theme.colorScheme.onSecondaryContainer,
+        child: BlocBuilder<CommentsBloc, CommentsState>(
+          builder: (context, state) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                      context, CommentsPage.route(widget.productId)),
+                  child: Container(
+                    height: 35,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: widget.theme.colorScheme.secondaryContainer,
+                    ),
+                    child: Center(
+                      child: Text(
+                        state is CommentsLoaded
+                            ? "${state.comments.length.toString().toPersianDigit()} نظر"
+                            : "",
+                        style: widget.theme.textTheme.labelLarge?.copyWith(
+                          color: widget.theme.colorScheme.onSecondaryContainer,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Row(
-              children: [
-                Text(
-                  "4.3",
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: Colors.orange,
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Icon(
-                  Icons.star,
-                  color: Colors.orange,
+                Row(
+                  children: [
+                    Text(
+                      state is CommentsLoaded
+                          ? state.averageRating.toString()
+                          : "",
+                      style: widget.theme.textTheme.titleLarge?.copyWith(
+                        color: Colors.orange,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Icon(
+                      Icons.star,
+                      color: Colors.orange,
+                    ),
+                  ],
                 ),
               ],
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
