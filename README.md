@@ -14,6 +14,7 @@ This project is a modern e-commerce mobile application built with Flutter. It de
 - Favorites (wishlist)
 - Comments and product reviews
 - Profile management
+- Dark and light theme modes
 
 ## Architecture
 
