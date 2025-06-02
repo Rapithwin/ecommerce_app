@@ -21,8 +21,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(CartLoading());
     try {
       final cartData = await _cartRepository.getCart(event.token);
-      if (cartData.data != null && cartData.data!.items != null) {
-        emit(CartLoaded(items: cartData.data!.items!));
+      if (cartData.data != null) {
+        emit(CartLoaded(cartData: cartData.data!));
       }
     } on CartEmptyFailure {
       emit(const CartError("cart-empty"));
@@ -39,7 +39,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         quantity: event.quantity,
         token: event.token,
       );
-      emit(CartLoaded(items: updatedCart.data!.items!));
+      emit(CartLoaded(cartData: updatedCart.data!));
     } catch (e) {
       emit(CartError(e.toString()));
     }
@@ -53,8 +53,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         token: event.token,
       );
       final cartData = await _cartRepository.getCart(event.token);
-      if (cartData.data != null && cartData.data!.items != null) {
-        emit(CartLoaded(items: cartData.data!.items!));
+      if (cartData.data != null) {
+        emit(CartLoaded(cartData: cartData.data!));
       }
     } on CartEmptyFailure {
       emit(const CartError("cart-empty"));

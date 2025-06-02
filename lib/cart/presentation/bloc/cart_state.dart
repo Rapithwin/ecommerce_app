@@ -12,13 +12,13 @@ final class CartInitial extends CartState {}
 final class CartLoading extends CartState {}
 
 final class CartLoaded extends CartState {
-  final List<CartItems> items;
+  final CartData cartData;
   final String? loadingItemId;
 
-  const CartLoaded({this.items = const [], this.loadingItemId});
+  const CartLoaded({required this.cartData, this.loadingItemId});
 
   @override
-  List<Object?> get props => [items, loadingItemId];
+  List<Object?> get props => [cartData, loadingItemId];
 }
 
 final class ItemAddSuccess extends CartState {}
